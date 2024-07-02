@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="24">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Level max 90"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+004651D9:
+cmp ax,46
+jae ps_game.exe+6522B
+0046507D:
+cmp ax,46
+jae ps_game.exe+65222
+0046143E:
+cmp eax,46
+jg ps_game.exe+6145A
+00480FC4:
+cmp ebx,46
+jnge 00480FB3
+0049B5DE:
+cmp ebx,46
+jg 0049B5FB
+0049B63A:
+cmp ebx,46
+jg 0049B657
+0049B68E:
+cmp ebx,46
+jg 0049B6AB
+0049B7C2:
+cmp ebx,46
+jg 0049B7DF
+0049B81E:
+cmp ebx,46
+jg 0049B83B
+0049B872:
+cmp ebx,46
+jg 0049B88F
+0049BD9E:
+cmp ebx,46
+jg 0049BDB7
+0049BDCF:
+cmp ebx,46
+jg 0049BDE8
+0049BE00:
+cmp ebx,46
+jg 0049BE19
+0049BEDB:
+cmp ebx,46
+jg 0049BEF8
+00460C55:
+cmp ecx,46
+jg 00460C6B
+00460C85:
+cmp ecx,46
+jg 00460C9B
+00460CB5:
+cmp ecx,46
+jg 00460CCB
+0046135B:
+cmp ecx,46
+jg 00461382
+004613AC:
+cmp ecx,46
+jg 004613C9
+004613F9:
+cmp ecx,46
+jg 00461416
+00464FF5:
+cmp ecx,46
+jg 00465007
+0046515F:
+cmp ecx,46
+jg 00465172
+004651EA:
+cmp ecx,46
+jg 004651FD
+0046523F:
+cmp ecx,46
+jg 00465252
+00467BFC:
+cmp ecx,46
+jg 00467C11
+004612CC:
+cmp edx,46
+jg 004612E5
+004612F7:
+cmp edx,46
+jg 00461310
+00461322:
+cmp edx,46
+jg 0046133C
+0049241B:
+cmp edx,46
+jg 00492430
+00547019:
+cmp eax,46
+jl 00547125
+0049BF34:
+cmp ebx,46
+jg 0049BF51
+0049BF81:
+cmp ebx,46
+jg 0049BF9E
+0049BFD1:
+cmp ebx,46
+jg 0049BFEE
+0049C013:
+cmp ebx,46
+jg 0049C030
+0049C052:
+cmp ebx,46
+jg 0049C084
+0049C0B4:
+cmp ebx,46
+jg 0049C0D1
+0049C10D:
+cmp ebx,46
+jg 0049C12A
+0049C15A:
+cmp ebx,46
+jg 0049C177
+0049C1AA:
+cmp ebx,46
+jg 0049C1C7
+0049C1EC:
+cmp ebx,46
+jg 0049C209
+0049C22B:
+cmp ebx,46
+jg 0049C246
+00480E0C:
+cmp ecx,46
+ja 00480D96
+0049243B:
+cmp ecx,46
+jg 0049244E
+0049B4A2:
+cmp ecx,46
+jg 0049B4BB
+0049B4D3:
+cmp ecx,46
+jg 0049B4EC
+0049B504:
+cmp ecx,46
+jg 0049B51D
+0049BB75:
+cmp ecx,46
+jg 0049BB8A
+0049BB9C:
+cmp ecx,46
+jg 0049BBAF
+
+
+[DISABLE]
+004651D9:
+cmp ax,46
+jae ps_game.exe+6522B
+0046507D:
+cmp ax,46
+jae ps_game.exe+65222
+0046143E:
+cmp eax,46
+jg ps_game.exe+6145A
+00480FC4:
+cmp ebx,46
+jnge 00480FB3
+0049B5DE:
+cmp ebx,46
+jg 0049B5FB
+0049B63A:
+cmp ebx,46
+jg 0049B657
+0049B68E:
+cmp ebx,46
+jg 0049B6AB
+0049B7C2:
+cmp ebx,46
+jg 0049B7DF
+0049B81E:
+cmp ebx,46
+jg 0049B83B
+0049B872:
+cmp ebx,46
+jg 0049B88F
+0049BD9E:
+cmp ebx,46
+jg 0049BDB7
+0049BDCF:
+cmp ebx,46
+jg 0049BDE8
+0049BE00:
+cmp ebx,46
+jg 0049BE19
+0049BEDB:
+cmp ebx,46
+jg 0049BEF8
+00460C55:
+cmp ecx,46
+jg 00460C6B
+00460C85:
+cmp ecx,46
+jg 00460C9B
+00460CB5:
+cmp ecx,46
+jg 00460CCB
+0046135B:
+cmp ecx,46
+jg 00461382
+004613AC:
+cmp ecx,46
+jg 004613C9
+004613F9:
+cmp ecx,46
+jg 00461416
+00464FF5:
+cmp ecx,46
+jg 00465007
+0046515F:
+cmp ecx,46
+jg 00465172
+004651EA:
+cmp ecx,46
+jg 004651FD
+0046523F:
+cmp ecx,46
+jg 00465252
+00467BFC:
+cmp ecx,46
+jg 00467C11
+004612CC:
+cmp edx,46
+jg 004612E5
+004612F7:
+cmp edx,46
+jg 00461310
+00461322:
+cmp edx,46
+jg 0046133C
+0049241B:
+cmp edx,46
+jg 00492430
+00547019:
+cmp eax,46
+jl 00547125
+0049BF34:
+cmp ebx,46
+jg 0049BF51
+0049BF81:
+cmp ebx,46
+jg 0049BF9E
+0049BFD1:
+cmp ebx,46
+jg 0049BFEE
+0049C013:
+cmp ebx,46
+jg 0049C030
+0049C052:
+cmp ebx,46
+jg 0049C084
+0049C0B4:
+cmp ebx,46
+jg 0049C0D1
+0049C10D:
+cmp ebx,46
+jg 0049C12A
+0049C15A:
+cmp ebx,46
+jg 0049C177
+0049C1AA:
+cmp ebx,46
+jg 0049C1C7
+0049C1EC:
+cmp ebx,46
+jg 0049C209
+0049C22B:
+cmp ebx,46
+jg 0049C246
+00480E0C:
+cmp ecx,46
+ja 00480D96
+0049243B:
+cmp ecx,46
+jg 0049244E
+0049B4A2:
+cmp ecx,46
+jg 0049B4BB
+0049B4D3:
+cmp ecx,46
+jg 0049B4EC
+0049B504:
+cmp ecx,46
+jg 0049B51D
+0049BB75:
+cmp ecx,46
+jg 0049BB8A
+0049BB9C:
+cmp ecx,46
+jg 0049BBAF
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

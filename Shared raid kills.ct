@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>34</ID>
+      <Description>"Shared raid kills"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+label(M1)
+label(M2)
+label(M3)
+label(M4)
+label(M5)
+label(M6)
+label(M7)
+label(M8)
+label(M9)
+
+newmem:
+jmp _kill_share
+call ps_game.exe+67EE0
+jmp exit
+
+_kill_share:
+call CustomFuncDeath
+pushad
+mov edi,esi
+mov edx,[esi+000000E0]
+xor ecx,ecx
+mov cl,[esi+0000012D]
+cmp ecx,01
+je setzero
+mov ecx,01
+jmp gocall
+setzero:
+mov ecx,00
+gocall:
+push ecx
+push edx
+call ShareKill
+popad
+originalcode:
+
+exit:
+jmp 00465ACF
+
+ShareKill:
+sub esp,10 { 16 }
+push ebx
+push ebp
+mov ebp,[esp+1C]
+push esi
+call dword ptr [ps_game.exe+1540D0] { -&gt;kernel32.GetTickCount }
+lea esi,[ebp+0000018C]
+mov ebx,eax
+push esi
+add ebx,000003E8 { 1000 }
+mov [esp+1C],esi
+call dword ptr [ps_game.exe+1540DC] { -&gt;ntdll.RtlEnterCriticalSection }
+mov ecx,[ebp+00000184]
+mov eax,[ecx+04]
+mov [ebp+00000188],eax
+cmp eax,ecx
+je M1
+test eax,eax
+je M1
+M8:
+mov eax,[eax+08]
+test eax,eax
+je M2
+lea esi,[eax-000000D0]
+jmp M3
+M2:
+xor esi,esi
+M3:
+// cmp byte ptr [esi+00005808],0A { if ( *(_BYTE *)(v8 + 22376) &gt; 0xAu )}
+//ja M4
+//mov eax,[ebp+00000188] {  v6 = (CObjectLink *)CZone-&gt;m_listUser.cursor-&gt;next;}
+//mov eax,[eax+04]
+//jmp M6
+
+M4:
+cmp edi,esi
+jne M5
+mov ecx,[ebp+00000188]
+mov eax,[ecx+04]
+jmp M6
+M5:
+mov dl,[esp+24]
+cmp byte ptr [esi+160],(int)173 // no faction check (for FFA)
+je _no_faction_check
+cmp [esi+0000012D],dl { if ( *(_BYTE *)(v8 + 301) == byCountry )}
+jne M9
+
+_no_faction_check:
+// NEW CODE HERE //
+fld dword ptr [edi+000000D0]
+push ecx
+fsub dword ptr [esi+000000D0]
+fstp dword ptr [esp+14]
+fld dword ptr [edi+000000D8]
+fsub dword ptr [esi+000000D8]
+fstp dword ptr [esp+24]
+fld dword ptr [esp+24]
+fld dword ptr [esp+14]
+fmul st(0),st(0)
+fld st(1)
+fmulp st(2),st(0)
+faddp
+fstp dword ptr [esp+24]
+fld dword ptr [esp+24]
+fstp dword ptr [esp]
+call ps_game.exe+1B8A0
+
+cmp byte ptr [esi+160],(int)173 // all over the map
+jne _orig_range
+fcomp dword ptr [RangeFloat2]
+jmp _compare_range
+_orig_range:
+fcomp dword ptr [RangeFloat] { [100.00] }
+
+_compare_range:
+add esp,04 { 00000004 }
+fnstsw ax
+sahf
+//test ah,41 { 65 }
+jae M9 { if ( v11 &gt; 10.0 )}
+//Need check party
+cmp [esi+000017F4],00
+je M9
+mov ecx,esi
+push edi
+call ps_game.exe+67CE0
+//               //
+M9:
+mov edx,[ebp+00000188]
+mov eax,[edx+04]
+M6:
+cmp eax,[ebp+00000184] { while ( v6 != CZone-&gt;m_listUser.head &amp;&amp; v6 );}
+mov [ebp+00000188],eax
+je M7
+test eax,eax
+jne M8
+M7:
+mov esi,[esp+18] { v4 = &amp;this-&gt;m_listUser.m_csList.m_cs;}
+M1:
+push esi
+call dword ptr [ps_game.exe+1540D4] { -&gt;ntdll.RtlLeaveCriticalSection }
+pop esi
+pop ebp
+pop ebx
+add esp,10 { 16 }
+ret 0008 { 00000008 }
+
+RangeFloat:
+dd 42C80000
+
+RangeFloat2:
+dd (float)10000
+
+CustomFuncDeath:
+sub esp,14 { 20 }
+mov eax,[esi+0000014C]
+cmp eax,[ps_game.exe+1823AC] { [000F4240] }
+jmp FuncDeathM
+mov edx,[esi+0000582C]
+//inc eax
+mov [esi+0000014C],eax
+mov ecx,0000060C { 1548 }
+mov [esp+0F],eax
+push 0B { 11 }
+lea eax,[esp+0C]
+mov [esp+0C],cx
+mov ecx,[ps_game.exe+18796C] { [010A2628] }
+push eax
+mov [esp+12],edx
+mov byte ptr [esp+16],01 { 1 }
+call ps_game.exe+ED2D0
+mov edx,[esi+0000014C]
+mov ecx,0000020E { 526 }
+push 07 { 7 }
+lea eax,[esp+04]
+mov [esp+04],cx
+push eax
+mov ecx,esi
+mov byte ptr [esp+0A],01 { 1 }
+mov [esp+0B],edx
+call ps_game.exe+ED0E0
+FuncDeathM:
+add esp,14 { 20 }
+ret
+
+"ps_game.exe"+65AAD:
+jmp newmem
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+65AAD:
+call ps_game.exe+67EE0
+//Alt: db E8 2E 24 00 00
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>35</ID>
+      <Description>"SQL Injection"</Description>
+      <LastState Value="" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>0</ID>
+          <Description>"sql injection protection"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(exit)
+
+alloc(check_characters,512)
+//label(check_characters)
+label(escape)
+registersymbol(check_characters)
+
+newmem:
+call check_characters
+mov [edx+eax],cl
+inc eax
+test cl,cl
+
+exit:
+jmp returnhere
+
+check_characters:
+cmp cl,27 // '
+je escape
+ret
+
+escape:
+mov cl,20 // space
+ret
+
+"ps_game.exe"+80A62:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+unregistersymbol(check_characters)
+dealloc(check_characters)
+"ps_game.exe"+80A62:
+mov [edx+eax],cl
+inc eax
+test cl,cl
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>24</ID>
+          <Description>"userid rewrite"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov cl,[eax]
+cmp cl,30
+jge originalcode
+cmp cl,'*'
+je originalcode
+cmp cl,'+'
+je originalcode
+cmp cl,'.'
+je originalcode
+cmp cl,'/'
+je originalcode
+cmp cl,0
+je originalcode
+mov cl,30
+originalcode:
+
+mov [edx+eax],cl
+
+exit:
+jmp returnhere
+
+"ps_login.exe"+44F4:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_login.exe"+44F4:
+mov cl,[eax]
+mov [edx+eax],cl
+//Alt: db 8A 08 88 0C 02
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>25</ID>
+          <Description>"password rewrite"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov cl,[eax]
+cmp cl,30
+jge originalcode
+cmp cl,'*'
+je originalcode
+cmp cl,'+'
+je originalcode
+cmp cl,'.'
+je originalcode
+cmp cl,'/'
+je originalcode
+cmp cl,0
+je originalcode
+mov cl,30
+originalcode:
+
+mov [edx+eax],cl
+
+exit:
+jmp returnhere
+
+"ps_login.exe"+4510:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_login.exe"+4510:
+mov cl,[eax]
+mov [edx+eax],cl
+//Alt: db 8A 08 88 0C 02
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

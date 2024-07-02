@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="27">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>317</ID>
+      <Description>"Auto Assemble script"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(SelectionScreen, 4096) // Extra memory for all of our operations
+label(SendPacket)
+
+SelectionScreen:
+SendPacket:
+
+// Allocate 631 (0x277) bytes from the stack, which will be used for our packet
+// Preserve our registers, and write the slot, char id, etc
+pushad
+lea edi, dword ptr [esp-477]
+
+// Write the opcode
+mov word ptr [edi],0101
+
+// Write the character slot
+movzx eax,[esi+09]
+mov byte ptr [edi+2],al
+
+// Write the character id
+mov eax,[esi]
+mov dword ptr [edi+3],eax
+
+// The creation time of the character
+mov eax,[esi+4]
+mov dword ptr [edi+7],eax
+
+// The level of the character
+mov eax,[esi+11]
+mov word ptr [edi+0B],ax
+
+// Race, Mode, Hair, Face
+mov eax,[esi+0A]
+mov [edi+0D],eax
+
+// Height, Class
+mov eax,[esi+0E]
+mov word ptr [edi+11],ax
+
+// Gender
+movzx eax,[esi+10]
+mov byte ptr [edi+13],al
+
+// Map
+mov eax,[esi+25]
+mov word ptr [edi+14],ax
+
+// STR, DEX
+mov eax,[esi+13]
+mov [edi+16],eax
+
+// REC, INT
+mov eax,[esi+17]
+mov [edi+1A],eax
+
+// WIS, LUC
+mov eax,[esi+1B]
+mov [edi+1E],eax
+
+// Helmet
+movzx eax,[esi+2B]
+mov byte ptr [edi+28],al
+movzx eax,[esi+33]
+mov byte ptr [edi+39],al
+
+// Top
+movzx eax,[esi+2C]
+mov byte ptr [edi+29],al
+movzx eax,[esi+34]
+mov byte ptr [edi+3A],al
+
+// Pants
+movzx eax,[esi+2D]
+mov byte ptr [edi+2A],al
+movzx eax,[esi+35]
+mov byte ptr [edi+3B],al
+
+// Gloves
+movzx eax,[esi+2E]
+mov byte ptr [edi+2B],al
+movzx eax,[esi+36]
+mov byte ptr [edi+3C],al
+
+// Boots
+movzx eax,[esi+2F]
+mov byte ptr [edi+2C],al
+movzx eax,[esi+37]
+mov byte ptr [edi+3D],al
+
+// Weapon
+movzx eax,[esi+30]
+mov byte ptr [edi+2D],al
+movzx eax,[esi+38]
+mov byte ptr [edi+3E],al
+
+// Shield
+movzx eax,[esi+31]
+mov byte ptr [edi+2E],al
+movzx eax,[esi+39]
+mov byte ptr [edi+3F],al
+
+// Cape
+movzx eax,[esi+32]
+mov byte ptr [edi+2F],al
+movzx eax,[esi+3A]
+mov byte ptr [edi+40],al
+
+// Pet
+mov byte ptr [edi+36],#0
+mov byte ptr [edi+47],#0
+
+// Costume
+mov byte ptr [edi+37],#0
+mov byte ptr [edi+48],#0
+
+// Wings
+mov byte ptr [edi+38],#0
+mov byte ptr [edi+49],#0
+
+// Cape Emblem Graphics
+mov byte ptr [edi+4A],#0
+mov byte ptr [edi+4B],#0
+mov byte ptr [edi+4C],#0
+mov byte ptr [edi+4D],#0
+mov byte ptr [edi+4E],#0
+mov byte ptr [edi+4F],#0
+
+// Character name
+mov eax,[esi+41]
+mov [edi+266],eax
+mov eax,[esi+45]
+mov [edi+26A],eax
+mov eax,[esi+49]
+mov [edi+26E],eax
+mov eax,[esi+4D]
+mov [edi+272],eax
+mov eax,[esi+51]
+mov [edi+276],eax
+
+// Character deletion flag
+cmp dword ptr [esi+27],0
+setz al // Set AL to the zero flag
+xor al,1 // Invert the value of AL (1=Deleting, 0=Normal)
+mov byte ptr [edi+279],al
+
+// Character rename
+movzx eax,[esi+08]
+mov byte ptr [edi+27A],al
+
+// Push the number of bytes, and packet data
+push #635
+push edi
+mov ecx,ebp // EBP is our player
+call 004ED0E0 // Send packet
+popad
+add esp,#8
+jmp 0047B9B8
+
+ps_game.exe+7B9AC:
+jmp SendPacket
+db 90 90
+
+[DISABLE]
+dealloc(SelectionScreen)
+
+ps_game.exe+7B9AC:
+mov [esp+000000CF],al
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>luainit</Name>
+      <Address>06270000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>LuaFunctionCall</Name>
+      <Address>06270080</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>luaserverinitialized</Name>
+      <Address>06270100</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>luaservername</Name>
+      <Address>06270110</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+</CheatTable>

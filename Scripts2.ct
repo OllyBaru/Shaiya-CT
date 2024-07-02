@@ -1,0 +1,2244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="27">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>235</ID>
+      <Description>"Scripts"</Description>
+      <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <LastState Value="" Activated="1" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>366</ID>
+          <Description>"Turbo API"</Description>
+          <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1" moAllowManualCollapseAndExpand="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>367</ID>
+              <Description>"Turbo API Send"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+
+label(turbo_api_send)
+label(turbo_api_exit)
+label(turbo_api_error)
+label(turbo_api_get_function_addresses)
+label(turbo_api_handles_ok)
+label(turbo_api_error_count)
+
+label(call_func_WinHttpConnect)
+label(call_func_WinHttpOpenRequest)
+label(call_func_WinHttpSendRequest)
+
+label(handle_lib_winhttp)
+label(handle_func_WinHttpOpen)
+label(handle_func_WinHttpConnect)
+label(handle_func_WinHttpOpenRequest)
+label(handle_func_WinHttpSendRequest)
+label(handle_func_WinHttpCloseHandle)
+
+label(name_lib_winhttp)
+label(name_func_WinHttpOpen)
+label(name_func_WinHttpConnect)
+label(name_func_WinHttpOpenRequest)
+label(name_func_WinHttpSendRequest)
+label(name_func_WinHttpCloseHandle)
+
+label(pwszUserAgent)
+label(pswzServerName)
+label(pwszVerb)
+
+registersymbol(turbo_api_send)
+registersymbol(turbo_api_error_count)
+
+newmem:
+
+// lpParameter = memory allocated using msvcrt.malloc
+// to be freed at the end of this function using msvcrt.free
+// if the call is asynchronous
+turbo_api_send:
+push eax
+push ecx
+push edx
+push ebx
+
+sub esp,10
+// [esp] = hSession
+// [esp+4] = hConnect
+// [esp+8] = hRequest
+
+cmp dword ptr [turbo_api_error_count],#100
+ja turbo_api_exit
+
+mov ebx, dword ptr [esp+24] // lpParameter
+
+test ebx,ebx
+je turbo_api_exit
+
+// Check if the module is loaded
+cmp dword ptr [handle_lib_winhttp],0
+jne turbo_api_handles_ok
+
+// Get the WinHttp module, in case it has already been loaded
+push name_lib_winhttp
+call kernel32.GetModuleHandleA
+
+mov dword ptr [handle_lib_winhttp],eax
+
+test eax,eax
+jne turbo_api_get_function_addresses
+
+// Load the WinHttp module
+push name_lib_winhttp
+call kernel32.LoadLibraryA
+
+test eax,eax
+je turbo_api_error
+
+mov dword ptr [handle_lib_winhttp],eax
+
+turbo_api_get_function_addresses:
+
+// Get the address of the WinHttpOpen function
+push name_func_WinHttpOpen
+push eax
+call kernel32.GetProcAddress
+
+test eax,eax
+je turbo_api_error
+
+mov dword ptr [handle_func_WinHttpOpen],eax
+mov eax, dword ptr [handle_lib_winhttp]
+
+// Get the address of the WinHttpConnect function
+push name_func_WinHttpConnect
+push eax
+call kernel32.GetProcAddress
+
+test eax,eax
+je turbo_api_error
+
+mov dword ptr [handle_func_WinHttpConnect],eax
+mov eax, dword ptr [handle_lib_winhttp]
+
+// Get the address of the WinHttpOpenRequest function
+push name_func_WinHttpOpenRequest
+push eax
+call kernel32.GetProcAddress
+
+test eax,eax
+je turbo_api_error
+
+mov dword ptr [handle_func_WinHttpOpenRequest],eax
+mov eax, dword ptr [handle_lib_winhttp]
+
+// Get the address of the WinHttpSendRequest function
+push name_func_WinHttpSendRequest
+push eax
+call kernel32.GetProcAddress
+
+test eax,eax
+je turbo_api_error
+
+mov dword ptr [handle_func_WinHttpSendRequest],eax
+mov eax, dword ptr [handle_lib_winhttp]
+
+// Get the address of the WinHttpCloseHandle function
+push name_func_WinHttpCloseHandle
+push eax
+call kernel32.GetProcAddress
+
+test eax,eax
+je turbo_api_error
+
+mov dword ptr [handle_func_WinHttpCloseHandle],eax
+
+// Proceed when all handles are available
+turbo_api_handles_ok:
+push 0 // dwFlags
+push 0 // pwszProxyBypass
+push 0 // pwszProxyName
+push 0 // dwAccessType
+push pwszUserAgent // pwszUserAgent
+call dword ptr [handle_func_WinHttpOpen] // = hSession
+
+test eax,eax
+je turbo_api_error
+
+mov dword ptr [esp],eax
+
+call_func_WinHttpConnect:
+
+push 0 // dwReserved
+push #9000 // nServerPort
+push pswzServerName // pswzServerName
+push eax // hSession
+call dword ptr [handle_func_WinHttpConnect] // = hConnect
+
+mov dword ptr [esp+4],eax
+
+test eax,eax
+jne call_func_WinHttpOpenRequest
+
+mov eax, dword ptr [esp]
+push eax
+call dword ptr [handle_func_WinHttpCloseHandle]
+
+jmp turbo_api_error
+
+call_func_WinHttpOpenRequest:
+
+mov ebx, dword ptr [esp+24]
+
+push 0 // dwFlags
+push 0 // *ppwszAcceptTypes
+push 0 // pwszReferrer
+push 0 // pwszVersion
+push ebx // pwszObjectName
+push pwszVerb // pwszVerb
+push eax // hConnect
+call dword ptr [handle_func_WinHttpOpenRequest] // = hRequest
+
+mov dword ptr [esp+8],eax
+
+test eax,eax
+jne call_func_WinHttpSendRequest
+
+mov eax, dword ptr [esp]
+push eax
+call dword ptr [handle_func_WinHttpCloseHandle]
+
+mov eax, dword ptr [esp+4]
+push eax
+call dword ptr [handle_func_WinHttpCloseHandle]
+
+jmp turbo_api_error
+
+call_func_WinHttpSendRequest:
+
+push 0 // dwContext
+push 0 // dwTotalLength
+push 0 // dwOptionalLength
+push 0 // lpOptional
+push -1 // dwHeadersLength
+push pwszHeaders // pwszHeaders
+push eax // hRequest
+call dword ptr [handle_func_WinHttpSendRequest]
+
+push eax
+
+mov eax, dword ptr [esp+4]
+push eax
+call dword ptr [handle_func_WinHttpCloseHandle]
+
+mov eax, dword ptr [esp+8]
+push eax
+call dword ptr [handle_func_WinHttpCloseHandle]
+
+mov eax, dword ptr [esp+C]
+push eax
+call dword ptr [handle_func_WinHttpCloseHandle]
+
+pop eax
+
+test eax,eax
+je turbo_api_error
+
+// Check return address to determine whether this function was called
+// synchronously or asynchronously
+mov eax,kernel32.CreateThread
+sub eax, dword ptr [esp+20] // return address
+
+// get absolute value
+cdq
+xor eax,edx
+sub eax,edx
+
+cmp eax,1000
+ja turbo_api_exit
+
+// Function was called asynchronously, free lpParameter
+mov ebx, dword ptr [esp+24] // lpParameter
+push ebx
+call msvcrt.free
+add esp,4
+
+turbo_api_exit:
+add esp,10
+pop ebx
+pop edx
+pop ecx
+pop eax
+ret 4
+
+turbo_api_error:
+inc dword ptr [turbo_api_error_count]
+jmp turbo_api_exit
+
+turbo_api_error_count:
+dd 0
+
+handle_lib_winhttp:
+dd 0
+handle_func_WinHttpOpen:
+dd 0
+handle_func_WinHttpConnect:
+dd 0
+handle_func_WinHttpOpenRequest:
+dd 0
+handle_func_WinHttpSendRequest:
+dd 0
+handle_func_WinHttpCloseHandle:
+dd 0
+
+name_lib_winhttp:
+db 'winhttp.dll' 0
+
+name_func_WinHttpOpen:
+db 'WinHttpOpen' 0
+
+name_func_WinHttpConnect:
+db 'WinHttpConnect' 0
+
+name_func_WinHttpOpenRequest:
+db 'WinHttpOpenRequest' 0
+
+name_func_WinHttpSendRequest:
+db 'WinHttpSendRequest' 0
+
+name_func_WinHttpCloseHandle:
+db 'WinHttpCloseHandle' 0
+
+pwszUserAgent: // TurboApiClient
+dw 54 75 72 62 6F 41 70 69 43 6C 69 65 6E 74 00
+
+pswzServerName: // localhost
+dw 6C 6F 63 61 6C 68 6F 73 74 00
+
+pwszVerb: // POST
+dw 50 4F 53 54 00
+
+pwszHeaders: // content-type:application/x-www-form-urlencoded
+dw 63 6F 6E 74 65 6E 74 2D 74 79 70 65 3A 61 70 70 6C 69 63 61 74 69 6F 6E 2F 78 2D 77 77 77 2D 66 6F 72 6D 2D 75 72 6C 65 6E 63 6F 64 65 64 00
+
+
+[DISABLE]
+
+unregistersymbol(turbo_api_send)
+unregistersymbol(turbo_api_error_count)
+
+dealloc(newmem)
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>248</ID>
+              <Description>"Utils"</Description>
+              <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1" moAllowManualCollapseAndExpand="1"/>
+              <LastState Value="" Activated="1" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>371</ID>
+                  <Description>"Function IntToStringDec"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+alloc(newmem,1024)
+
+label(func_int_to_string_dec)
+
+registersymbol(func_int_to_string_dec)
+
+newmem:
+func_int_to_string_dec:
+push ecx
+push edx
+push ebx
+push edi
+
+mov eax, dword ptr [esp+14] // int
+mov ecx, dword ptr [esp+18] // dest
+mov ebx,divisor_table
+xor edi,edi
+
+next:
+xor edx,edx //edx:eax = number
+div dword [ebx]
+// eax = quotient, edx = remainder
+test eax,eax
+jne print
+// if first digit = 0, skip
+test edi,edi
+je skip
+
+print:
+add eax,30
+mov byte ptr [ecx],al
+mov edi,1
+inc ecx
+
+skip:
+mov eax,edx // eax = remainder
+add ebx,4 // ebx = address of next divisor
+cmp dword [ebx],0 // Have all divisors been done?
+jne next
+
+mov byte ptr [ecx],0
+
+pop edi
+pop ebx
+pop edx
+pop ecx
+ret 8
+
+db CC CC CC CC CC CC
+
+divisor_table:
+dd #1000000000
+dd #100000000
+dd #10000000
+dd #1000000
+dd #100000
+dd #10000
+dd #1000
+dd #100
+dd #10
+dd #1
+dd #0
+
+db CC CC CC CC CC
+
+[DISABLE]
+unregistersymbol(func_int_to_string_dec)
+
+dealloc(newmem)
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>368</ID>
+                  <Description>"Function IntToStringHex"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+alloc(newmem,1024)
+
+label(func_int_to_string_hex)
+label(next)
+label(number)
+
+registersymbol(func_int_to_string_hex)
+
+newmem:
+// push dest
+// push int
+func_int_to_string_hex:
+push eax
+push ecx
+push edx
+push ebx
+
+mov edx, dword ptr [esp+14] // int
+mov ebx, dword ptr [esp+18] // dest
+
+mov ecx,8
+
+next:
+dec ecx
+
+mov byte ptr [ebx+ecx],30
+
+mov eax,edx
+shr edx,4
+and eax,F
+
+cmp al,A
+jb number
+
+add byte ptr [ebx+ecx],7
+
+number:
+add byte ptr [ebx+ecx],al
+
+test ecx,ecx
+jne next
+
+pop ebx
+pop edx
+pop ecx
+pop eax
+ret 8
+
+[DISABLE]
+unregistersymbol(func_int_to_string_hex)
+
+dealloc(newmem)
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>246</ID>
+                  <Description>"Function LongToStringHex"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+alloc(newmem,1024)
+label(func_long_to_string_hex)
+label(next)
+label(load_lower)
+label(number)
+
+registersymbol(func_long_to_string_hex)
+
+newmem:
+// push dest
+// push int
+func_long_to_string_hex:
+push eax
+push ecx
+push edx
+push ebx
+
+mov edx, dword ptr [esp+14] // lower int
+mov ebx, dword ptr [esp+1C] // dest
+
+mov ecx,#16
+jmp next
+
+load_lower:
+mov edx, dword ptr [esp+18] // higher int
+
+next:
+dec ecx
+
+mov byte ptr [ebx+ecx],30
+
+mov eax,edx
+shr edx,4
+and eax,F
+
+cmp al,A
+jb number
+
+add byte ptr [ebx+ecx],7
+
+number:
+add byte ptr [ebx+ecx],al
+
+cmp ecx,#8
+je load_lower
+
+test ecx,ecx
+jne next
+
+pop ebx
+pop edx
+pop ecx
+pop eax
+ret C
+
+[DISABLE]
+unregistersymbol(func_long_to_string_hex)
+
+dealloc(newmem)
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>242</ID>
+                  <Description>"Function BufferToStringHex"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+alloc(newmem,1024)
+
+label(func_buffer_to_string_hex)
+label(next)
+label(high_is_number)
+label(low_is_number)
+label(exit)
+
+registersymbol(func_buffer_to_string_hex)
+
+newmem:
+// push dest buffer
+// push src buffer length
+// push src buffer
+func_buffer_to_string_hex:
+push eax
+push ecx
+push edi
+push esi
+
+mov ecx, dword ptr [esp+18] // src buffer length
+mov esi, dword ptr [esp+14] // src buffer
+mov edi, dword ptr [esp+1C] // dest buffer
+
+// ror eax,4 // get the high nibble in AL
+// shr eax,8 // lose the high nibble
+// rol eax,C // get the low nibble in AL
+
+next:
+movzx eax, byte ptr [esi]
+
+ror eax,4 // get the high nibble in AL
+
+cmp al,A
+jb high_is_number
+
+add al,7
+
+high_is_number:
+add al,30
+
+mov byte ptr [edi],al
+
+shr eax,8 // lose the high nibble
+rol eax,C // get the low nibble in AL
+
+cmp al,A
+jb low_is_number
+
+add al,7
+
+low_is_number:
+add al,30
+
+mov byte ptr [edi+1],al
+
+dec ecx
+je exit
+
+mov byte ptr [edi+2],'-'
+inc esi
+add edi,3
+
+jmp next
+
+exit:
+mov byte ptr [edi+2],0
+
+pop esi
+pop edi
+pop ecx
+pop eax
+ret C
+
+[DISABLE]
+unregistersymbol(func_buffer_to_string_hex)
+
+dealloc(newmem)
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>369</ID>
+                  <Description>"Function AsciiToUnicode"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+alloc(newmem,1024)
+label(func_ascii_to_unicode)
+label(next)
+label(exit)
+
+registersymbol(func_ascii_to_unicode)
+
+newmem:
+// push dest buffer
+// push src buffer length
+// push src buffer
+func_ascii_to_unicode:
+push eax
+push ecx
+push edi
+push esi
+
+mov ecx, dword ptr [esp+18] // src buffer length
+mov esi, dword ptr [esp+14] // src buffer
+mov edi, dword ptr [esp+1C] // dest buffer
+
+next:
+movzx eax, byte ptr [esi]
+mov word ptr [edi],ax
+
+dec ecx
+je exit
+
+inc esi
+add edi,2
+jmp next
+
+exit:
+mov word ptr [edi+2],0
+pop esi
+pop edi
+pop ecx
+pop eax
+ret C
+
+[DISABLE]
+unregistersymbol(func_ascii_to_unicode)
+
+dealloc(newmem)
+</AssemblerScript>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>249</ID>
+              <Description>"Managers"</Description>
+              <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1" moAllowManualCollapseAndExpand="1"/>
+              <LastState Value="" Activated="1" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>370</ID>
+                  <Description>"Security Failure"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+
+label(turbo_api_security_failure)
+label(turbo_api_security_failure_exit)
+
+registersymbol(turbo_api_security_failure)
+
+define(malloc_size,300)
+//   0 - 200 - unicode pwszObjectName
+// 200 - 300 - ascii pwszObjectName
+
+newmem:
+// push securityFailType
+// push playerPointer
+// call turbo_api_security_failure
+turbo_api_security_failure:
+push eax
+push ecx
+push edx
+sub esp,4
+
+push malloc_size
+call msvcrt.malloc
+add esp,4
+
+test eax,eax
+je turbo_api_security_failure_exit
+
+mov dword ptr [esp],eax
+
+push malloc_size
+push 0
+push eax
+call msvcrt.memset
+add esp,C
+
+mov eax, dword ptr [esp]
+lea eax, dword ptr [eax+200]
+
+push pwszObjectName
+push eax
+call msvcrt.strcat
+add esp,8
+
+mov eax, dword ptr [esp]
+lea eax, dword ptr [eax+F0]
+
+mov ecx, dword ptr [esp+14]
+mov ecx, dword ptr [ecx+582C]
+
+// UserUID to decimal String
+push eax
+push ecx
+call func_int_to_string_dec
+
+mov eax, dword ptr [esp]
+lea ecx, dword ptr [eax+F0]
+lea eax, dword ptr [eax+200]
+
+push ecx
+push eax
+call msvcrt.strcat
+add esp,8
+
+mov eax, dword ptr [esp]
+lea eax, dword ptr [eax+200]
+
+push pwszObjectName2
+push eax
+call msvcrt.strcat
+add esp,8
+
+mov eax, dword ptr [esp]
+lea eax, dword ptr [eax+F0]
+
+mov ecx, dword ptr [esp+18]
+
+// SecurityFailType to decimal String
+push eax
+push ecx
+call func_int_to_string_dec
+
+mov eax, dword ptr [esp]
+lea ecx, dword ptr [eax+F0]
+lea eax, dword ptr [eax+200]
+
+push ecx
+push eax
+call msvcrt.strcat
+add esp,8
+
+mov eax, dword ptr [esp]
+push eax // dest buffer
+lea eax, dword ptr [eax+200]
+push 3A // src buffer length
+push eax
+call func_ascii_to_unicode
+
+mov eax, dword ptr [esp]
+
+// START: Synchronous
+
+push eax
+call turbo_api_send
+
+mov eax, dword ptr [esp]
+
+push eax
+call msvcrt.free
+add esp,4
+
+// END: Synchronous
+
+/*
+// START: Asynchronous
+
+push 0 // out lpThreadId
+push 0 // dwCreationFlags
+push eax // lpParameter
+push turbo_api_send // lpStartAddress
+push 0 // dwStackSize
+push 0 // lpThreadAttributes
+call kernel32.CreateThread
+
+// END: Asynchronous
+*/
+
+turbo_api_security_failure_exit:
+add esp,4
+pop edx
+pop ecx
+pop eax
+ret 8
+
+pwszObjectName: // /Player/LogIn?userUID=
+db '/Security/SecurityFail?userUID=' 0
+
+pwszObjectName2: // &amp;securityFailType=
+db '&amp;securityFailType=' 0
+
+[DISABLE]
+unregistersymbol(turbo_api_security_failure)
+
+dealloc(newmem)
+</AssemblerScript>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>166</ID>
+          <Description>"Player"</Description>
+          <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>0</ID>
+              <Description>"Expand Player Memory Allocation"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+
+00411F73:
+push 000064A0
+
+[DISABLE]
+{
+00411F73:
+push 000062A0
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>372</ID>
+              <Description>"Extra Player Memory Cleanup"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+
+newmem:
+push ecx
+mov ecx,62A0
+
+next:
+cmp ecx, dword ptr [00411F74]
+jae exit_cleanup
+mov dword ptr [edi+ecx],eax
+add ecx,4
+jmp next
+
+exit_cleanup:
+pop ecx
+jmp returnhere
+
+004552E5:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+
+004552E5:
+mov dword ptr [edi+58B0],eax
+
+dealloc(newmem)
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>39</ID>
+          <Description>"Item"</Description>
+          <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>109</ID>
+              <Description>"Special Recreation Runes"</Description>
+              <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+              <LastState Value="" Activated="1" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>105</ID>
+                  <Description>"Store Information"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+
+// dword 6320 = Rec Rune Item Pointer
+// dword 6324 = Item Pointer
+// word 6328 = Index of Craftname for stat
+// word 632A = Craftname to write
+// word 632C = Index of actual stat
+// word 632E = Stat to write
+
+newmem:
+mov dword ptr [edi+6320],ecx
+mov dword ptr [edi+6324],ebp
+mov dword ptr [edi+6328],0
+mov dword ptr [edi+632C],0
+
+originalcode:
+movzx eax, word ptr [eax+3E]
+cmp ax,si
+jbe 0046D901
+jmp returnhere
+
+0046D68F:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+returnhere:
+
+[DISABLE]
+
+0046D68F:
+movzx eax, word ptr [eax+3E]
+cmp ax,si
+jbe 0046D901
+
+dealloc(newmem)
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>106</ID>
+                  <Description>"Compute Stats"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+alloc(newmem,512)
+
+define(rec_rune_action_fail,0046D901)
+
+//ebp = Item To Reroll
+newmem:
+mov edx, dword ptr [edi+6320]
+movzx edx, byte ptr [edx+41]
+
+dec edx
+
+// RuneType
+movzx ecx, byte ptr [rec_rune_dictionary+edx*2]
+
+// RuneStat
+movzx edx, byte ptr [rec_rune_dictionary+edx*2+1]
+
+cmp ecx,4
+ja rec_rune_action_fail
+
+jmp dword ptr [rec_rune_action_dictionary+ecx*4]
+
+originalcode:
+mov ecx, dword ptr [edi+6320]
+mov ecx, dword ptr [ecx+30]
+
+lea eax, dword ptr [ebp+4C]
+lea edx, dword ptr [esp+130]
+
+jmp returnhere
+
+rec_rune_action_invalid:
+jmp rec_rune_action_fail
+
+rec_rune_action_default:
+jmp originalcode
+
+// ************************* REMOVAL REC RUNE ************************* //
+
+rec_rune_action_remove:
+add edx,edx
+
+add edx,4C
+mov word ptr [edi+6328],dx
+mov word ptr [edi+632A],3030
+
+add edx,38
+mov word ptr [edi+632C],dx
+mov word ptr [edi+632E],0
+
+jmp originalcode
+
+// ************************* RANDOM REC RUNE ************************* //
+
+rec_rune_action_random:
+push ebx
+push esi
+
+push edx // rune_stat
+push ebp // item_pointer
+call func_can_oj
+
+test eax,eax
+pop esi
+pop ebx
+je rec_rune_action_fail
+
+mov ebx, dword ptr [ebp+30]
+movzx ebx, byte ptr [ebx+3E]
+
+push ebx // max_oj
+call func_get_random_oj
+
+push eax // rune_stat
+push edx // stat_value
+call func_set_oj
+
+exit_rec_rune_action_random:
+jmp originalcode
+
+// ************************* PERFECT REC RUNE ************************* //
+
+rec_rune_action_perfect:
+push ebx
+push esi
+
+push edx // rune_stat
+push ebp // item_pointer
+call func_can_oj
+
+test eax,eax
+pop esi
+pop ebx
+je rec_rune_action_fail
+
+mov ebx, dword ptr [ebp+30]
+movzx ebx, byte ptr [ebx+3E]
+
+push ebx // rune_stat
+push edx // stat_value
+call func_set_oj
+
+exit_rec_rune_action_perfect:
+jmp originalcode
+
+// ************************* FUNCTIONS ************************* //
+
+// push rune_stat
+// push stat_value
+// call func_set_oj
+func_set_oj:
+push ecx
+push edx
+push ebx
+push edi
+push esi
+
+mov edx, dword ptr [esp+18] // stat_value
+mov ebx, dword ptr [esp+1C] // rune_stat
+
+add edx,edx
+add edx,4C
+mov word ptr [edi+6328],dx
+add edx,38
+mov word ptr [edi+632C],dx
+
+mov word ptr [edi+632E],bx
+
+push ebx
+call func_int_to_string
+
+mov word ptr [edi+632A],ax
+
+exit_func_set_oj:
+pop esi
+pop edi
+pop ebx
+pop edx
+pop ecx
+ret 8
+
+// push rune_stat
+// push item_pointer
+// call func_can_oj
+func_can_oj:
+push ecx
+push edx
+push ebx
+
+mov ecx, dword ptr [esp+10] // item_pointer
+mov edx, dword ptr [esp+14] // rune_stat
+xor eax,eax
+
+push eax
+
+push edx
+push ecx
+call func_count_oj_except
+
+mov ebx, dword ptr [ebp+30]
+movzx ebx, byte ptr [ebx+4A]
+
+cmp eax,ebx
+pop eax
+jae exit_func_can_oj // item_ojs - rune_stat_oj &gt;= itemdef_ojs
+
+push eax
+
+push edx
+push ecx
+call func_vitals_ok
+
+// START: explicit code
+test eax,eax
+pop eax
+je exit_func_can_oj // cannot set vital stats on weps and accs
+
+inc eax
+// END: explicit code
+
+exit_func_can_oj:
+pop ebx
+pop edx
+pop ecx
+ret 8
+
+// push except_stat
+// push item_pointer
+// call func_count_oj_except
+func_count_oj_except:
+push ecx
+push edx
+push ebx
+
+mov ecx, dword ptr [esp+10] // item_pointer
+mov edx, dword ptr [esp+14] // except_stat
+
+add edx,edx
+add edx,84
+
+xor eax,eax
+mov ebx,84
+
+func_count_oj_except_next:
+cmp edx,ebx
+je func_count_oj_except_check
+
+cmp word ptr [ecx+ebx],0
+je func_count_oj_except_check
+
+inc eax
+
+func_count_oj_except_check:
+add ebx,2
+cmp ebx,96
+jb func_count_oj_except_next
+
+exit_func_count_oj_except:
+pop ebx
+pop edx
+pop ecx
+ret 8
+
+// push rune_stat
+// push item_pointer
+// call func_vitals_ok
+func_vitals_ok:
+push ecx
+push edx
+push ebx
+
+mov ecx, dword ptr [esp+10] // item_pointer
+mov edx, dword ptr [esp+14] // rune_stat
+
+xor eax,eax
+
+movzx ecx, byte ptr [ecx+40]
+
+cmp ecx,#15
+jbe func_vitals_ok_weapon
+cmp ecx,#22
+je func_vitals_ok_weapon
+cmp ecx,#23
+je func_vitals_ok_weapon
+cmp ecx,#40
+je func_vitals_ok_weapon
+
+jmp func_vitals_ok_success
+
+func_vitals_ok_weapon:
+cmp edx,6 // HP
+je exit_func_vitals_ok
+cmp edx,7 // MP
+je exit_func_vitals_ok
+cmp edx,8 // SP
+je exit_func_vitals_ok
+
+func_vitals_ok_success:
+inc eax
+
+exit_func_vitals_ok:
+pop ebx
+pop edx
+pop ecx
+ret 8
+
+// push int
+// call func_int_to_string
+func_int_to_string:
+push ecx
+push edx
+
+mov eax, dword ptr [esp+C]
+mov ecx,#10
+cdq
+div ecx
+mov ah,dl
+add ax,3030
+
+exit_func_int_to_string:
+pop edx
+pop ecx
+ret 4
+
+// push max_ok
+// call func_get_random_oj
+func_get_random_oj:
+push ecx
+push edx
+
+call rand
+
+mov ecx, dword ptr [esp+C] // max_oj
+inc ecx
+cdq
+div ecx
+mov eax,edx
+
+exit_func_get_random_oj:
+pop edx
+pop ecx
+ret 4
+
+rec_rune_action_dictionary:
+dd rec_rune_action_invalid
+dd rec_rune_action_default
+dd rec_rune_action_remove
+dd rec_rune_action_random
+dd rec_rune_action_perfect
+
+// RuneTypes:
+// 0 = Invalid
+// 1 = Default
+// 2 = Remove
+// 3 = Random
+// 4 = Perfect
+
+// RuneStats (for RuneTypes 2,3)
+// 0 = STR
+// 1 = DEX
+// 2 = REC
+// 3 = INT
+// 4 = WIS
+// 5 = LUC
+// 6 = HP
+// 7 = MP
+// 8 = SP
+
+rec_rune_dictionary:
+//  RuneType RuneStat
+db	0	0	//	100 1
+db	0	0	//	100 2
+db	0	0	//	100 3
+db	0	0	//	100 4
+db	0	0	//	100 5
+db	0	0	//	100 6
+db	0	0	//	100 7
+db	0	0	//	100 8
+db	0	0	//	100 9
+db	0	0	//	100 10
+db	0	0	//	100 11
+db	0	0	//	100 12
+db	0	0	//	100 13
+db	0	0	//	100 14
+db	0	0	//	100 15
+db	0	0	//	100 16
+db	0	0	//	100 17
+db	0	0	//	100 18
+db	0	0	//	100 19
+db	0	0	//	100 20
+db	0	0	//	100 21
+db	0	0	//	100 22
+db	0	0	//	100 23
+db	0	0	//	100 24
+db	0	0	//	100 25
+db	0	0	//	100 26
+db	0	0	//	100 27
+db	0	0	//	100 28
+db	0	0	//	100 29
+db	0	0	//	100 30
+db	0	0	//	100 31
+db	0	0	//	100 32
+db	0	0	//	100 33
+db	0	0	//	100 34
+db	0	0	//	100 35
+db	0	0	//	100 36
+db	0	0	//	100 37
+db	0	0	//	100 38
+db	0	0	//	100 39
+db	0	0	//	100 40
+db	0	0	//	100 41
+db	0	0	//	100 42
+db	0	0	//	100 43
+db	0	0	//	100 44
+db	0	0	//	100 45
+db	0	0	//	100 46
+db	0	0	//	100 47
+db	0	0	//	100 48
+db	0	0	//	100 49
+db	0	0	//	100 50
+db	0	0	//	100 51
+db	0	0	//	100 52
+db	0	0	//	100 53
+db	0	0	//	100 54
+db	0	0	//	100 55
+db	0	0	//	100 56
+db	0	0	//	100 57
+db	0	0	//	100 58
+db	0	0	//	100 59
+db	0	0	//	100 60
+db	0	0	//	100 61
+db	0	0	//	100 62
+db	0	0	//	100 63
+db	0	0	//	100 64
+db	0	0	//	100 65
+db	0	0	//	100 66
+db	0	0	//	100 67
+db	0	0	//	100 68
+db	0	0	//	100 69
+db	0	0	//	100 70
+db	0	0	//	100 71
+db	0	0	//	100 72
+db	0	0	//	100 73
+db	0	0	//	100 74
+db	0	0	//	100 75
+db	0	0	//	100 76
+db	0	0	//	100 77
+db	0	0	//	100 78
+db	0	0	//	100 79
+db	0	0	//	100 80
+db	0	0	//	100 81
+db	0	0	//	100 82
+db	0	0	//	100 83
+db	0	0	//	100 84
+db	0	0	//	100 85
+db	0	0	//	100 86
+db	0	0	//	100 87
+db	0	0	//	100 88
+db	0	0	//	100 89
+db	0	0	//	100 90
+db	0	0	//	100 91
+db	0	0	//	100 92
+db	0	0	//	100 93
+db	0	0	//	100 94
+db	0	0	//	100 95
+db	0	0	//	100 96
+db	0	0	//	100 97
+db	0	0	//	100 98
+db	0	0	//	100 99
+db	0	0	//	100 100
+db	2	0	//	100 101
+db	2	1	//	100 102
+db	2	2	//	100 103
+db	2	3	//	100 104
+db	2	4	//	100 105
+db	2	5	//	100 106
+db	2	6	//	100 107
+db	2	7	//	100 108
+db	2	8	//	100 109
+db	0	0	//	100 110
+db	0	0	//	100 111
+db	0	0	//	100 112
+db	0	0	//	100 113
+db	0	0	//	100 114
+db	0	0	//	100 115
+db	0	0	//	100 116
+db	0	0	//	100 117
+db	0	0	//	100 118
+db	0	0	//	100 119
+db	0	0	//	100 120
+db	0	0	//	100 121
+db	0	0	//	100 122
+db	0	0	//	100 123
+db	0	0	//	100 124
+db	0	0	//	100 125
+db	0	0	//	100 126
+db	0	0	//	100 127
+db	0	0	//	100 128
+db	0	0	//	100 129
+db	0	0	//	100 130
+db	0	0	//	100 131
+db	0	0	//	100 132
+db	0	0	//	100 133
+db	0	0	//	100 134
+db	0	0	//	100 135
+db	0	0	//	100 136
+db	0	0	//	100 137
+db	0	0	//	100 138
+db	0	0	//	100 139
+db	0	0	//	100 140
+db	0	0	//	100 141
+db	0	0	//	100 142
+db	0	0	//	100 143
+db	0	0	//	100 144
+db	0	0	//	100 145
+db	0	0	//	100 146
+db	0	0	//	100 147
+db	0	0	//	100 148
+db	0	0	//	100 149
+db	0	0	//	100 150
+db	0	0	//	100 151
+db	0	0	//	100 152
+db	0	0	//	100 153
+db	0	0	//	100 154
+db	0	0	//	100 155
+db	4	0	//	100 156
+db	4	1	//	100 157
+db	4	2	//	100 158
+db	4	3	//	100 159
+db	4	4	//	100 160
+db	4	5	//	100 161
+db	4	6	//	100 162
+db	4	7	//	100 163
+db	4	8	//	100 164
+db	0	0	//	100 165
+db	0	0	//	100 166
+db	0	0	//	100 167
+db	0	0	//	100 168
+db	0	0	//	100 169
+db	0	0	//	100 170
+db	1	0	//	100 171
+db	0	0	//	100 172
+db	0	0	//	100 173
+db	0	0	//	100 174
+db	0	0	//	100 175
+db	0	0	//	100 176
+db	0	0	//	100 177
+db	0	0	//	100 178
+db	0	0	//	100 179
+db	0	0	//	100 180
+db	0	0	//	100 181
+db	0	0	//	100 182
+db	0	0	//	100 183
+db	0	0	//	100 184
+db	0	0	//	100 185
+db	0	0	//	100 186
+db	0	0	//	100 187
+db	0	0	//	100 188
+db	0	0	//	100 189
+db	0	0	//	100 190
+db	0	0	//	100 191
+db	0	0	//	100 192
+db	0	0	//	100 193
+db	0	0	//	100 194
+db	0	0	//	100 195
+db	0	0	//	100 196
+db	0	0	//	100 197
+db	0	0	//	100 198
+db	0	0	//	100 199
+db	0	0	//	100 200
+db	0	0	//	100 201
+db	3	0	//	100 202
+db	3	1	//	100 203
+db	3	2	//	100 204
+db	3	3	//	100 205
+db	3	4	//	100 206
+db	3	5	//	100 207
+db	3	6	//	100 208
+db	3	7	//	100 209
+db	3	8	//	100 210
+db	0	0	//	100 211
+db	0	0	//	100 212
+db	0	0	//	100 213
+db	0	0	//	100 214
+db	0	0	//	100 215
+db	0	0	//	100 216
+db	0	0	//	100 217
+db	0	0	//	100 218
+db	0	0	//	100 219
+db	0	0	//	100 220
+db	0	0	//	100 221
+db	0	0	//	100 222
+db	0	0	//	100 223
+db	0	0	//	100 224
+db	0	0	//	100 225
+db	0	0	//	100 226
+db	0	0	//	100 227
+db	0	0	//	100 228
+db	0	0	//	100 229
+db	0	0	//	100 230
+db	0	0	//	100 231
+db	0	0	//	100 232
+db	0	0	//	100 233
+db	0	0	//	100 234
+db	0	0	//	100 235
+db	0	0	//	100 236
+db	0	0	//	100 237
+db	0	0	//	100 238
+db	0	0	//	100 239
+db	0	0	//	100 240
+db	0	0	//	100 241
+db	0	0	//	100 242
+db	0	0	//	100 243
+db	0	0	//	100 244
+db	0	0	//	100 245
+db	0	0	//	100 246
+db	0	0	//	100 247
+db	0	0	//	100 248
+db	0	0	//	100 249
+db	0	0	//	100 250
+db	0	0	//	100 251
+db	0	0	//	100 252
+db	0	0	//	100 253
+db	0	0	//	100 254
+db	0	0	//	100 255
+
+0046D6BD:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+returnhere:
+
+[DISABLE]
+
+0046D6BD:
+lea eax, dword ptr [ebp+4C]
+lea edx, dword ptr [esp+130]
+
+dealloc(newmem)
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>107</ID>
+                  <Description>"Apply Equipped"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+alloc(newmem,512)
+
+newmem:
+cmp dword ptr [edi+6328],0
+jne apply_equipped
+
+originalcode:
+push 1
+call 004D29C0
+jmp returnhere
+
+apply_equipped:
+movzx edx, word ptr [edi+6328]
+movzx eax, word ptr [edi+632A]
+
+mov word ptr [ebp+edx],ax
+
+movzx edx, word ptr [edi+632C]
+movzx eax, word ptr [edi+632E]
+
+mov word ptr [ebp+edx],ax
+
+jmp returnhere
+
+0046D720:
+jmp newmem
+nop
+nop
+returnhere:
+
+[DISABLE]
+
+0046D720:
+push 1
+call 004D29C0
+
+dealloc(newmem)
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>108</ID>
+                  <Description>"Apply Inventory"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+alloc(newmem,512)
+
+newmem:
+cmp dword ptr [edi+6328],0
+jne apply_inventory
+
+originalcode:
+push 1
+mov esi,ebp
+call 004D29C0
+jmp returnhere
+
+apply_inventory:
+movzx edx, word ptr [edi+6328]
+movzx eax, word ptr [edi+632A]
+
+mov word ptr [ebp+edx],ax
+
+movzx edx, word ptr [edi+632C]
+movzx eax, word ptr [edi+632E]
+
+mov word ptr [ebp+edx],ax
+
+jmp returnhere
+
+0046D775:
+jmp newmem
+nop
+nop
+nop
+nop
+returnhere:
+
+[DISABLE]
+
+0046D775:
+push 1
+mov esi,ebp
+call 004D29C0
+
+dealloc(newmem)
+</AssemblerScript>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>168</ID>
+          <Description>"Movement"</Description>
+          <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>112</ID>
+              <Description>"Enter World (Security)"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,64)
+label(returnhere)
+label(originalcode)
+
+newmem:
+mov dword ptr [ebx+6400],0
+mov dword ptr [ebx+6404],0
+mov dword ptr [ebx+6408],0
+
+originalcode:
+pop edi
+pop esi
+pop ebp
+pop ebx
+add esp,0C
+jmp returnhere
+
+00456A4B:
+jmp newmem
+nop
+nop
+returnhere:
+
+[DISABLE]
+
+00456A4B:
+pop edi
+pop esi
+pop ebp
+pop ebx
+add esp,0C
+
+dealloc(newmem)
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>137</ID>
+              <Description>"Leave World (Security)"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,64)
+label(returnhere)
+label(originalcode)
+
+newmem:
+mov dword ptr [esi+6400],0
+mov dword ptr [esi+6404],0
+mov dword ptr [esi+6408],0
+
+originalcode:
+mov dword ptr [esi+E0],ebx
+jmp returnhere
+
+0041CA0A:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+
+0041CA0A:
+mov dword ptr [esi+E0],ebx
+
+dealloc(newmem)
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>189</ID>
+          <Description>"Security"</Description>
+          <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1" moAllowManualCollapseAndExpand="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>364</ID>
+              <Description>"Continuous Player Loop"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,512)
+
+label(security)
+label(security_request)
+label(security_fail)
+label(security_exit)
+
+define(request_interval,#20000) // 20 seconds
+define(response_interval,#10000) // 10 seconds
+
+// esi == TickCount
+newmem:
+lea ecx, dword ptr [eax-D0]
+call security
+jmp 004281E1
+
+security:
+mov eax,esi
+
+mov dword ptr [ecx+6440],eax
+
+cmp dword ptr [ecx+640C],0
+je security_verify_request
+
+cmp eax, dword ptr [ecx+640C]
+jae security_kick
+
+security_verify_request:
+cmp dword ptr [ecx+6400],0
+je security_request // jump if never requested
+
+push eax
+sub eax,response_interval
+cmp eax, dword ptr [ecx+6400]
+pop eax
+jb security_exit // jump if last request was less than &lt;response_interval&gt; seconds ago
+
+push eax
+mov eax, dword ptr [ecx+6400]
+sub eax,response_interval
+cmp eax, dword ptr [ecx+6404]
+pop eax
+ja security_fail // jump if there has been no response after &lt;response_interval&gt; seconds
+
+push eax
+sub eax,request_interval
+cmp eax, dword ptr [ecx+6404]
+pop eax
+jb security_exit // jump if last response was less than &lt;request_interval&gt; seconds ago
+jmp security_request
+
+security_request:
+mov dword ptr [ecx+6400],eax
+pushad
+pushfd
+push #250
+push security_request_packet
+call 004ED0E0
+popfd
+popad
+
+security_exit:
+ret
+
+security_fail:
+push #10
+push ecx
+call turbo_api_security_failure
+security_kick:
+pushad
+pushfd
+push 0
+push 9
+call 004EC760
+popfd
+popad
+ret
+
+security_request_packet:
+db FF FF // packet signature
+jmp security_request_packet_code
+
+db 'speedhack-i386' 0
+
+security_request_packet_code:
+push ebp
+mov ebp,esp
+
+sub esp,#86
+
+mov word ptr [esp],103
+
+// TheHound WallClimb
+mov eax, dword ptr [00442996]
+mov dword ptr [esp+2],eax
+
+// TheHound X-Ray
+mov eax, dword ptr [004CC274]
+mov dword ptr [esp+6],eax
+
+// TheHound AllowSkillCutting
+mov eax, dword ptr [00598B8A]
+mov dword ptr [esp+A],eax
+
+// TheHound AutoSkillCutting
+mov eax, dword ptr [00413EA7]
+mov dword ptr [esp+E],eax
+
+// TheHound FuckStop
+mov eax, dword ptr [00561CCB]
+mov dword ptr [esp+12],eax
+
+// TheHound FuckBlackholes
+mov eax, dword ptr [0058FD88]
+mov dword ptr [esp+16],eax
+
+// TheHound RangeHack
+mov eax, dword ptr [004407C3]
+mov dword ptr [esp+1A],eax
+
+// Delite X-Ray
+mov eax, dword ptr [004CC279]
+mov dword ptr [esp+1E],eax
+
+// Delite WallClimb
+mov eax, dword ptr [00442990]
+mov dword ptr [esp+22],eax
+
+// Delite FuckStop
+mov eax, dword ptr [0043DAE8]
+mov dword ptr [esp+26],eax
+
+// Delite FuckStun
+mov eax, dword ptr [00561CEE]
+mov dword ptr [esp+2A],eax
+
+// PacketEditor
+mov eax, dword ptr [00597D70]
+mov dword ptr [esp+2E],eax
+
+// SpeedHack
+push ecx
+add ecx,5
+push ecx
+call dword ptr [006BB310] // kernel32.GetModuleHandleA
+pop ecx
+mov dword ptr [esp+32],eax
+
+mov dword ptr [esp+36],0
+mov dword ptr [esp+3A],0
+mov dword ptr [esp+3E],0
+mov dword ptr [esp+42],0
+mov dword ptr [esp+46],0
+mov dword ptr [esp+4A],0
+mov dword ptr [esp+4E],0
+mov dword ptr [esp+52],0
+
+mov edx,esp
+push #86 // packet length
+push edx // packet
+mov edx,00597F60
+call edx // send
+
+add esp,#82
+
+mov esp,ebp
+pop ebp
+ret
+db CC CC CC CC CC
+
+004281D7:
+jmp newmem
+nop
+nop
+nop
+
+[DISABLE]
+
+004281D7:
+lea ecx, dword ptr [eax-D0]
+jmp 004281E1
+
+dealloc(newmem)
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>365</ID>
+              <Description>"Client Security Packet"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,1024)
+
+newmem:
+cmp cx,103
+je security
+
+originalcode:
+mov eax,10D
+jmp returnhere
+
+security:
+cmp dword ptr [edi+52],0
+jne security_debug
+
+// TheHound WallClimb
+cmp dword ptr [edi+2],511841D9
+jne security_verify_thehound_wallclimb_fail
+security_verify_thehound_wallclimb_after:
+
+// TheHound X-Ray
+cmp dword ptr [edi+6],760A3E80
+jne security_verify_thehound_xray_fail
+security_verify_thehound_xray_after:
+
+// TheHound AllowSkillCutting
+cmp dword ptr [edi+A],B2C015FF
+jne security_verify_thehound_allowskillcut_fail
+security_verify_thehound_allowskillcut_after:
+
+// TheHound AutoSkillCutting
+cmp dword ptr [edi+E],0090850F
+jne security_verify_thehound_autoskillcut_fail
+security_verify_thehound_autoskillcut_after:
+
+// TheHound FuckStop
+cmp dword ptr [edi+12],10245C8A
+jne security_verify_thehound_fuckstop_fail
+security_verify_thehound_fuckstop_after:
+
+// TheHound FuckBlackholes
+cmp dword ptr [edi+16],448D046A
+jne security_verify_thehound_fuckblackholes_fail
+security_verify_thehound_fuckblackholes_after:
+
+// TheHound RangeHack
+cmp dword ptr [edi+1A],B70F1774
+jne security_verify_thehound_rangehack_fail
+security_verify_thehound_rangehack_after:
+
+// Delite X-Ray
+cmp dword ptr [edi+1E],028887C7
+jne security_verify_delite_xray_fail
+security_verify_delite_xray_after:
+
+// Delite WallClimb
+cmp dword ptr [edi+22],0302850F
+jne security_verify_delite_wallclimb_fail
+security_verify_delite_wallclimb_after:
+
+// Delite FuckStop
+cmp dword ptr [edi+26],00DC818B
+jne security_verify_delite_fuckstop_fail
+security_verify_delite_fuckstop_after:
+
+// Delite FuckStun
+cmp dword ptr [edi+2A],548A1074
+jne security_verify_delite_fuckstun_fail
+security_verify_delite_fuckstun_after:
+
+// PackerEditor
+cmp dword ptr [edi+2E],00608CB8
+jne security_verify_packeteditor_fail
+security_verify_packeteditor_after:
+
+// SpeedHack
+cmp dword ptr [edi+32],0
+jne security_verify_speedhack_fail
+security_verify_speedhack_after:
+
+cmp dword ptr [ebx+6408],0
+jne security_failure
+
+jmp security_exit
+
+security_verify_thehound_wallclimb_fail:
+inc dword ptr [ebx+6408]
+push #3
+push ebx
+call turbo_api_security_failure
+jmp security_verify_thehound_wallclimb_after
+
+security_verify_thehound_xray_fail:
+inc dword ptr [ebx+6408]
+push #4
+push ebx
+call turbo_api_security_failure
+jmp security_verify_thehound_xray_after
+
+security_verify_thehound_allowskillcut_fail:
+inc dword ptr [ebx+6408]
+push #5
+push ebx
+call turbo_api_security_failure
+jmp security_verify_thehound_allowskillcut_after
+
+security_verify_thehound_autoskillcut_fail:
+inc dword ptr [ebx+6408]
+push #6
+push ebx
+call turbo_api_security_failure
+jmp security_verify_thehound_autoskillcut_after
+
+security_verify_thehound_fuckstop_fail:
+inc dword ptr [ebx+6408]
+push #7
+push ebx
+call turbo_api_security_failure
+jmp security_verify_thehound_fuckstop_after
+
+security_verify_thehound_fuckblackholes_fail:
+inc dword ptr [ebx+6408]
+push #8
+push ebx
+call turbo_api_security_failure
+jmp security_verify_thehound_fuckblackholes_after
+
+security_verify_thehound_rangehack_fail:
+inc dword ptr [ebx+6408]
+push #9
+push ebx
+call turbo_api_security_failure
+jmp security_verify_thehound_rangehack_after
+
+security_verify_delite_xray_fail:
+inc dword ptr [ebx+6408]
+push #11
+push ebx
+call turbo_api_security_failure
+jmp security_verify_delite_xray_after
+
+security_verify_delite_wallclimb_fail:
+inc dword ptr [ebx+6408]
+push #12
+push ebx
+call turbo_api_security_failure
+jmp security_verify_delite_wallclimb_after
+
+security_verify_delite_fuckstop_fail:
+inc dword ptr [ebx+6408]
+push #13
+push ebx
+call turbo_api_security_failure
+jmp security_verify_delite_fuckstop_after
+
+security_verify_delite_fuckstun_fail:
+inc dword ptr [ebx+6408]
+push #14
+push ebx
+call turbo_api_security_failure
+jmp security_verify_delite_fuckstun_after
+
+security_verify_packeteditor_fail:
+inc dword ptr [ebx+6408]
+push #2
+push ebx
+call turbo_api_security_failure
+jmp security_verify_packeteditor_after
+
+security_verify_speedhack_fail:
+inc dword ptr [ebx+6408]
+push #1
+push ebx
+call turbo_api_security_failure
+jmp security_verify_speedhack_after
+
+security_failure:
+pushad
+pushfd
+mov ecx,ebx
+push #89
+push security_failure_packet
+call 004ED0E0
+popfd
+popad
+
+push ecx
+push edx
+call dword ptr [005540D0] // kernel32.GetTickCount
+pop edx
+pop ecx
+
+add eax,#1000
+mov dword ptr [ebx+640C],eax
+
+jmp 004750D3 // success
+
+security_exit:
+push ecx
+push edx
+call dword ptr [005540D0] // kernel32.GetTickCount
+pop edx
+pop ecx
+
+mov dword ptr [ebx+6404],eax
+jmp 004750D3
+
+security_debug:
+pushad
+lea edi, dword ptr [edi+2]
+lea ecx, dword ptr [edi+50]
+push ecx
+push ecx
+push 40 // PAGE_EXECUTE_READWRITE
+push 100
+push edi
+call kernel32.VirtualProtect
+pop ecx
+push ecx
+call edi
+pop ecx
+mov eax, dword ptr [ecx]
+push ecx
+push eax
+push 100
+push ecx
+call kernel32.VirtualProtect
+popad
+jmp security_exit
+
+security_failure_packet:
+db FF FF // packet signature
+jmp security_failure_packet_code
+
+db 'nAC Error!' 0 0 0 0 0 0
+db 'Security validation failed.' 0
+
+security_failure_packet_code:
+push ebp
+mov ebp,esp
+
+push 0 // uType
+
+mov eax, ecx
+add eax,5
+push eax // lpCaption
+add eax,10
+push eax // lpText
+push dword ptr [00719A3C] // hWnd
+call dword ptr [006BB3BC] // user32.MessageBoxA
+
+mov esp,ebp
+pop ebp
+ret
+
+db CC CC CC CC CC
+
+00474D12:
+jmp newmem
+returnhere:
+
+[DISABLE]
+
+00474D12:
+mov eax,10D
+
+dealloc(newmem)
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>206</ID>
+      <Description>"bless point"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+cmp [edi+17f4],0
+je noparty
+pushad
+//pushfd
+mov eax,[edi+17f4] //get pt id
+mov ebx,[eax+10] //player amount in party
+add eax,18 //jump to pt players
+mov ecx,0
+
+loop:
+mov edi,[eax+ecx*8]
+cmp edi,0
+je continue
+cmp [edi],(int)5708456
+jne continue
+//call addpoint
+pushad
+//pushfd
+mov ebx,edi // mov player pointer to ebx
+mov edx,[ebx+0000582C]
+mov eax,[ebx+154]
+add eax,(int)5
+mov [ebx+00000154],eax
+mov ecx,0000060C { 1548 }
+mov [esp+1B],eax
+push 0B { 11 }
+lea eax,[esp+18]
+mov [esp+18],cx
+mov ecx,[ps_game.exe+18796C] { [010A2628] }
+push eax
+mov [esp+1E],edx
+mov byte ptr [esp+22],03 { 3 }
+call ps_game.exe+ED2D0
+//popfd
+popad
+continue:
+add ecx,1
+cmp ecx,ebx
+jnge loop
+//popfd
+popad
+jmp originalcode
+
+addpoint:
+push ecx
+push eax
+push ebx
+mov ebx,edi // mov player pointer to ebx
+mov edx,[ebx+0000582C]
+mov eax,[ebx+154]
+add eax,(int)5
+mov [ebx+00000154],eax
+mov ecx,0000060C { 1548 }
+mov [esp+1B],eax
+push 0B { 11 }
+lea eax,[esp+18]
+mov [esp+18],cx
+mov ecx,[ps_game.exe+18796C] { [010A2628] }
+push eax
+mov [esp+1E],edx
+mov byte ptr [esp+22],03 { 3 }
+call ps_game.exe+ED2D0
+pop ebx
+pop eax
+pop ecx
+
+ret
+
+
+noparty:
+pushad
+pushfd
+mov ebx,edi // mov player pointer to ebx
+mov edx,[ebx+0000582C]
+mov eax,[ebx+154]
+add eax,(int)5
+mov [ebx+00000154],eax
+mov ecx,0000060C { 1548 }
+mov [esp+1B],eax
+push 0B { 11 }
+lea eax,[esp+18]
+mov [esp+18],cx
+mov ecx,[ps_game.exe+18796C] { [010A2628] }
+push eax
+mov [esp+1E],edx
+mov byte ptr [esp+22],03 { 3 }
+call ps_game.exe+ED2D0
+popfd
+popad
+originalcode:
+mov edx,[edi+000000DC]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+58FC9:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+58FC9:
+mov edx,[edi+000000DC]
+//Alt: db 8B 97 DC 00 00 00
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>207</ID>
+      <Description>"bless point2"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+cmp [edi+17f4],0
+je noparty
+pushad
+pushad
+pushad
+pushad
+pushad
+//pushfd
+mov eax,[edi+17f4] //get pt id
+mov ebx,[eax+10] //player amount in party
+add eax,18 //jump to pt players
+mov ecx,0
+
+loop:
+mov edi,[eax+ecx*8]
+cmp edi,0
+je continue
+cmp [edi],(int)5708456
+jne continue
+//call addpoint
+//pushfd
+pushad
+pushad
+pushad
+pushad
+pushad
+mov ebx,edi // mov player pointer to ebx
+mov edx,[ebx+0000582C]
+mov eax,[ebx+154]
+add eax,(int)5
+mov [ebx+00000154],eax
+mov ecx,0000060C { 1548 }
+mov [esp+1B],eax
+push 0B { 11 }
+lea eax,[esp+18]
+mov [esp+18],cx
+mov ecx,[ps_game.exe+18796C] { [010A2628] }
+push eax
+mov [esp+1E],edx
+mov byte ptr [esp+22],03 { 3 }
+call ps_game.exe+ED2D0
+popad
+popad
+popad
+popad
+popad
+//popfd
+
+continue:
+add ecx,1
+cmp ecx,ebx
+jnge loop
+//popfd
+popad
+popad
+popad
+popad
+popad
+jmp originalcode
+
+addpoint:
+push ecx
+push eax
+push ebx
+mov ebx,edi // mov player pointer to ebx
+mov edx,[ebx+0000582C]
+mov eax,[ebx+154]
+add eax,(int)5
+mov [ebx+00000154],eax
+mov ecx,0000060C { 1548 }
+mov [esp+1B],eax
+push 0B { 11 }
+lea eax,[esp+18]
+mov [esp+18],cx
+mov ecx,[ps_game.exe+18796C] { [010A2628] }
+push eax
+mov [esp+1E],edx
+mov byte ptr [esp+22],03 { 3 }
+call ps_game.exe+ED2D0
+pop ebx
+pop eax
+pop ecx
+
+ret
+
+
+noparty:
+pushad
+pushfd
+mov ebx,edi // mov player pointer to ebx
+mov edx,[ebx+0000582C]
+mov eax,[ebx+154]
+add eax,(int)5
+mov [ebx+00000154],eax
+mov ecx,0000060C { 1548 }
+mov [esp+1B],eax
+push 0B { 11 }
+lea eax,[esp+18]
+mov [esp+18],cx
+mov ecx,[ps_game.exe+18796C] { [010A2628] }
+push eax
+mov [esp+1E],edx
+mov byte ptr [esp+22],03 { 3 }
+call ps_game.exe+ED2D0
+popfd
+popad
+originalcode:
+mov edx,[edi+000000DC]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+58FC9:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+58FC9:
+mov edx,[edi+000000DC]
+//Alt: db 8B 97 DC 00 00 00
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

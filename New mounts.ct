@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"New mounts"</Description>
+      <Options moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <LastState Value="" Activated="1" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1</ID>
+          <Description>"New mount"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(original)
+//label(continue)
+label(poporiginal)
+label(exit)
+alloc(fix_mount,10)
+
+newmem:
+cmp [ecx+0D*4+1C0],00
+je original
+
+push eax
+// get type
+mov eax,[ecx+0D*4+1C0]
+movzx eax, byte ptr [eax+40]
+// check type
+cmp al,#42
+jne poporiginal
+// get typeid
+mov eax,[ecx+0D*4+1C0]
+movzx eax, byte ptr [eax+41]
+// check typeid
+cmp al,#98
+jbe poporiginal
+
+// opcode
+mov eax,[esp+04]
+mov [fix_mount],eax
+mov eax,[esp+08]
+mov [fix_mount+04],eax
+
+// get mount id
+mov eax,[ecx+0D*4+1C0]
+movzx eax, byte ptr [eax+40]
+mov [fix_mount+07],eax
+mov eax,[ecx+0D*4+1C0]
+movzx eax, byte ptr [eax+41]
+mov [fix_mount+0B],eax
+pop eax
+
+// continue:
+push #15
+lea edx,[fix_mount]
+
+exit:
+jmp returnhere
+
+original:
+push 07
+lea edx,[esp+04]
+jmp exit
+
+poporiginal:
+pop eax
+jmp original
+
+"ps_game.exe"+91490:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(fix_mount)
+dealloc(newmem)
+"ps_game.exe"+91490:
+push 07
+lea edx,[esp+04]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>2</ID>
+          <Description>"New mount (around)"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(continue)
+label(exit)
+alloc(fix_mount,10)
+
+newmem:
+push eax
+
+mov eax,[esp+18]
+mov [fix_mount],eax
+mov eax,[esp+1C]
+mov [fix_mount+04],eax
+
+cmp [esi+0D*4+1C0],00
+je no_mount
+
+mov eax,[esi+0D*4+1C0]
+movzx eax, byte ptr [eax+40]
+mov [fix_mount+07],eax
+mov eax,[esi+0D*4+1C0]
+movzx eax, byte ptr [eax+41]
+mov [fix_mount+0B],eax
+
+continue:
+pop eax
+mov [fix_mount+06],al
+
+originalcode:
+push #15
+lea edx,[fix_mount]
+
+exit:
+jmp returnhere
+
+no_mount:
+mov [fix_mount+07],00000000
+mov [fix_mount+0B],00000000
+jmp continue
+
+"ps_game.exe"+2A56C:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+dealloc(fix_mount)
+"ps_game.exe"+2A56C:
+push 07
+lea edx,[esp+18]
+
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"New mount (town)"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+alloc(fix_mount,10)
+
+newmem:
+push eax
+
+cmp byte ptr [esp+3C],1D
+jne poporiginal
+
+mov eax,[esp+3C]
+mov [fix_mount],eax
+mov eax,[esp+40]
+mov [fix_mount+04],eax
+
+cmp [edi+0D*4+1C0],00
+je no_mount
+
+mov eax,[edi+0D*4+1C0]
+movzx eax, byte ptr [eax+40]
+mov [fix_mount+07],eax
+mov eax,[edi+0D*4+1C0]
+movzx eax, byte ptr [eax+41]
+mov [fix_mount+0B],eax
+
+continue:
+pop eax
+mov [fix_mount+06],al
+
+originalcode:
+lea ecx,[fix_mount]
+push #15
+
+exit:
+jmp returnhere
+
+original:
+lea ecx,[esp+38]
+push 07
+jmp exit
+
+poporiginal:
+pop eax
+jmp original
+
+no_mount:
+mov [fix_mount+07],00000000
+mov [fix_mount+0B],00000000
+jmp continue
+
+"ps_game.exe"+263AD:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+dealloc(fix_mount)
+"ps_game.exe"+263AD:
+lea ecx,[esp+38]
+push 07
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

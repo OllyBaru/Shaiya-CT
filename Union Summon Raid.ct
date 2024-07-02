@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable>
+  <CheatEntries>
+    <CheatEntry>
+      <ID>17</ID>
+      <Description>"Union Summon Raid"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(ItemSummonRaid)
+label(checkcountry)
+label(failed)
+label(exit)
+
+newmem:
+call ps_game.exe+4ECF0
+//esi=target player,edi=source player
+//check map
+originalcode:
+pushad
+movzx eax,word ptr [esi+0x160]
+movzx ebx,word ptr [edi+0x160]
+cmp eax,(int)45
+je checkcountry
+cmp ebx,(int)45
+je checkcountry
+
+jmp ItemSummonRaid
+
+//checkcountry and check if same map
+checkcountry:
+cmp eax,ebx        //if they are in the same map which we speicifys
+je ItemSummonRaid
+
+movzx eax,byte ptr [esi+0x12d]
+movzx ebx,byte ptr [edi+0x12d]
+cmp eax,ebx
+jne failed
+
+/*
+push eax               //party table
+push ecx               //leader id
+mov eax,[edi+17f4]
+mov ecx,[eax+0c]       //leader id
+imul ecx,ecx,8
+add  ecx,18
+mov  ecx,[eax+ecx]   //leader address
+cmp edi,ecx          //compare address check is leader
+pop ecx
+pop eax
+je 0049e4ea        //if yes
+*/
+
+ItemSummonRaid:
+
+mov eax,dword ptr ds:[edi+0x58FC]
+mov ecx,dword ptr ds:[edi+0x5900]
+lea eax,dword ptr ds:[eax+eax*2]     // eax=bag,ecx=slot
+lea edx,dword ptr ds:[ecx+eax*8]
+imul edx,edx,4
+mov eax,dword ptr ds:[edi+edx+0x1C0]
+mov eax,dword ptr ds:[eax+30]
+cmp [eax],(int)100045                 //orginal item id
+popad
+jne 0049e4ea   //success addr
+/*
+mov eax,dword ptr ds:[eax+0x30]
+cmp byte ptr ds:[eax+0x46],0x1F
+*/
+
+
+
+exit:
+jmp returnhere
+
+failed:
+popad
+jmp 0049E517
+
+
+
+"ps_game.exe"+9E4E1:
+
+jmp newmem
+
+returnhere:
+
+[DISABLE]
+
+//code from here till the end of the code will be used to disable the cheat
+
+dealloc(newmem)
+
+"ps_game.exe"+9E4E1:
+
+call ps_game.exe+4ECF0
+
+//Alt: db E8 0A 08 FB FF
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

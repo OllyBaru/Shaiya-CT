@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="19">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Drop Fix"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>
+// Credits to Eric-Dutra16
+[ENABLE]
+004BAFC8:
+db 90 90 90 90 90 90 90 90 90
+
+004BAFD1:
+db 90 90 90 90 90 90 90 90 90
+
+00473BBD:
+db 90 90 90 90 90 90 90 90 90 90 90 90 90
+
+[DISABLE]
+004BAFC8:
+cmp eax,10
+je 004BB47A
+
+004BAFD1:
+cmp eax,18
+je 004BB47A
+
+00473BBD:
+cmp dword ptr [eax+000000A0],18
+je 0047468A
+		
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
+
+

@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="18">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Perfect lapisia depending on TypeID"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// Credits to Eric-Dutra16
+[ENABLE]
+alloc(newmem2,2048)
+alloc(typeid,4)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2:
+push eax
+mov eax,[edx+41]
+mov [typeid],eax
+pop eax
+
+originalcode2:
+cmp byte ptr [edx+40],5F
+jne ps_game.exe+6CAB7
+
+exit2:
+jmp returnhere2
+
+"ps_game.exe"+6C9FE:
+jmp newmem2
+nop
+nop
+nop
+nop
+nop
+returnhere2:
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+cmp byte ptr [typeid],(int)2 // typeid perfect lapisia
+je 0046CD83
+cmp byte ptr [typeid],(int)7 // typeid perfect lapisia
+je 0046CD83
+
+originalcode:
+cmp esi,eax
+jae ps_game.exe+6D11C
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6CD7B:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+[DISABLE]
+dealloc(typeid)
+dealloc(newmem2)
+"ps_game.exe"+6C9FE:
+cmp byte ptr [edx+40],5F
+jne ps_game.exe+6CAB7
+
+dealloc(newmem)
+"ps_game.exe"+6CD7B:
+cmp esi,eax
+jae ps_game.exe+6D11C
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Perfect lapisia Shaiya OS"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// Credits to Eric-Dutra16
+[ENABLE]
+alloc(newmem2,2048)
+alloc(typeid,4)
+alloc(qnt,4)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2:
+push eax
+mov eax,[edx+41]
+mov [typeid],eax
+pop eax
+
+originalcode2:
+cmp byte ptr [edx+40],5F
+jne ps_game.exe+6CAB7
+
+exit2:
+jmp returnhere2
+
+"ps_game.exe"+6C9FE:
+jmp newmem2
+nop
+nop
+nop
+nop
+nop
+returnhere2:
+
+alloc(newmem3,2048)
+label(returnhere3)
+label(originalcode3)
+label(exit3)
+
+newmem3:
+mov [qnt],al
+cmp byte ptr [qnt],#50
+jl originalcode3
+sub [qnt],#50
+
+originalcode3:
+mov [esp+13],al
+cmp al,32
+
+exit3:
+jmp returnhere3
+
+"ps_game.exe"+6CCB0:
+jmp newmem3
+nop
+returnhere3:
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(qnt1)
+label(qnt2)
+label(qnt3)
+label(qnt4)
+label(qnt5)
+label(qnt6)
+label(qnt7)
+label(qnt8)
+label(qnt9)
+label(qnt10)
+label(qnt11)
+label(qnt12)
+label(qnt13)
+label(qnt14)
+label(qnt15)
+label(qnt16)
+label(qnt17)
+label(qnt18)
+label(qnt19)
+label(qnt20)
+label(exit)
+
+newmem:
+cmp byte ptr [typeid],#22
+je qnt1
+cmp byte ptr [typeid],#42
+je qnt1
+cmp byte ptr [typeid],#23
+je qnt2
+cmp byte ptr [typeid],#43
+je qnt2
+cmp byte ptr [typeid],#24
+je qnt3
+cmp byte ptr [typeid],#44
+je qnt3
+cmp byte ptr [typeid],#25
+je qnt4
+cmp byte ptr [typeid],#45
+je qnt4
+cmp byte ptr [typeid],#26
+je qnt5
+cmp byte ptr [typeid],#46
+je qnt5
+cmp byte ptr [typeid],#27
+je qnt6
+cmp byte ptr [typeid],#47
+je qnt6
+cmp byte ptr [typeid],#28
+je qnt7
+cmp byte ptr [typeid],#48
+je qnt7
+cmp byte ptr [typeid],#29
+je qnt8
+cmp byte ptr [typeid],#49
+je qnt8
+cmp byte ptr [typeid],#30
+je qnt9
+cmp byte ptr [typeid],#50
+je qnt9
+cmp byte ptr [typeid],#31
+je qnt10
+cmp byte ptr [typeid],#51
+je qnt10
+cmp byte ptr [typeid],#32
+je qnt11
+cmp byte ptr [typeid],#52
+je qnt11
+cmp byte ptr [typeid],#33
+je qnt12
+cmp byte ptr [typeid],#53
+je qnt12
+cmp byte ptr [typeid],#34
+je qnt13
+cmp byte ptr [typeid],#54
+je qnt13
+cmp byte ptr [typeid],#35
+je qnt14
+cmp byte ptr [typeid],#55
+je qnt14
+cmp byte ptr [typeid],#36
+je qnt15
+cmp byte ptr [typeid],#56
+je qnt15
+cmp byte ptr [typeid],#37
+je qnt16
+cmp byte ptr [typeid],#57
+je qnt16
+cmp byte ptr [typeid],#38
+je qnt17
+cmp byte ptr [typeid],#58
+je qnt17
+cmp byte ptr [typeid],#39
+je qnt18
+cmp byte ptr [typeid],#59
+je qnt18
+cmp byte ptr [typeid],#40
+je qnt19
+cmp byte ptr [typeid],#60
+je qnt19
+cmp byte ptr [typeid],#41
+je qnt20
+cmp byte ptr [typeid],#61
+je qnt20
+
+originalcode:
+cmp esi,eax
+jae ps_game.exe+6D11C
+jmp exit
+
+qnt1:
+cmp byte ptr [qnt],0
+je 0046CD83
+jmp originalcode
+
+qnt2:
+cmp byte ptr [qnt],1
+je 0046CD83
+jmp originalcode
+
+qnt3:
+cmp byte ptr [qnt],2
+je 0046CD83
+jmp originalcode
+
+qnt4:
+cmp byte ptr [qnt],3
+je 0046CD83
+jmp originalcode
+
+qnt5:
+cmp byte ptr [qnt],4
+je 0046CD83
+jmp originalcode
+
+qnt6:
+cmp byte ptr [qnt],5
+je 0046CD83
+jmp originalcode
+
+qnt7:
+cmp byte ptr [qnt],6
+je 0046CD83
+jmp originalcode
+
+qnt8:
+cmp byte ptr [qnt],7
+je 0046CD83
+jmp originalcode
+
+qnt9:
+cmp byte ptr [qnt],8
+je 0046CD83
+jmp originalcode
+
+qnt10:
+cmp byte ptr [qnt],9
+je 0046CD83
+jmp originalcode
+
+qnt11:
+cmp byte ptr [qnt],#10
+je 0046CD83
+jmp originalcode
+
+qnt12:
+cmp byte ptr [qnt],#11
+je 0046CD83
+jmp originalcode
+
+qnt13:
+cmp byte ptr [qnt],#12
+je 0046CD83
+jmp originalcode
+
+qnt14:
+cmp byte ptr [qnt],#13
+je 0046CD83
+jmp originalcode
+
+qnt15:
+cmp byte ptr [qnt],#14
+je 0046CD83
+jmp originalcode
+
+qnt16:
+cmp byte ptr [qnt],#15
+je 0046CD83
+jmp originalcode
+
+qnt17:
+cmp byte ptr [qnt],#16
+je 0046CD83
+jmp originalcode
+
+qnt18:
+cmp byte ptr [qnt],#17
+je 0046CD83
+jmp originalcode
+
+qnt19:
+cmp byte ptr [qnt],#18
+je 0046CD83
+jmp originalcode
+
+qnt20:
+cmp byte ptr [qnt],#19
+je 0046CD83
+jmp originalcode
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6CD7B:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+[DISABLE]
+dealloc(typeid)
+dealloc(qnt)
+dealloc(newmem3)
+"ps_game.exe"+6CCB0:
+mov [esp+13],al
+cmp al,32
+
+dealloc(newmem2)
+"ps_game.exe"+6C9FE:
+cmp byte ptr [edx+40],5F
+jne ps_game.exe+6CAB7
+
+dealloc(newmem)
+"ps_game.exe"+6CD7B:
+cmp esi,eax
+jae ps_game.exe+6D11C
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"Perfect lapisia 0 &gt; [20]"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// Credits to Eric-Dutra16
+[ENABLE]
+"ps_game.exe"+6CD97:
+mov al,#20
+
+"ps_game.exe"+6CD7D:
+db 90 90 90 90 90 90
+
+[DISABLE]
+"ps_game.exe"+6CD97:
+inc al
+
+"ps_game.exe"+6CD7D:
+jae "ps_game.exe"+6D11C
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry>
+      <Description>Change of jae ps_game.exe+6D11C</Description>
+      <Address>0046CD7D</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>6CD7D</ModuleNameOffset>
+      <Before>
+        <Byte>6C</Byte>
+        <Byte>24</Byte>
+        <Byte>44</Byte>
+        <Byte>3B</Byte>
+        <Byte>F0</Byte>
+      </Before>
+      <Actual>
+        <Byte>0F</Byte>
+        <Byte>83</Byte>
+        <Byte>99</Byte>
+        <Byte>03</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>0F</Byte>
+        <Byte>B7</Byte>
+        <Byte>14</Byte>
+        <Byte>55</Byte>
+        <Byte>30</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+</CheatTable>

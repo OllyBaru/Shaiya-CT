@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="31">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"fix sql injection gm commands"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(exit)
+
+alloc(check_characters,512)
+//label(check_characters)
+label(escape)
+registersymbol(check_characters)
+
+newmem:
+call check_characters
+mov [edx+eax],cl
+inc eax
+test cl,cl
+
+exit:
+jmp returnhere
+
+check_characters:
+cmp cl,27 // '
+je escape
+ret
+
+escape:
+mov cl,20 // space
+ret
+
+"ps_game.exe"+80A62:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+unregistersymbol(check_characters)
+dealloc(check_characters)
+"ps_game.exe"+80A62:
+mov [edx+eax],cl
+inc eax
+test cl,cl
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

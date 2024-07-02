@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="18">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>11</ID>
+      <Description>"all"</Description>
+      <Options moBindActivation="1"/>
+      <LastState Value="" Activated="0" RealAddress="00000000"/>
+      <Color>80000008</Color>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>19</ID>
+          <Description>"Cross Faction Inspect"</Description>
+          <LastState Activated="0"/>
+          <Color>80000008</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+00477d49:
+db 90 90 90 90 90 90
+
+
+
+[DISABLE]
+00477d49:
+db 0F 85 F9 02 00 00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>21</ID>
+          <Description>"Cross Faction Whisper"</Description>
+          <LastState Activated="0"/>
+          <Color>80000008</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+0047f629:
+db 90 90 90 90 90 90
+
+0047ff69:
+db 90 90 90 90 90 90
+
+
+[DISABLE]
+0047f629:
+db 0F 85 DF 00 00 00
+
+0047ff69:
+db 0F 85 DF 00 00 00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17</ID>
+          <Description>"Union Summon Raid"</Description>
+          <LastState Activated="0"/>
+          <Color>80000008</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(ItemSummonRaid)
+label(checkcountry)
+label(failed)
+label(exit)
+
+newmem:
+call ps_game.exe+4ECF0
+//esi=target player,edi=source player
+//check map
+originalcode:
+pushad
+movzx eax,word ptr [esi+0x160]
+movzx ebx,word ptr [edi+0x160]
+cmp eax,(int)45
+je checkcountry
+cmp ebx,(int)45
+je checkcountry
+
+jmp ItemSummonRaid
+
+//checkcountry and check if same map
+checkcountry:
+cmp eax,ebx        //if they are in the same map which we speicifys
+je ItemSummonRaid
+
+movzx eax,byte ptr [esi+0x12d]
+movzx ebx,byte ptr [edi+0x12d]
+cmp eax,ebx
+jne failed
+
+/*
+push eax               //party table
+push ecx               //leader id
+mov eax,[edi+17f4]
+mov ecx,[eax+0c]       //leader id
+imul ecx,ecx,8
+add  ecx,18
+mov  ecx,[eax+ecx]   //leader address
+cmp edi,ecx          //compare address check is leader
+pop ecx
+pop eax
+je 0049e4ea        //if yes
+*/
+
+ItemSummonRaid:
+
+mov eax,dword ptr ds:[edi+0x58FC]
+mov ecx,dword ptr ds:[edi+0x5900]
+lea eax,dword ptr ds:[eax+eax*2]     // eax=bag,ecx=slot
+lea edx,dword ptr ds:[ecx+eax*8]
+imul edx,edx,4
+mov eax,dword ptr ds:[edi+edx+0x1C0]
+mov eax,dword ptr ds:[eax+30]
+cmp [eax],(int)100045                 //orginal item id
+popad
+jne 0049e4ea   //success addr
+/*
+mov eax,dword ptr ds:[eax+0x30]
+cmp byte ptr ds:[eax+0x46],0x1F
+*/
+
+
+
+exit:
+jmp returnhere
+
+failed:
+popad
+jmp 0049E517
+
+
+
+"ps_game.exe"+9E4E1:
+
+jmp newmem
+
+returnhere:
+
+[DISABLE]
+
+//code from here till the end of the code will be used to disable the cheat
+
+dealloc(newmem)
+
+"ps_game.exe"+9E4E1:
+
+call ps_game.exe+4ECF0
+
+//Alt: db E8 0A 08 FB FF
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>20</ID>
+          <Description>"UseingItemUnlessGotXXXkill"</Description>
+          <LastState Activated="0"/>
+          <Color>80000008</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048) //2048 enough dont change
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+cmp byte ptr [ebx+0x40],(int)100 //item type
+jne originalcode
+cmp byte ptr [ebx+0x41],(int)1   //item id
+jne originalcode
+
+cmp dword ptr [ebp+148],0x50  //kills: plz use hex format
+jl ps_game.exe+7469F
+
+
+
+
+
+
+originalcode:
+cmp byte ptr ds:[ebx+0x42],0x0
+je ps_game.exe+7469F
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+72E1A:
+jmp newmem
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+72E1A:
+je ps_game.exe+7469F
+//Alt: db 0F 84 7F 18 00 00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>24</ID>
+          <Description>"Free For All"</Description>
+          <Options moBindActivation="1"/>
+          <LastState Value="" Activated="0" RealAddress="00000000"/>
+          <Color>80000008</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>18</ID>
+              <Description>"FFA and level attack"</Description>
+              <LastState Activated="0"/>
+              <Color>80000008</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(AttackIllegal)
+label(AttackLegal)
+label(originalcode)
+label(exit)
+
+newmem:
+push ebx
+movzx esi byte ptr [edx+136]
+movzx ebx,byte ptr [eax+136]
+cmp esi,ebx                    //level equal
+pop ebx
+jne AttackIllegal
+
+cmp byte ptr [edx+160],(int)78  //map id
+jne originalcode
+
+
+AttackLegal:
+jmp 00457e35
+
+
+
+AttackIllegal:                //eax=main
+mov byte ptr [eax+1544],0
+jmp 00457e39
+
+originalcode:
+mov dl,[edx+0000012D]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+57E27:
+jmp newmem
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+57E27:
+mov dl,[edx+0000012D]
+//Alt: db 8A 92 2D 01 00 00
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>23</ID>
+              <Description>"MoveOutOfSpecialMap"</Description>
+              <LastState Activated="0"/>
+              <Color>80000008</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+cmp dword ptr [esi+0x17f4],0          //check party
+je originalcode
+
+cmp byte ptr [esi+0x160],(int)78     //special map id
+jne originalcode
+
+cmp word ptr [esi+0x160],ax          //if map didnt change
+je originalcode
+
+pushad                              //exit party
+mov eax,esi
+mov ecx,[eax+0x17f4]
+call 0044F5F0
+popad
+
+originalcode:
+mov [esi+00000160],ax
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+148E0:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+148E0:
+mov [esi+00000160],ax
+//Alt: db 66 89 86 60 01 00 00
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>22</ID>
+              <Description>"UseMoveRuneInSpecialMap"</Description>
+              <LastState Activated="0"/>
+              <Color>80000008</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(CheckCountry)
+label(exit)
+
+newmem:
+pushad
+movzx ebx,byte ptr [ebp+0x160]
+
+cmp eax,(int)78                //target mapid
+je CheckCountry
+cmp ebx,(int)78                //src mapid
+je CheckCountry
+
+jmp originalcode
+
+
+CheckCountry:
+cmp ebx,eax                     //we allow same map
+je originalcode
+
+movzx ebx,byte ptr [ebp+0x12d]  //we allow same country
+movzx ecx,byte ptr [esi+0x12d]
+cmp ebx,ecx
+je originalcode
+
+popad
+jmp 00473576           //wrong addr
+
+
+originalcode:
+popad
+call ps_game.exe+72880
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+734FC:
+jmp newmem
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+734FC:
+call ps_game.exe+72880
+//Alt: db E8 7F F3 FF FF
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

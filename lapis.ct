@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="24">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"lapis"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>//Author: Totoshka, skype: antoshka1312
+//http://www.elitepvpers.com/forum/shaiya-trading/4166314-development-projects.html
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+mov ecx,0
+fstp qword ptr [esp+2B]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6F37E:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+"ps_game.exe"+6E5C0:
+ nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+ 
+[DISABLE]
+"ps_game.exe"+6E5C0:
+mov eax,[ebp+00000140]
+cmp eax,esi
+jb ps_game.exe+6EFC5
+sub eax,esi
+mov [ebp+00000140],eax
+"ps_game.exe"+6F37E:
+mov ecx,[esp+14]
+fstp qword ptr [esp+2B]
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"lapisian"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>//Author: Totoshka, skype: antoshka1312
+//http://www.elitepvpers.com/forum/shaiya-trading/4166314-development-projects.html
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov eax,00
+originalcode:
+mov ecx,[ebp+00000140]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6CCD4:
+jmp newmem
+nop
+returnhere:
+
+
+
+[DISABLE]
+"ps_game.exe"+6CCD4:
+mov ecx,[ebp+00000140]
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry>
+      <Description>Изменение mov [ebp+00000140],eax</Description>
+      <Address>0046E5D0</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>6E5D0</ModuleNameOffset>
+      <Before>
+        <Byte>09</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>2B</Byte>
+        <Byte>C6</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>85</Byte>
+        <Byte>40</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>44</Byte>
+        <Byte>24</Byte>
+        <Byte>1C</Byte>
+        <Byte>8B</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Изменение sub eax,esi</Description>
+      <Address>0046E5CE</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>6E5CE</ModuleNameOffset>
+      <Before>
+        <Byte>82</Byte>
+        <Byte>F7</Byte>
+        <Byte>09</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>2B</Byte>
+        <Byte>C6</Byte>
+      </Actual>
+      <After>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Изменение jb ps_game.exe+6EFC5</Description>
+      <Address>0046E5C8</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>6E5C8</ModuleNameOffset>
+      <Before>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>3B</Byte>
+        <Byte>C6</Byte>
+      </Before>
+      <Actual>
+        <Byte>0F</Byte>
+        <Byte>82</Byte>
+        <Byte>F7</Byte>
+        <Byte>09</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Изменение cmp eax,esi</Description>
+      <Address>0046E5C6</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>6E5C6</ModuleNameOffset>
+      <Before>
+        <Byte>85</Byte>
+        <Byte>40</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>3B</Byte>
+        <Byte>C6</Byte>
+      </Actual>
+      <After>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Изменение mov eax,[ebp+00000140]</Description>
+      <Address>0046E5C0</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>6E5C0</ModuleNameOffset>
+      <Before>
+        <Byte>04</Byte>
+        <Byte>8B</Byte>
+        <Byte>74</Byte>
+        <Byte>24</Byte>
+        <Byte>24</Byte>
+      </Before>
+      <Actual>
+        <Byte>8B</Byte>
+        <Byte>85</Byte>
+        <Byte>40</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Изменение mov [ebp+00000140],ecx</Description>
+      <Address>0046CCEA</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>6CCEA</ModuleNameOffset>
+      <Before>
+        <Byte>00</Byte>
+        <Byte>2B</Byte>
+        <Byte>C8</Byte>
+        <Byte>8B</Byte>
+        <Byte>C5</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>8D</Byte>
+        <Byte>40</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>E8</Byte>
+        <Byte>EB</Byte>
+        <Byte>DD</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Изменение mov eax,ebp</Description>
+      <Address>0046CCE8</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>6CCE8</ModuleNameOffset>
+      <Before>
+        <Byte>08</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>2B</Byte>
+        <Byte>C8</Byte>
+      </Before>
+      <Actual>
+        <Byte>8B</Byte>
+        <Byte>C5</Byte>
+      </Actual>
+      <After>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Изменение sub ecx,eax</Description>
+      <Address>0046CCE6</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>6CCE6</ModuleNameOffset>
+      <Before>
+        <Byte>82</Byte>
+        <Byte>D8</Byte>
+        <Byte>08</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>2B</Byte>
+        <Byte>C8</Byte>
+      </Actual>
+      <After>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Изменение jb ps_game.exe+6D5BE</Description>
+      <Address>0046CCE0</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>6CCE0</ModuleNameOffset>
+      <Before>
+        <Byte>44</Byte>
+        <Byte>24</Byte>
+        <Byte>30</Byte>
+        <Byte>3B</Byte>
+        <Byte>C8</Byte>
+      </Before>
+      <Actual>
+        <Byte>0F</Byte>
+        <Byte>82</Byte>
+        <Byte>D8</Byte>
+        <Byte>08</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Изменение cmp ecx,eax</Description>
+      <Address>0046CCDE</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>6CCDE</ModuleNameOffset>
+      <Before>
+        <Byte>00</Byte>
+        <Byte>89</Byte>
+        <Byte>44</Byte>
+        <Byte>24</Byte>
+        <Byte>30</Byte>
+      </Before>
+      <Actual>
+        <Byte>3B</Byte>
+        <Byte>C8</Byte>
+      </Actual>
+      <After>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Изменение mov [esp+30],eax</Description>
+      <Address>0046CCDA</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>6CCDA</ModuleNameOffset>
+      <Before>
+        <Byte>8D</Byte>
+        <Byte>40</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>44</Byte>
+        <Byte>24</Byte>
+        <Byte>30</Byte>
+      </Actual>
+      <After>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Изменение mov ecx,[ebp+00000140]</Description>
+      <Address>0046CCD4</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>6CCD4</ModuleNameOffset>
+      <Before>
+        <Byte>E8</Byte>
+        <Byte>4C</Byte>
+        <Byte>FA</Byte>
+        <Byte>FF</Byte>
+        <Byte>FF</Byte>
+      </Before>
+      <Actual>
+        <Byte>8B</Byte>
+        <Byte>8D</Byte>
+        <Byte>40</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+  <Comments>Информация об этой таблице:
+</Comments>
+</CheatTable>

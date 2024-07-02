@@ -13,79 +13,71 @@
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 //code from here to '[DISABLE]' will be used to enable the cheat
+alloc(isBag,128)
+registersymbol(isBag)
+alloc(isRewardTypeID,4)
+registersymbol(isRewardTypeID)
+alloc(isRewardType,4)
+registersymbol(isRewardType)
+alloc(isSlot,128)
+registersymbol(isSlot)
+alloc(opcode_0206,32)
+registersymbol(opcode_0206)
+alloc(opcode_dbagent_0702,32)
+registersymbol(opcode_dbagent_0702)
 
-// comands ep 5 credits to alvx9
+
+ 
+[DISABLE]
+dealloc(isItemBag)
+dealloc(isRewardBag)
+unregistersymbol(isItemBag)
+unregistersymbol(isRewardBag)
+dealloc(isItemSlot)
+dealloc(isRewardSlot)
+unregistersymbol(isItemSlot)
+unregistersymbol(isRewardSlot)
+dealloc(opcode_dbagent_0702)
+unregistersymbol(opcode_dbagent_0702)
+dealloc(opcode_0206)
+unregistersymbol(opcode_0206)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>749</ID>
+          <Description>"getInvenInfo"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
 alloc(newmem,2048)
 label(returnhere)
-alloc(command1,16)
-alloc(command2,16)
 label(originalcode)
 label(exit)
 
 newmem: //this is allocated memory, you have read,write,execute access
 //place your code here
-push 0x05 // String Lenght
-push command1// command string
-push ebp
-call game.exe+1CDF60 //CmdImput
-add esp,0x0C
-test eax,eax //Testar se comando foi digitado.
-jne dep
-jmp blacksmith
+cmp word ptr [esi],080D
+jne originalcode
+pushad
+movzx edx,byte ptr [esi+02]
+mov [isBag],edx
+movzx edx,byte ptr [esi+03]
+mov [isSlot],edx
+movzx edx,byte ptr [esi+04]
+mov [isBag+02],edx
+movzx edx,byte ptr [esi+05]
+mov [isSlot+02],edx
+popad
 
-
-
+jmp 00479FD4
 originalcode:
-push 13D4 //Código original
-jmp exit
-
-
-blacksmith:
-push eax
-mov eax,FD0 // cInputNpcNumber
-mov [868DD8],eax // cGetNpcNumber
-mov [868DDC],eax // cGetNpcNumber
-mov [21FED2C],eax // cGetNpcNumber
-mov [086DE30],3 // type
-mov [086DE2C],1 // typeid
-mov [21FE66C],0 // dwNpcFunctionName
-mov [868DD4], 66  // dwBlackSmithWindow
-pop eax
-jmp 0x479D21 // Cmd_Jump
-
-
-dep:
-push 04
-push command2//string your command
-push ebp
-call game.exe+1CDF60
-add esp,0C
-test eax,eax
-je dep2
-jmp originalcode
-
-dep2:
-push eax
-mov eax,FD0
-mov [0086DE30],6 // type
-mov [0086DE2C],B //typeid
-// CwNpcFunctionName
-mov [021FE66C],0
-mov [00868DD4],(int)100
-pop eax
-jmp 00479D21
-
-
-command1:
-db '/wh' // warehouse
-
-command2:
-db '/blacksmith'
+cmp eax,09
+ja ps_game.exe+7A040
 
 exit:
 jmp returnhere
 
-"game.exe"+78F8A:
+"ps_game.exe"+79FBC:
 jmp newmem
 returnhere:
 
@@ -95,10 +87,190 @@ returnhere:
 [DISABLE]
 //code from here till the end of the code will be used to disable the cheat
 dealloc(newmem)
-"game.exe"+78F8A:
-push 000013D4
-//Alt: db 68 D4 13 00 00
+"ps_game.exe"+79FBC:
+db 83 F8 09 77 7F
+//cmp eax,09
+//ja ps_game.exe+7A040
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>751</ID>
+          <Description>"npc vial"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
 
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+cmp word ptr [edx],080D
+jne originalcode
+pushad
+pushfd
+xor esi,esi
+mov word ptr [isRewardType],(int)101 // Default Type
+start_loop:
+cmp esi,01
+jg end_loop
+movzx eax,byte ptr [esi*2+isBag]
+movzx ecx,byte ptr [esi*2+isSlot]
+lea eax,[eax+eax*2]
+lea eax,[ecx+eax*8]
+cmp dword ptr [edi+eax*4+000001C0],00
+je end_loop
+lea ebp,[edi+eax*4+000001C0]
+lea eax,[edi+eax*4+000001C0]
+mov ebx,[eax]
+cmp esi,01
+jne continue
+call sendItem
+
+continue:
+mov word ptr [opcode_0206],0206
+xor edx,edx
+mov edx,[esi*2+isBag]
+mov [opcode_0206+02],edx
+mov edx,[esi*2+isSlot]
+mov [opcode_0206+03],edx
+movzx edx,byte ptr [ebx+40]
+mov [opcode_0206+04],edx
+movzx edx,byte ptr [ebx+41]
+mov [opcode_0206+05],edx
+cmp esi,01
+je isdecItem
+sub [ebx+42],02
+jmp iscontinue_sub
+isdecItem:
+dec [ebx+42]
+iscontinue_sub:
+movzx edx,byte ptr [ebx+42]
+mov [opcode_0206+06],edx
+push 07
+lea ecx,[opcode_0206]
+push ecx
+mov ecx,edi
+call 004ED0E0
+
+cmp esi,01
+je deleteVial
+cmp byte ptr [ebx+42],02
+jna sendDeletedItem
+packetContinue:
+mov word ptr [opcode_dbagent_0702],0702
+mov edx,[edi+582C]
+mov [opcode_dbagent_0702+02],edx
+movzx edx,byte ptr [isBag]
+mov [opcode_dbagent_0702+06],edx
+movzx edx,byte ptr [isSlot]
+mov [opcode_dbagent_0702+07],edx
+mov [opcode_dbagent_0702+08],02
+isPacketContinue:
+push 09
+lea edx,[opcode_dbagent_0702]
+mov ecx,[0058796C]
+push edx
+call 004ED2D0
+
+inc esi
+jmp start_loop
+
+popad
+popfd
+
+originalcode:
+mov eax,[eax]
+cmp byte ptr [eax+42],01
+
+exit:
+jmp returnhere
+
+end_loop:
+popfd
+popad
+jmp originalcode
+
+sendDeletedItem:
+mov [ebp],0
+jmp packetContinue
+
+deleteVial:
+cmp byte ptr [ebx+42],00
+jne packetVial
+mov [ebp],0
+packetVial:
+mov word ptr [opcode_dbagent_0702],0702
+mov edx,[edi+582C]
+mov [opcode_dbagent_0702+02],edx
+movzx edx,byte ptr [isBag+02]
+mov [opcode_dbagent_0702+06],edx
+movzx edx,byte ptr [isSlot+02]
+mov [opcode_dbagent_0702+07],edx
+mov [opcode_dbagent_0702+08],01
+jmp isPacketContinue
+
+sendItem:
+mov eax,[isRewardType]
+cmp byte ptr [ebx+41],07
+jne isDex
+mov [isRewardTypeID],01
+jmp rewardSend
+isDex:
+cmp byte ptr [ebx+41],08
+jne isRec
+mov [isRewardTypeID],02
+jmp rewardSend
+isRec:
+cmp byte ptr [ebx+41],09
+jne isInt
+mov [isRewardTypeID],03
+jmp rewardSend
+isInt:
+cmp byte ptr [ebx+41],(int)10
+jne isWis
+mov [isRewardTypeID],04
+jmp rewardSend
+isWis:
+cmp byte ptr [ebx+41],(int)11
+jne isLuc
+mov [isRewardTypeID],05
+jmp rewardSend
+isLuc:
+cmp byte ptr [ebx+41],(int)12
+jne retn_
+mov [isRewardTypeID],06
+jmp rewardSend
+
+rewardSend:
+mov ecx,[isRewardTypeID]
+call 004059B0
+mov ecx,edi
+push 01 // count
+push eax
+call 0046BD10
+ret
+
+retn_:
+xor eax,eax
+ret
+
+"ps_game.exe"+71ABF:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+71ABF:
+db 8B 00 80 78 42 01
+//mov eax,[eax]
+//cmp byte ptr [eax+42],01
 </AssemblerScript>
         </CheatEntry>
       </CheatEntries>

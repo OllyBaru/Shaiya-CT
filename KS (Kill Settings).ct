@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="18">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"KS (Kill Settings)"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+label(killcount)
+label(killcountnorune1)
+label(killcountnorune2)
+label(killcountnorune3)
+label(killcountnorune4)
+newmem: //this is allocated memory, you have read,write,execute access
+cmp [edi+148],(int)110000 // Kill Bonus Level 1
+JL killcountnorune1
+cmp [edi+148],(int)200000 // Kill Bonus Level 2
+JL killcountnorune2
+cmp [edi+148],(int)450000 // Kill Bonus Level 3
+JL killcountnorune3
+cmp [edi+148],(int)1000000 // Kill Bonus Level 4
+JL killcountnorune4
+
+originalcode:
+cmp dword ptr [edi+0000597C],00
+jmp exit
+
+killcount:
+
+add eax,(int)0 // + Kill Bonus all levels
+
+cmp dword ptr [edi+0000597C],00
+JE ps_game.exe+67db4
+add eax,1 // bfrune kill to add
+jmp ps_game.exe+67db4
+
+killcountnorune1:
+add eax,(int)6 // bfrune 110000 Kill Level 1
+jmp killcount
+
+killcountnorune2:
+add eax,4 // bfrune 200000 Kill Level 2
+jmp killcount
+
+killcountnorune3:
+add eax,3 // bfrune 450000 Kill Level 3
+jmp killcount
+
+killcountnorune4:
+add eax,2 // bfrune 1000000 Kill Level 4
+jmp killcount
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+67DA5:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+67DA5:
+cmp dword ptr [edi+0000597C],00
+//Alt: db 83 BF 7C 59 00 00 00
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

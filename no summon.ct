@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"no summon"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+
+newmem: //this is allocated memory, you have read,write,execute access
+
+cmp word ptr [esi+160],(int)5 //mapid
+JE ps_game.exe+9E517
+cmp word ptr [edi+160],(int)5 //mapid
+je ps_game.exe+9E517
+mov dl,[esi+12d]
+cmp dl,[edi+12d]
+JNE ps_game.exe+9E517
+
+originalcode:
+test al,al
+je ps_game.exe+9E517
+jmp exit
+
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+9E479:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+9E479:
+test al,al
+je ps_game.exe+9E517
+//Alt: db 84 C0 0F 84 96 00 00 00
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"no move"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp word ptr [ebp+160],(int)5 //mapid
+je ps_game.exe+73576
+cmp word ptr [esi+00000160],(int)5 //mapid
+je ps_game.exe+73576
+mov dl,[esi+12d]
+cmp dl,[ebp+12d]
+JNE ps_game.exe+73576
+
+originalcode:
+test al,al
+je ps_game.exe+73576
+cmp [ebp+00000160],dx
+jmp exit
+
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+73501:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+73501:
+test al,al
+je ps_game.exe+73576
+cmp [ebp+00000160],dx
+//Alt: db 84 C0 74 71 66 39 95 60 01 00 00
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"no summon"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+
+newmem: //this is allocated memory, you have read,write,execute access
+
+cmp word ptr [esi+160],(int)7 //mapid
+JE ps_game.exe+9E517
+cmp word ptr [edi+160],(int)7 //mapid
+je 0049E49F
+mov dl,[esi+12d]
+cmp dl,[edi+12d]
+JNE ps_game.exe+9E517
+
+originalcode:
+test al,al
+je ps_game.exe+9E517
+jmp exit
+
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+9E479:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+9E479:
+test al,al
+je ps_game.exe+9E517
+//Alt: db 84 C0 0F 84 96 00 00 00
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>4</ID>
+      <Description>"no move"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp word ptr [ebp+160],(int)7 //mapid
+je ps_game.exe+73576
+cmp word ptr [esi+00000160],(int)7 //mapid
+je 00473523
+mov dl,[esi+12d]
+cmp dl,[ebp+12d]
+JNE ps_game.exe+73576
+
+originalcode:
+test al,al
+je ps_game.exe+73576
+cmp [ebp+00000160],dx
+jmp exit
+
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+73501:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+73501:
+test al,al
+je ps_game.exe+73576
+cmp [ebp+00000160],dx
+//Alt: db 84 C0 74 71 66 39 95 60 01 00 00
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

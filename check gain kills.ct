@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"check gain kills"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+cmp byte ptr[edi+160],(int)1//MapID
+je newcode
+cmp byte ptr[edi+160],(int)2//MapID
+je newcode
+cmp byte ptr[edi+160],(int)3//MapID
+je newcode
+cmp byte ptr[edi+160],(int)4//MapID
+je newcode
+jmp originalcode
+newcode:
+push ebx
+movzx esi byte ptr [edi+136]
+movzx ebx,byte ptr [ebp+136]
+cmp esi,ebx                    //level equal
+pop ebx
+jg AttackIllegal
+originalcode:
+mov [edi+00000148],eax
+
+exit:
+jmp returnhere
+
+AttackIllegal:                //eax=main
+jmp 00467EC1
+
+"ps_game.exe"+67DBA:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+67DBA:
+mov [edi+00000148],eax
+//Alt: db 89 87 48 01 00 00
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

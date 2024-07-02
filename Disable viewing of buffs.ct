@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="18">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Disable viewing of buffs"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+/////////////////////////////script by -AMI-/////////////////////////////
+alloc(newmem,2048)
+
+newmem:
+
+"ps_game.exe"+91752:
+jmp 00491792
+nop
+nop
+nop
+nop
+nop
+"ps_game.exe"+56C95:
+nop
+"ps_game.exe"+56CA1:
+nop
+"ps_game.exe"+56CA6:
+nop
+nop
+nop
+nop
+nop
+
+
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+91752:
+push ebx
+push esi
+call ps_game.exe+56CF0
+
+"ps_game.exe"+56C95:
+push ecx
+"ps_game.exe"+56CA1:
+push edx
+"ps_game.exe"+56CA6:
+call 004ED0E0
+//Alt: db 53 56 E8 97 55 FC FF
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

@@ -1,0 +1,2637 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="21">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"New mounts"</Description>
+      <Options moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <LastState Value="" Activated="1" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1</ID>
+          <Description>"New mount"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(original)
+//label(continue)
+label(poporiginal)
+label(exit)
+alloc(fix_mount,10)
+
+newmem:
+cmp [ecx+0D*4+1C0],00
+je original
+
+push eax
+// get type
+mov eax,[ecx+0D*4+1C0]
+movzx eax, byte ptr [eax+40]
+// check type
+cmp al,#42
+jne poporiginal
+// get typeid
+mov eax,[ecx+0D*4+1C0]
+movzx eax, byte ptr [eax+41]
+// check typeid
+cmp al,#98
+jbe poporiginal
+
+// opcode
+mov eax,[esp+04]
+mov [fix_mount],eax
+mov eax,[esp+08]
+mov [fix_mount+04],eax
+
+// get mount id
+mov eax,[ecx+0D*4+1C0]
+movzx eax, byte ptr [eax+40]
+mov [fix_mount+07],eax
+mov eax,[ecx+0D*4+1C0]
+movzx eax, byte ptr [eax+41]
+mov [fix_mount+0B],eax
+pop eax
+
+// continue:
+push #15
+lea edx,[fix_mount]
+
+exit:
+jmp returnhere
+
+original:
+push 07
+lea edx,[esp+04]
+jmp exit
+
+poporiginal:
+pop eax
+jmp original
+
+"ps_game.exe"+91490:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(fix_mount)
+dealloc(newmem)
+"ps_game.exe"+91490:
+push 07
+lea edx,[esp+04]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>2</ID>
+          <Description>"New mount (around)"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(continue)
+label(exit)
+alloc(fix_mount,10)
+
+newmem:
+push eax
+
+mov eax,[esp+18]
+mov [fix_mount],eax
+mov eax,[esp+1C]
+mov [fix_mount+04],eax
+
+cmp [esi+0D*4+1C0],00
+je no_mount
+
+mov eax,[esi+0D*4+1C0]
+movzx eax, byte ptr [eax+40]
+mov [fix_mount+07],eax
+mov eax,[esi+0D*4+1C0]
+movzx eax, byte ptr [eax+41]
+mov [fix_mount+0B],eax
+
+continue:
+pop eax
+mov [fix_mount+06],al
+
+originalcode:
+push #15
+lea edx,[fix_mount]
+
+exit:
+jmp returnhere
+
+no_mount:
+mov [fix_mount+07],00000000
+mov [fix_mount+0B],00000000
+jmp continue
+
+"ps_game.exe"+2A56C:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+dealloc(fix_mount)
+"ps_game.exe"+2A56C:
+push 07
+lea edx,[esp+18]
+
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"New mount (town)"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+alloc(fix_mount,10)
+
+newmem:
+push eax
+
+cmp byte ptr [esp+3C],1D
+jne poporiginal
+
+mov eax,[esp+3C]
+mov [fix_mount],eax
+mov eax,[esp+40]
+mov [fix_mount+04],eax
+
+cmp [edi+0D*4+1C0],00
+je no_mount
+
+mov eax,[edi+0D*4+1C0]
+movzx eax, byte ptr [eax+40]
+mov [fix_mount+07],eax
+mov eax,[edi+0D*4+1C0]
+movzx eax, byte ptr [eax+41]
+mov [fix_mount+0B],eax
+
+continue:
+pop eax
+mov [fix_mount+06],al
+
+originalcode:
+lea ecx,[fix_mount]
+push #15
+
+exit:
+jmp returnhere
+
+original:
+lea ecx,[esp+38]
+push 07
+jmp exit
+
+poporiginal:
+pop eax
+jmp original
+
+no_mount:
+mov [fix_mount+07],00000000
+mov [fix_mount+0B],00000000
+jmp continue
+
+"ps_game.exe"+263AD:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+dealloc(fix_mount)
+"ps_game.exe"+263AD:
+lea ecx,[esp+38]
+push 07
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"GM ability to attack both factions"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(exit)
+
+newmem:
+cmp byte ptr [eax+5808],#10
+jb 00457E35
+cmp dl,[eax+0000012D]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+57E2D:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+57E2D:
+cmp dl,[eax+0000012D]
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>6</ID>
+      <Description>"Capital Recall Rune"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+// Capital Spawn Points
+
+// Light
+0056E608:
+dd #36 // MapID
+
+dd (float)672.780 // X
+dd (float)27.775 // Y
+dd (float)591.889 // Z
+
+// Fury
+0056E618:
+dd #36 // MapID
+
+dd (float)369.398 // X
+dd (float)27.819 // Y
+dd (float)194.590 // Z
+
+[DISABLE]
+
+0056E608:
+dd 00000023
+
+dd 441277AE
+dd 41D80000
+dd 43607D71
+
+0056E618:
+dd 00000024
+
+dd 44094666
+dd 42280000
+dd 43A2B70A
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>7</ID>
+      <Description>"Auction House Recall Rune"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+// Light Auction House Spawn Points
+
+// Light
+0056E628:
+dd #42 // MapID
+
+dd (float)25.0 // X
+dd (float)2.0 // Y
+dd (float)30.0 // Z
+
+// Fury
+0056E638:
+dd #42 // MapID
+
+dd (float)30.0 // X
+dd (float)2.0 // Y
+dd (float)28.0 // Z
+
+[DISABLE]
+
+0056E628:
+dd 0000002A
+
+dd 429D3852
+dd 4175C28F
+dd 41DF999A
+
+0056E638:
+dd 0000002A
+
+dd 41BB1EB8
+dd 4175C28F
+dd 42D4CCCD
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>14</ID>
+      <Description>"Arena Recall Rune"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+// Arena Spawn Points
+
+// Light
+0056E648:
+dd #40 // MapID
+
+dd (float)0.0 // X
+dd (float)0.0 // Y
+dd (float)0.0 // Z
+
+// Fury
+0056E658:
+dd #40 // MapID
+
+dd (float)0.0 // X
+dd (float)0.0 // Y
+dd (float)0.0 // Z
+
+[DISABLE]
+
+0056E648:
+dd 00000028
+
+dd 43000000
+dd 40600000
+dd 42A40000
+
+0056E658:
+dd 00000028
+
+dd 42680000
+dd 46600000
+dd 42A40000
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>23</ID>
+      <Description>"Guild House Recall Rune"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+// Guild House Spawn Points
+
+// Light
+0056E688:
+dd #51 // MapID
+
+dd (float)0.0 // X
+dd (float)0.0 // Y
+dd (float)0.0 // Z
+
+// Fury
+0056E698:
+dd #52 // MapID
+
+dd (float)0.0 // X
+dd (float)0.0 // Y
+dd (float)0.0 // Z
+
+[DISABLE]
+
+0056E688:
+dd 00000033
+
+dd 43F5BEB8
+dd 42275C29
+dd 43A3251F
+
+0056E698:
+dd 00000034
+
+dd 43F12F5C
+dd 42275C29
+dd 43A0F47B
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>24</ID>
+      <Description>"Kill Boost 5.4 (x2)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+add [edi+00000148],1//KillBoost
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+67DC0:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+67DC0:
+add [edi+00000148],ecx
+//Alt: db 01 8F 48 01 00 00
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>25</ID>
+      <Description>"Skill Point HM"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+add word ptr [esi+0000013A],05
+
+exit:
+jmp returnhere
+
+ps_game.exe+9B5CB:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+ps_game.exe+9B5CB:
+add word ptr [esi+0000013A],04
+//Alt: db 66 83 86 3A 01 00 00 04
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>26</ID>
+      <Description>"Skill Point Rune HM"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+imul ecx,eax,05
+lea ecx,[ecx+05]
+nop
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+8FCB8:
+imul ecx,eax,05
+lea ecx,[ecx+05]
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+8FCB8:
+lea ecx,[eax*4+00000005]
+//Alt: db 6B C8 05 8D 49 05
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>27</ID>
+      <Description>"Cross Trade AH v2"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+nop
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+7D9B6:
+jmp newmem
+nop
+returnhere:
+
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+7D9B6:
+jne ps_game.exe+7E0DA
+//Alt: db 0F 85 1E 07 00 00
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>28</ID>
+      <Description>"Cross Trade Chat"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem2,2048)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode2:
+nop
+
+exit2:
+jmp returnhere2
+
+"ps_game.exe"+2793E:
+jmp newmem2
+nop
+returnhere2:
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+nop
+nop
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+27934:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+returnhere:
+
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem2)
+"ps_game.exe"+2793E:
+jne ps_game.exe+279CE
+//Alt: db 0F 85 8A 00 00 00
+dealloc(newmem)
+"ps_game.exe"+27934:
+mov dl,[esp+14]
+cmp dl,[ecx+0000012D]
+//Alt: db 8A 54 24 14 3A 91 2D 01 00 00
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"Stat Point HM"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+add word ptr [esi+00000138],09 // change 07 to something else
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+9B46B:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+9B46B:
+add word ptr [esi+00000138],07
+//Alt: db 66 83 86 38 01 00 00 07
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>29</ID>
+      <Description>"Stat Point Rune HM"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+imul esi,ecx,0A
+nop
+nop
+nop
+nop
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+8F967:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+8F967:
+lea esi,[ecx*8+00000000]
+//Alt: db 8D 34 CD 00 00 00 00
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>30</ID>
+      <Description>"Level Max 80 StatusDefs/ExpDefs"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+004651D9:
+cmp ax,50
+jae ps_game.exe+6522B
+0046507D:
+cmp ax,50
+jae ps_game.exe+65222
+0046143E:
+cmp eax,50
+jg ps_game.exe+6145A
+00480FC4:
+cmp ebx,50
+jnge 00480FB3
+0049B5DE:
+cmp ebx,50
+jg 0049B5FB
+0049B63A:
+cmp ebx,50
+jg 0049B657
+0049B68E:
+cmp ebx,50
+jg 0049B6AB
+0049B7C2:
+cmp ebx,50
+jg 0049B7DF
+0049B81E:
+cmp ebx,50
+jg 0049B83B
+0049B872:
+cmp ebx,50
+jg 0049B88F
+0049BD9E:
+cmp ebx,50
+jg 0049BDB7
+0049BDCF:
+cmp ebx,50
+jg 0049BDE8
+0049BE00:
+cmp ebx,50
+jg 0049BE19
+0049BEDB:
+cmp ebx,50
+jg 0049BEF8
+00460C55:
+cmp ecx,50
+jg 00460C6B
+00460C85:
+cmp ecx,50
+jg 00460C9B
+00460CB5:
+cmp ecx,50
+jg 00460CCB
+0046135B:
+cmp ecx,50
+jg 00461382
+004613AC:
+cmp ecx,50
+jg 004613C9
+004613F9:
+cmp ecx,50
+jg 00461416
+00464FF5:
+cmp ecx,50
+jg 00465007
+0046515F:
+cmp ecx,50
+jg 00465172
+004651EA:
+cmp ecx,50
+jg 004651FD
+0046523F:
+cmp ecx,50
+jg 00465252
+00467BFC:
+cmp ecx,50
+jg 00467C11
+004612CC:
+cmp edx,50
+jg 004612E5
+004612F7:
+cmp edx,50
+jg 00461310
+00461322:
+cmp edx,50
+jg 0046133C
+0049241B:
+cmp edx,50
+jg 00492430
+00547019:
+cmp eax,50
+jl 00547125
+0049BF34:
+cmp ebx,50
+jg 0049BF51
+0049BF81:
+cmp ebx,50
+jg 0049BF9E
+0049BFD1:
+cmp ebx,50
+jg 0049BFEE
+0049C013:
+cmp ebx,50
+jg 0049C030
+0049C052:
+cmp ebx,50
+jg 0049C084
+0049C0B4:
+cmp ebx,50
+jg 0049C0D1
+0049C10D:
+cmp ebx,50
+jg 0049C12A
+0049C15A:
+cmp ebx,50
+jg 0049C177
+0049C1AA:
+cmp ebx,50
+jg 0049C1C7
+0049C1EC:
+cmp ebx,50
+jg 0049C209
+0049C22B:
+cmp ebx,50
+jg 0049C246
+00480E0C:
+cmp ecx,50
+ja 00480D96
+0049243B:
+cmp ecx,50
+jg 0049244E
+0049B4A2:
+cmp ecx,50
+jg 0049B4BB
+0049B4D3:
+cmp ecx,50
+jg 0049B4EC
+0049B504:
+cmp ecx,50
+jg 0049B51D
+0049BB75:
+cmp ecx,50
+jg 0049BB8A
+0049BB9C:
+cmp ecx,50
+jg 0049BBAF
+
+
+[DISABLE]
+004651D9:
+cmp ax,46
+jae ps_game.exe+6522B
+0046507D:
+cmp ax,46
+jae ps_game.exe+65222
+0046143E:
+cmp eax,46
+jg ps_game.exe+6145A
+00480FC4:
+cmp ebx,46
+jnge 00480FB3
+0049B5DE:
+cmp ebx,46
+jg 0049B5FB
+0049B63A:
+cmp ebx,46
+jg 0049B657
+0049B68E:
+cmp ebx,46
+jg 0049B6AB
+0049B7C2:
+cmp ebx,46
+jg 0049B7DF
+0049B81E:
+cmp ebx,46
+jg 0049B83B
+0049B872:
+cmp ebx,46
+jg 0049B88F
+0049BD9E:
+cmp ebx,46
+jg 0049BDB7
+0049BDCF:
+cmp ebx,46
+jg 0049BDE8
+0049BE00:
+cmp ebx,46
+jg 0049BE19
+0049BEDB:
+cmp ebx,46
+jg 0049BEF8
+00460C55:
+cmp ecx,46
+jg 00460C6B
+00460C85:
+cmp ecx,46
+jg 00460C9B
+00460CB5:
+cmp ecx,46
+jg 00460CCB
+0046135B:
+cmp ecx,46
+jg 00461382
+004613AC:
+cmp ecx,46
+jg 004613C9
+004613F9:
+cmp ecx,46
+jg 00461416
+00464FF5:
+cmp ecx,46
+jg 00465007
+0046515F:
+cmp ecx,46
+jg 00465172
+004651EA:
+cmp ecx,46
+jg 004651FD
+0046523F:
+cmp ecx,46
+jg 00465252
+00467BFC:
+cmp ecx,46
+jg 00467C11
+004612CC:
+cmp edx,46
+jg 004612E5
+004612F7:
+cmp edx,46
+jg 00461310
+00461322:
+cmp edx,46
+jg 0046133C
+0049241B:
+cmp edx,46
+jg 00492430
+00547019:
+cmp eax,46
+jl 00547125
+0049BF34:
+cmp ebx,46
+jg 0049BF51
+0049BF81:
+cmp ebx,46
+jg 0049BF9E
+0049BFD1:
+cmp ebx,46
+jg 0049BFEE
+0049C013:
+cmp ebx,46
+jg 0049C030
+0049C052:
+cmp ebx,46
+jg 0049C084
+0049C0B4:
+cmp ebx,46
+jg 0049C0D1
+0049C10D:
+cmp ebx,46
+jg 0049C12A
+0049C15A:
+cmp ebx,46
+jg 0049C177
+0049C1AA:
+cmp ebx,46
+jg 0049C1C7
+0049C1EC:
+cmp ebx,46
+jg 0049C209
+0049C22B:
+cmp ebx,46
+jg 0049C246
+00480E0C:
+cmp ecx,46
+ja 00480D96
+0049243B:
+cmp ecx,46
+jg 0049244E
+0049B4A2:
+cmp ecx,46
+jg 0049B4BB
+0049B4D3:
+cmp ecx,46
+jg 0049B4EC
+0049B504:
+cmp ecx,46
+jg 0049B51D
+0049BB75:
+cmp ecx,46
+jg 0049BB8A
+0049BB9C:
+cmp ecx,46
+jg 0049BBAF
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>11</ID>
+      <Description>"Shen's script"</Description>
+      <Options moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <LastState Value="" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>19</ID>
+          <Description>"Cross Faction Inspect"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+00477d49:
+db 90 90 90 90 90 90
+
+
+
+[DISABLE]
+00477d49:
+db 0F 85 F9 02 00 00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>21</ID>
+          <Description>"Cross Faction Whisper"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+0047f629:
+db 90 90 90 90 90 90
+
+0047ff69:
+db 90 90 90 90 90 90
+
+
+[DISABLE]
+0047f629:
+db 0F 85 DF 00 00 00
+
+0047ff69:
+db 0F 85 DF 00 00 00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17</ID>
+          <Description>"Union Summon Raid"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(ItemSummonRaid)
+label(checkcountry)
+label(failed)
+label(exit)
+
+newmem:
+call ps_game.exe+4ECF0
+//esi=target player,edi=source player
+//check map
+originalcode:
+pushad
+movzx eax,word ptr [esi+0x160]
+movzx ebx,word ptr [edi+0x160]
+cmp eax,(int)45
+je checkcountry
+cmp ebx,(int)45
+je checkcountry
+
+jmp ItemSummonRaid
+
+//checkcountry and check if same map
+checkcountry:
+cmp eax,ebx        //if they are in the same map which we speicifys
+je ItemSummonRaid
+
+movzx eax,byte ptr [esi+0x12d]
+movzx ebx,byte ptr [edi+0x12d]
+cmp eax,ebx
+jne failed
+
+/*
+push eax               //party table
+push ecx               //leader id
+mov eax,[edi+17f4]
+mov ecx,[eax+0c]       //leader id
+imul ecx,ecx,8
+add  ecx,18
+mov  ecx,[eax+ecx]   //leader address
+cmp edi,ecx          //compare address check is leader
+pop ecx
+pop eax
+je 0049e4ea        //if yes
+*/
+
+ItemSummonRaid:
+
+mov eax,dword ptr ds:[edi+0x58FC]
+mov ecx,dword ptr ds:[edi+0x5900]
+lea eax,dword ptr ds:[eax+eax*2]     // eax=bag,ecx=slot
+lea edx,dword ptr ds:[ecx+eax*8]
+imul edx,edx,4
+mov eax,dword ptr ds:[edi+edx+0x1C0]
+mov eax,dword ptr ds:[eax+30]
+cmp [eax],(int)100045                 //orginal item id
+popad
+jne 0049e4ea   //success addr
+/*
+mov eax,dword ptr ds:[eax+0x30]
+cmp byte ptr ds:[eax+0x46],0x1F
+*/
+
+
+
+exit:
+jmp returnhere
+
+failed:
+popad
+jmp 0049E517
+
+
+
+"ps_game.exe"+9E4E1:
+
+jmp newmem
+
+returnhere:
+
+[DISABLE]
+
+//code from here till the end of the code will be used to disable the cheat
+
+dealloc(newmem)
+
+"ps_game.exe"+9E4E1:
+
+call ps_game.exe+4ECF0
+
+//Alt: db E8 0A 08 FB FF
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>20</ID>
+          <Description>"UseingItemUnlessGotXXXkill"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048) //2048 enough dont change
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+cmp byte ptr [ebx+0x40],(int)100 //item type
+jne originalcode
+cmp byte ptr [ebx+0x41],(int)206   //item id
+jne originalcode
+
+cmp dword ptr [ebp+148],0x32  //kills: plz use hex format
+jl ps_game.exe+7469F
+
+
+
+
+
+
+originalcode:
+cmp byte ptr ds:[ebx+0x42],0x0
+je ps_game.exe+7469F
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+72E1A:
+jmp newmem
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+72E1A:
+je ps_game.exe+7469F
+//Alt: db 0F 84 7F 18 00 00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>31</ID>
+          <Description>"Free For All"</Description>
+          <Options moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>18</ID>
+              <Description>"FFA and level attack"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(AttackIllegal)
+label(AttackLegal)
+label(originalcode)
+label(exit)
+
+newmem:
+push ebx
+movzx esi byte ptr [edx+136]
+movzx ebx,byte ptr [eax+136]
+cmp esi,ebx                    //level equal
+pop ebx
+jne AttackIllegal
+
+cmp byte ptr [edx+160],(int)78  //map id
+jne originalcode
+
+
+AttackLegal:
+jmp 00457e35
+
+
+
+AttackIllegal:                //eax=main
+mov byte ptr [eax+1544],0
+jmp 00457e39
+
+originalcode:
+mov dl,[edx+0000012D]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+57E27:
+jmp newmem
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+57E27:
+mov dl,[edx+0000012D]
+//Alt: db 8A 92 2D 01 00 00
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>32</ID>
+              <Description>"MoveOutOfSpecialMap"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+cmp dword ptr [esi+0x17f4],0          //check party
+je originalcode
+
+cmp byte ptr [esi+0x160],(int)78     //special map id
+jne originalcode
+
+cmp word ptr [esi+0x160],ax          //if map didnt change
+je originalcode
+
+pushad                              //exit party
+mov eax,esi
+mov ecx,[eax+0x17f4]
+call 0044F5F0
+popad
+
+originalcode:
+mov [esi+00000160],ax
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+148E0:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+148E0:
+mov [esi+00000160],ax
+//Alt: db 66 89 86 60 01 00 00
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>22</ID>
+              <Description>"UseMoveRuneInSpecialMap"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(CheckCountry)
+label(exit)
+
+newmem:
+pushad
+movzx ebx,byte ptr [ebp+0x160]
+
+cmp eax,(int)78                //target mapid
+je CheckCountry
+cmp ebx,(int)78                //src mapid
+je CheckCountry
+
+jmp originalcode
+
+
+CheckCountry:
+cmp ebx,eax                     //we allow same map
+je originalcode
+
+movzx ebx,byte ptr [ebp+0x12d]  //we allow same country
+movzx ecx,byte ptr [esi+0x12d]
+cmp ebx,ecx
+je originalcode
+
+popad
+jmp 00473576           //wrong addr
+
+
+originalcode:
+popad
+call ps_game.exe+72880
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+734FC:
+jmp newmem
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+734FC:
+call ps_game.exe+72880
+//Alt: db E8 7F F3 FF FF
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>33</ID>
+      <Description>"level var 1"</Description>
+      <LastState Value="0" RealAddress="0AB19D58"/>
+      <VariableType>Byte</VariableType>
+      <Address>0AB19D58</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>34</ID>
+      <Description>"level var 2"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>3BA5213E</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>35</ID>
+      <Description>"No description"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>3BA5213E</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>36</ID>
+      <Description>"Max Level 5.4 Edit"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem1322,2048)
+label(returnhere1322)
+label(originalcode1322)
+label(exit1322)
+
+newmem1322: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode1322:
+cmp ecx,(int)70
+jg 0049BBAF
+
+exit1322:
+jmp returnhere1322
+
+0049BB9C:
+jmp newmem1322
+returnhere1322:
+
+alloc(newmem1271,2048)
+label(returnhere1271)
+label(originalcode1271)
+label(exit1271)
+
+newmem1271: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode1271:
+cmp ecx,(int)70
+jg 0049BB8A
+
+exit1271:
+jmp returnhere1271
+
+0049BB75:
+jmp newmem1271
+returnhere1271:
+
+alloc(newmem1221,2048)
+label(returnhere1221)
+label(originalcode1221)
+label(exit1221)
+
+newmem1221: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode1221:
+cmp ecx,(int)70
+jg 0049B51D
+
+exit1221:
+jmp returnhere1221
+
+0049B504:
+jmp newmem1221
+returnhere1221:
+
+alloc(newmem1172,2048)
+label(returnhere1172)
+label(originalcode1172)
+label(exit1172)
+
+newmem1172: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode1172:
+cmp ecx,(int)70
+jg 0049B51D
+
+exit1172:
+jmp returnhere1172
+
+0049B504:
+jmp newmem1172
+returnhere1172:
+
+alloc(newmem1124,2048)
+label(returnhere1124)
+label(originalcode1124)
+label(exit1124)
+
+newmem1124: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode1124:
+cmp ecx,(int)70
+jg 0049B4EC
+
+exit1124:
+jmp returnhere1124
+
+0049B4D3:
+jmp newmem1124
+returnhere1124:
+
+alloc(newmem1077,2048)
+label(returnhere1077)
+label(originalcode1077)
+label(exit1077)
+
+newmem1077: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode1077:
+cmp ecx,(int)70
+jg 0049B4BB
+
+exit1077:
+jmp returnhere1077
+
+0049B4A2:
+jmp newmem1077
+returnhere1077:
+
+alloc(newmem1031,2048)
+label(returnhere1031)
+label(originalcode1031)
+label(exit1031)
+
+newmem1031: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode1031:
+cmp ecx,(int)70
+jg 0049244E
+
+exit1031:
+jmp returnhere1031
+
+0049243B:
+jmp newmem1031
+returnhere1031:
+
+alloc(newmem986,2048)
+label(returnhere986)
+label(originalcode986)
+label(exit986)
+
+newmem986: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode986:
+cmp ecx,(int)70
+ja 00480D96
+
+exit986:
+jmp returnhere986
+
+00480E0C:
+jmp newmem986
+returnhere986:
+
+alloc(newmem942,2048)
+label(returnhere942)
+label(originalcode942)
+label(exit942)
+
+newmem942: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode942:
+cmp ebx,(int)70
+jg 0049C246
+
+exit942:
+jmp returnhere942
+
+0049C22B:
+jmp newmem942
+returnhere942:
+
+alloc(newmem899,2048)
+label(returnhere899)
+label(originalcode899)
+label(exit899)
+
+newmem899: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode899:
+cmp ebx,(int)70
+jg 0049C209
+
+exit899:
+jmp returnhere899
+
+0049C1EC:
+jmp newmem899
+returnhere899:
+
+alloc(newmem857,2048)
+label(returnhere857)
+label(originalcode857)
+label(exit857)
+
+newmem857: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode857:
+cmp ebx,(int)70
+jg 0049C1C7
+
+exit857:
+jmp returnhere857
+
+0049C1AA:
+jmp newmem857
+returnhere857:
+
+alloc(newmem816,2048)
+label(returnhere816)
+label(originalcode816)
+label(exit816)
+
+newmem816: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode816:
+cmp ebx,(int)70
+jg 0049C177
+
+exit816:
+jmp returnhere816
+
+0049C15A:
+jmp newmem816
+returnhere816:
+
+alloc(newmem776,2048)
+label(returnhere776)
+label(originalcode776)
+label(exit776)
+
+newmem776: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode776:
+cmp ebx,(int)70
+jg 0049C12A
+
+exit776:
+jmp returnhere776
+
+0049C10D:
+jmp newmem776
+returnhere776:
+
+alloc(newmem737,2048)
+label(returnhere737)
+label(originalcode737)
+label(exit737)
+
+newmem737: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode737:
+cmp ebx,(int)70
+jg 0049C0D1
+
+exit737:
+jmp returnhere737
+
+0049C0B4:
+jmp newmem737
+returnhere737:
+
+alloc(newmem699,2048)
+label(returnhere699)
+label(originalcode699)
+label(exit699)
+
+newmem699: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode699:
+cmp ebx,(int)70
+jg 0049C084
+
+exit699:
+jmp returnhere699
+
+0049C052:
+jmp newmem699
+returnhere699:
+
+alloc(newmem662,2048)
+label(returnhere662)
+label(originalcode662)
+label(exit662)
+
+newmem662: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode662:
+cmp ebx,(int)70
+jg 0049C030
+
+exit662:
+jmp returnhere662
+
+0049C013:
+jmp newmem662
+returnhere662:
+
+alloc(newmem626,2048)
+label(returnhere626)
+label(originalcode626)
+label(exit626)
+
+newmem626: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode626:
+cmp ebx,(int)70
+jg 0049BFEE
+
+exit626:
+jmp returnhere626
+
+0049BFD1:
+jmp newmem626
+returnhere626:
+
+alloc(newmem591,2048)
+label(returnhere591)
+label(originalcode591)
+label(exit591)
+
+newmem591: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode591:
+cmp ebx,(int)70
+jg 0049BF9E
+
+exit591:
+jmp returnhere591
+
+0049BF81:
+jmp newmem591
+returnhere591:
+
+alloc(newmem557,2048)
+label(returnhere557)
+label(originalcode557)
+label(exit557)
+
+newmem557: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode557:
+cmp ebx,(int)70
+jg 0049BF51
+
+exit557:
+jmp returnhere557
+
+0049BF34:
+jmp newmem557
+returnhere557:
+
+alloc(newmem524,2048)
+label(returnhere524)
+label(originalcode524)
+label(exit524)
+
+newmem524: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode524:
+cmp eax,(int)70
+jl 00547125
+
+exit524:
+jmp returnhere524
+
+00547019:
+jmp newmem524
+nop
+nop
+nop
+nop
+returnhere524:
+
+alloc(newmem492,2048)
+label(returnhere492)
+label(originalcode492)
+label(exit492)
+
+newmem492: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode492:
+cmp edx,(int)70
+jg 00492430
+
+exit492:
+jmp returnhere492
+
+0049241B:
+jmp newmem492
+returnhere492:
+
+alloc(newmem461,2048)
+label(returnhere461)
+label(originalcode461)
+label(exit461)
+
+newmem461: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode461:
+cmp edx,(int)70
+jg 0046133C
+
+exit461:
+jmp returnhere461
+
+00461322:
+jmp newmem461
+returnhere461:
+
+alloc(newmem431,2048)
+label(returnhere431)
+label(originalcode431)
+label(exit431)
+
+newmem431: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode431:
+cmp edx,(int)70
+jg 00461310
+
+exit431:
+jmp returnhere431
+
+004612F7:
+jmp newmem431
+returnhere431:
+
+alloc(newmem402,2048)
+label(returnhere402)
+label(originalcode402)
+label(exit402)
+
+newmem402: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode402:
+cmp edx,(int)70
+jg 004612E5
+
+exit402:
+jmp returnhere402
+
+004612CC:
+jmp newmem402
+returnhere402:
+
+alloc(newmem374,2048)
+label(returnhere374)
+label(originalcode374)
+label(exit374)
+
+newmem374: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode374:
+cmp ecx,(int)70
+jg 00467C11
+
+exit374:
+jmp returnhere374
+
+00467BFC:
+jmp newmem374
+returnhere374:
+
+alloc(newmem347,2048)
+label(returnhere347)
+label(originalcode347)
+label(exit347)
+
+newmem347: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode347:
+cmp ecx,(int)70
+jg 00465252
+
+exit347:
+jmp returnhere347
+
+0046523F:
+jmp newmem347
+returnhere347:
+
+alloc(newmem321,2048)
+label(returnhere321)
+label(originalcode321)
+label(exit321)
+
+newmem321: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode321:
+cmp ecx,(int)70
+jg 00460C6B
+
+exit321:
+jmp returnhere321
+
+"ps_game.exe"+60C55:
+jmp newmem321
+returnhere321:
+
+alloc(newmem296,2048)
+label(returnhere296)
+label(originalcode296)
+label(exit296)
+
+newmem296: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode296:
+cmp ecx,(int)70
+jg 004651FD
+
+exit296:
+jmp returnhere296
+
+004651EA:
+jmp newmem296
+returnhere296:
+
+alloc(newmem272,2048)
+label(returnhere272)
+label(originalcode272)
+label(exit272)
+
+newmem272: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode272:
+cmp ecx,(int)70
+jg 00465172
+
+exit272:
+jmp returnhere272
+
+0046515F:
+jmp newmem272
+returnhere272:
+
+alloc(newmem249,2048)
+label(returnhere249)
+label(originalcode249)
+label(exit249)
+
+newmem249: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode249:
+cmp ecx,(int)70
+jg 00465007
+
+exit249:
+jmp returnhere249
+
+00464FF5:
+jmp newmem249
+returnhere249:
+
+alloc(newmem227,2048)
+label(returnhere227)
+label(originalcode227)
+label(exit227)
+
+newmem227: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode227:
+cmp ecx,(int)70
+jg 00461416
+
+exit227:
+jmp returnhere227
+
+004613F9:
+jmp newmem227
+returnhere227:
+
+alloc(newmem206,2048)
+label(returnhere206)
+label(originalcode206)
+label(exit206)
+
+newmem206: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode206:
+cmp ecx,(int)70
+jg 004613C9
+
+exit206:
+jmp returnhere206
+
+004613AC:
+jmp newmem206
+returnhere206:
+
+alloc(newmem186,2048)
+label(returnhere186)
+label(originalcode186)
+label(exit186)
+
+newmem186: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode186:
+cmp ecx,(int)70
+jg 00461382
+
+exit186:
+jmp returnhere186
+
+0046135B:
+jmp newmem186
+returnhere186:
+
+alloc(newmem167,2048)
+label(returnhere167)
+label(originalcode167)
+label(exit167)
+
+newmem167: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode167:
+cmp ecx,(int)70
+jg 00460CCB
+
+exit167:
+jmp returnhere167
+
+"ps_game.exe"+60CB5:
+jmp newmem167
+returnhere167:
+
+alloc(newmem149,2048)
+label(returnhere149)
+label(originalcode149)
+label(exit149)
+
+newmem149: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode149:
+cmp ecx,(int)70
+jg 00460C9B
+
+exit149:
+jmp returnhere149
+
+"ps_game.exe"+ 60C85:
+jmp newmem149
+returnhere149:
+
+alloc(newmem132,2048)
+label(returnhere132)
+label(originalcode132)
+label(exit132)
+
+newmem132: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode132:
+cmp ecx,(int)70
+jg 00460C6B
+
+exit132:
+jmp returnhere132
+
+"ps_game.exe"+60C55:
+jmp newmem132
+returnhere132:
+
+alloc(newmem116,2048)
+label(returnhere116)
+label(originalcode116)
+label(exit116)
+
+newmem116: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode116:
+cmp ebx,(int)70
+jg 0049BEF8
+
+exit116:
+jmp returnhere116
+
+"ps_game.exe"+9BEDB:
+jmp newmem116
+returnhere116:
+
+alloc(newmem101,2048)
+label(returnhere101)
+label(originalcode101)
+label(exit101)
+
+newmem101: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode101:
+cmp ebx,(int)70
+jg 0049BE19
+
+exit101:
+jmp returnhere101
+
+"ps_game.exe"+9BE00:
+jmp newmem101
+returnhere101:
+
+alloc(newmem87,2048)
+label(returnhere87)
+label(originalcode87)
+label(exit87)
+
+newmem87: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode87:
+cmp ebx,(int)70
+jg 0049BDE8
+
+exit87:
+jmp returnhere87
+
+"ps_game.exe"+9BDCF:
+jmp newmem87
+returnhere87:
+
+alloc(newmem74,2048)
+label(returnhere74)
+label(originalcode74)
+label(exit74)
+
+newmem74: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode74:
+cmp ebx,(int)70
+jg 0049BDB7
+
+exit74:
+jmp returnhere74
+
+"ps_game.exe"+9BD9E:
+jmp newmem74
+returnhere74:
+
+alloc(newmem62,2048)
+label(returnhere62)
+label(originalcode62)
+label(exit62)
+
+newmem62: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode62:
+cmp ebx,(int)70
+jg 0049B88F
+
+exit62:
+jmp returnhere62
+
+"ps_game.exe"+9B872:
+jmp newmem62
+returnhere62:
+
+alloc(newmem51,2048)
+label(returnhere51)
+label(originalcode51)
+label(exit51)
+
+newmem51: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode51:
+cmp ebx,(int)70
+jg 0049B83B
+
+exit51:
+jmp returnhere51
+
+"ps_game.exe"+9B81E:
+jmp newmem51
+returnhere51:
+
+alloc(newmem41,2048)
+label(returnhere41)
+label(originalcode41)
+label(exit41)
+
+newmem41: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode41:
+cmp ebx,(int)70
+jg 0049B7DF
+
+exit41:
+jmp returnhere41
+
+"ps_game.exe"+9B7C2:
+jmp newmem41
+returnhere41:
+
+alloc(newmem32,2048)
+label(returnhere32)
+label(originalcode32)
+label(exit32)
+
+newmem32: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode32:
+cmp ebx,(int)70
+jg 0049B6AB
+
+exit32:
+jmp returnhere32
+
+"ps_game.exe"+9B68E:
+jmp newmem32
+returnhere32:
+
+alloc(newmem24,2048)
+label(returnhere24)
+label(originalcode24)
+label(exit24)
+
+newmem24: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode24:
+cmp ebx,(int)70
+jg 0049B657
+
+exit24:
+jmp returnhere24
+
+"ps_game.exe"+9B63A:
+jmp newmem24
+returnhere24:
+
+alloc(newmem17,2048)
+label(returnhere17)
+label(originalcode17)
+label(exit17)
+
+newmem17: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode17:
+cmp ebx,(int)70
+jg 0049B5FB
+
+exit17:
+jmp returnhere17
+
+"ps_game.exe"+9B5DE:
+jmp newmem17
+returnhere17:
+
+alloc(newmem11,2048)
+label(returnhere11)
+label(originalcode11)
+label(exit11)
+
+newmem11: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode11:
+cmp ebx,(int)70
+jl 00480FB3
+
+exit11:
+jmp returnhere11
+
+"ps_game.exe"+80FC4:
+jmp newmem11
+returnhere11:
+
+alloc(newmem6,2048)
+label(returnhere6)
+label(originalcode6)
+label(exit6)
+
+newmem6: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode6:
+cmp eax,(int)70
+jg 0046145A
+
+exit6:
+jmp returnhere6
+
+0046143E:
+jmp newmem6
+returnhere6:
+
+alloc(newmem2,2048)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode2:
+cmp ax,(int)70
+jae 00465222
+
+exit2:
+jmp returnhere2
+
+"ps_game.exe"+6507D:
+jmp newmem2
+nop
+nop
+nop
+nop
+nop
+returnhere2:
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+cmp ax,(int)70
+jae ps_game.exe+6522B
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+651D9:
+jmp newmem
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem1322)
+0049BB9C:
+cmp ecx,50
+jg 0049BBAF
+//Alt: db 83 F9 50 7F 0E
+dealloc(newmem1271)
+0049BB75:
+cmp ecx,50
+jg 0049BB8A
+//Alt: db 83 F9 50 7F 10
+dealloc(newmem1221)
+0049B504:
+cmp ecx,50
+jg 0049B51D
+//Alt: db 83 F9 50 7F 14
+dealloc(newmem1172)
+0049B504:
+cmp ecx,50
+jg 0049B51D
+//Alt: db 83 F9 50 7F 14
+dealloc(newmem1124)
+0049B4D3:
+cmp ecx,50
+jg 0049B4EC
+//Alt: db 83 F9 50 7F 14
+dealloc(newmem1077)
+0049B4A2:
+cmp ecx,50
+jg 0049B4BB
+//Alt: db 83 F9 50 7F 14
+dealloc(newmem1031)
+0049243B:
+cmp ecx,50
+jg 0049244E
+//Alt: db 83 F9 50 7F 0E
+dealloc(newmem986)
+00480E0C:
+cmp ecx,50
+ja 00480D96
+//Alt: db 83 F9 50 77 85
+dealloc(newmem942)
+0049C22B:
+cmp ebx,50
+jg 0049C246
+//Alt: db 83 FB 50 7F 16
+dealloc(newmem899)
+0049C1EC:
+cmp ebx,50
+jg 0049C209
+//Alt: db 83 FB 50 7F 18
+dealloc(newmem857)
+0049C1AA:
+cmp ebx,50
+jg 0049C1C7
+//Alt: db 83 FB 50 7F 18
+dealloc(newmem816)
+0049C15A:
+cmp ebx,50
+jg 0049C177
+//Alt: db 83 FB 50 7F 18
+dealloc(newmem776)
+0049C10D:
+cmp ebx,50
+jg 0049C12A
+//Alt: db 83 FB 50 7F 18
+dealloc(newmem737)
+0049C0B4:
+cmp ebx,50
+jg 0049C0D1
+//Alt: db 83 FB 50 7F 18
+dealloc(newmem699)
+0049C052:
+cmp ebx,50
+jg 0049C084
+//Alt: db 83 FB 50 7F 2D
+dealloc(newmem662)
+0049C013:
+cmp ebx,50
+jg 0049C030
+//Alt: db 83 FB 50 7F 18
+dealloc(newmem626)
+0049BFD1:
+cmp ebx,50
+jg 0049BFEE
+//Alt: db 83 FB 50 7F 18
+dealloc(newmem591)
+0049BF81:
+cmp ebx,50
+jg 0049BF9E
+//Alt: db 83 FB 50 7F 18
+dealloc(newmem557)
+0049BF34:
+cmp ebx,50
+jg 0049BF51
+//Alt: db 83 FB 50 7F 18
+dealloc(newmem524)
+00547019:
+cmp eax,50
+jl 00547125
+//Alt: db 83 F8 50 0F 8C 03 01 00 00
+dealloc(newmem492)
+0049241B:
+cmp edx,50
+jg 00492430
+//Alt: db 83 FA 50 7F 10
+dealloc(newmem461)
+00461322:
+cmp edx,50
+jg 0046133C
+//Alt: db 83 FA 50 7F 15
+dealloc(newmem431)
+004612F7:
+cmp edx,50
+jg 00461310
+//Alt: db 83 FA 50 7F 14
+dealloc(newmem402)
+004612CC:
+cmp edx,50
+jg 004612E5
+//Alt: db 83 FA 50 7F 14
+dealloc(newmem374)
+00467BFC:
+cmp ecx,50
+jg 00467C11
+//Alt: db 83 F9 50 7F 10
+dealloc(newmem347)
+0046523F:
+cmp ecx,50
+jg 00465252
+//Alt: db 83 F9 50 7F 0E
+dealloc(newmem321)
+"ps_game.exe"+60C55:
+cmp ecx,50
+jg 00460C6B
+//Alt: db 83 F9 50 7F 11
+dealloc(newmem296)
+004651EA:
+cmp ecx,50
+jg 004651FD
+//Alt: db 83 F9 50 7F 0E
+dealloc(newmem272)
+0046515F:
+cmp ecx,50
+jg 00465172
+//Alt: db 83 F9 50 7F 0E
+dealloc(newmem249)
+00464FF5:
+cmp ecx,50
+jg 00465007
+//Alt: db 83 F9 50 7F 0D
+dealloc(newmem227)
+004613F9:
+cmp ecx,50
+jg 00461416
+//Alt: db 83 F9 50 7F 18
+dealloc(newmem206)
+004613AC:
+cmp ecx,50
+jg 004613C9
+//Alt: db 83 F9 50 7F 18
+dealloc(newmem186)
+0046135B:
+cmp ecx,50
+jg 00461382
+//Alt: db 83 F9 50 7F 22
+dealloc(newmem167)
+"ps_game.exe"+60CB5:
+cmp ecx,50
+jg 00460CCB
+//Alt: db 83 F9 50 7F 11
+dealloc(newmem149)
+"ps_game.exe"+ 60C85:
+cmp ecx,50
+jg 00460C9B
+//Alt: db 83 F9 50 7F 11
+dealloc(newmem132)
+"ps_game.exe"+60C55:
+cmp ecx,50
+jg 00460C6B
+//Alt: db 83 F9 50 7F 11
+dealloc(newmem116)
+"ps_game.exe"+9BEDB:
+cmp ebx,50
+jg 0049BEF8
+//Alt: db 83 FB 50 7F 18
+dealloc(newmem101)
+"ps_game.exe"+9BE00:
+cmp ebx,50
+jg 0049BE19
+//Alt: db 83 FB 50 7F 14
+dealloc(newmem87)
+"ps_game.exe"+9BDCF:
+cmp ebx,50
+jg 0049BDE8
+//Alt: db 83 FB 50 7F 14
+dealloc(newmem74)
+"ps_game.exe"+9BD9E:
+cmp ebx,50
+jg 0049BDB7
+//Alt: db 83 FB 50 7F 14
+dealloc(newmem62)
+"ps_game.exe"+9B872:
+cmp ebx,50
+jg 0049B88F
+//Alt: db 83 FB 50 7F 18
+dealloc(newmem51)
+"ps_game.exe"+9B81E:
+cmp ebx,50
+jg 0049B83B
+//Alt: db 83 FB 50 7F 18
+dealloc(newmem41)
+"ps_game.exe"+9B7C2:
+cmp ebx,50
+jg 0049B7DF
+//Alt: db 83 FB 50 7F 18
+dealloc(newmem32)
+"ps_game.exe"+9B68E:
+cmp ebx,50
+jg 0049B6AB
+//Alt: db 83 FB 50 7F 18
+dealloc(newmem24)
+"ps_game.exe"+9B63A:
+cmp ebx,50
+jg 0049B657
+//Alt: db 83 FB 50 7F 18
+dealloc(newmem17)
+"ps_game.exe"+9B5DE:
+cmp ebx,50
+jg 0049B5FB
+//Alt: db 83 FB 50 7F 18
+dealloc(newmem11)
+"ps_game.exe"+80FC4:
+cmp ebx,50
+jl 00480FB3
+//Alt: db 83 FB 50 7C EA
+dealloc(newmem6)
+0046143E:
+cmp eax,50
+jg 0046145A
+//Alt: db 83 F8 50 7F 17
+dealloc(newmem2)
+"ps_game.exe"+6507D:
+cmp ax,0050
+jae 00465222
+//Alt: db 66 3D 50 00 0F 83 9B 01 00 00
+dealloc(newmem)
+"ps_game.exe"+651D9:
+cmp ax,0050
+jae ps_game.exe+6522B
+//Alt: db 66 3D 50 00 73 4C
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

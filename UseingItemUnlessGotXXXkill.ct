@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable>
+  <CheatEntries>
+    <CheatEntry>
+      <ID>20</ID>
+      <Description>"UseingItemUnlessGotXXXkill"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048) //2048 enough dont change
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+cmp byte ptr [ebx+0x40],(int)100 //item type
+jne originalcode
+cmp byte ptr [ebx+0x41],(int)1   //item id
+jne originalcode
+
+cmp dword ptr [ebp+148],0x50  //kills: plz use hex format
+jl ps_game.exe+7469F
+
+
+
+
+
+
+originalcode:
+cmp byte ptr ds:[ebx+0x42],0x0
+je ps_game.exe+7469F
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+72E1A:
+jmp newmem
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+72E1A:
+je ps_game.exe+7469F
+//Alt: db 0F 84 7F 18 00 00
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

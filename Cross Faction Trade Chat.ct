@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="16">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>6</ID>
+      <Description>"Cross Faction Trade Chat"</Description>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+00420E44:
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+
+[DISABLE]
+
+00420E44:
+mov dl,[esp+14]
+cmp dl,[ecx+0000012D]
+jne 00420EDE
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry>
+      <Description>Change of jne ps_game.CZone::SendAllCountry+71</Description>
+      <Address>0042053B</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>2053B</ModuleNameOffset>
+      <Before>
+        <Byte>91</Byte>
+        <Byte>2D</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>75</Byte>
+        <Byte>14</Byte>
+      </Actual>
+      <After>
+        <Byte>85</Byte>
+        <Byte>C0</Byte>
+        <Byte>74</Byte>
+        <Byte>08</Byte>
+        <Byte>8D</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Change of mov dl,[eax+0000012D]</Description>
+      <Address>00471111</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>71111</ModuleNameOffset>
+      <Before>
+        <Byte>84</Byte>
+        <Byte>0D</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>8A</Byte>
+        <Byte>90</Byte>
+        <Byte>2D</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>3A</Byte>
+        <Byte>93</Byte>
+        <Byte>2D</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Change of cmp dl,[ebx+0000012D]</Description>
+      <Address>00471117</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>71117</ModuleNameOffset>
+      <Before>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+      </Before>
+      <Actual>
+        <Byte>3A</Byte>
+        <Byte>93</Byte>
+        <Byte>2D</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>0F</Byte>
+        <Byte>85</Byte>
+        <Byte>FB</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Change of jne ps_game.CUser::PacketAdminChat+38E</Description>
+      <Address>0047111D</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>7111D</ModuleNameOffset>
+      <Before>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+      </Before>
+      <Actual>
+        <Byte>0F</Byte>
+        <Byte>85</Byte>
+        <Byte>FB</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>8D</Byte>
+        <Byte>83</Byte>
+        <Byte>88</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Change of jne ps_game.CZone::PSendAllCountry+DE</Description>
+      <Address>00420E4E</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>20E4E</ModuleNameOffset>
+      <Before>
+        <Byte>91</Byte>
+        <Byte>2D</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>0F</Byte>
+        <Byte>85</Byte>
+        <Byte>8A</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>85</Byte>
+        <Byte>C0</Byte>
+        <Byte>74</Byte>
+        <Byte>08</Byte>
+        <Byte>8D</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+</CheatTable>

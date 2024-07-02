@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="24">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>18</ID>
+      <Description>"level attack"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(AttackIllegal)
+label(AttackLegal)
+label(originalcode)
+label(exit)
+label(newcode)
+newmem:
+cmp byte ptr[edx+160],(int)0//MapID
+je newcode
+cmp byte ptr[edx+160],(int)2//MapID
+je newcode
+cmp byte ptr[edx+160],(int)3//MapID
+je newcode
+cmp byte ptr[edx+160],(int)4//MapID
+je newcode
+jmp originalcode
+newcode:
+push ebx
+movzx esi byte ptr [edx+136]
+movzx ebx,byte ptr [eax+136]
+cmp ebx,esi                    //level equal
+pop ebx
+jg AttackIllegal
+AttackLegal:
+jmp 00457e35
+
+
+
+AttackIllegal:                //eax=main
+mov byte ptr [eax+1544],0
+jmp 00457e39
+
+originalcode:
+mov dl,[edx+0000012D]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+57E27:
+jmp newmem
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+57E27:
+mov dl,[edx+0000012D]
+//Alt: db 8A 92 2D 01 00 00
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

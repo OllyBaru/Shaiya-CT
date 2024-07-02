@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="21">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Capital Recall Rune"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+// Capital Spawn Points
+
+// Light
+0056E608:
+dd #35 // MapID
+
+dd (float)0.0 // X
+dd (float)0.0 // Y
+dd (float)0.0 // Z
+
+// Fury
+0056E618:
+dd #36 // MapID
+
+dd (float)0.0 // X
+dd (float)0.0 // Y
+dd (float)0.0 // Z
+
+[DISABLE]
+
+0056E608:
+dd 00000023
+
+dd 441277AE
+dd 41D80000
+dd 43607D71
+
+0056E618:
+dd 00000024
+
+dd 44094666
+dd 42280000
+dd 43A2B70A
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Auction House Recall Rune"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+// Light Auction House Spawn Points
+
+// Light
+0056E628:
+dd #42 // MapID
+
+dd (float)0.0 // X
+dd (float)0.0 // Y
+dd (float)0.0 // Z
+
+// Fury
+0056E638:
+dd #42 // MapID
+
+dd (float)0.0 // X
+dd (float)0.0 // Y
+dd (float)0.0 // Z
+
+[DISABLE]
+
+0056E628:
+dd 0000002A
+
+dd 429D3852
+dd 4175C28F
+dd 41DF999A
+
+0056E638:
+dd 0000002A
+
+dd 41BB1EB8
+dd 4175C28F
+dd 42D4CCCD
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>14</ID>
+      <Description>"Arena Recall Rune"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+// Arena Spawn Points
+
+// Light
+0056E648:
+dd #40 // MapID
+
+dd (float)0.0 // X
+dd (float)0.0 // Y
+dd (float)0.0 // Z
+
+// Fury
+0056E658:
+dd #40 // MapID
+
+dd (float)0.0 // X
+dd (float)0.0 // Y
+dd (float)0.0 // Z
+
+[DISABLE]
+
+0056E648:
+dd 00000028
+
+dd 43000000
+dd 40600000
+dd 42A40000
+
+0056E658:
+dd 00000028
+
+dd 42680000
+dd 46600000
+dd 42A40000
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>23</ID>
+      <Description>"Guild House Recall Rune"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+// Guild House Spawn Points
+
+// Light
+0056E688:
+dd #51 // MapID
+
+dd (float)0.0 // X
+dd (float)0.0 // Y
+dd (float)0.0 // Z
+
+// Fury
+0056E698:
+dd #52 // MapID
+
+dd (float)0.0 // X
+dd (float)0.0 // Y
+dd (float)0.0 // Z
+
+[DISABLE]
+
+0056E688:
+dd 00000033
+
+dd 43F5BEB8
+dd 42275C29
+dd 43A3251F
+
+0056E698:
+dd 00000034
+
+dd 43F12F5C
+dd 42275C29
+dd 43A0F47B
+
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

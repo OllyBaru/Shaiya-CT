@@ -1,0 +1,893 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="18">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"Important Pour le Server"</Description>
+      <LastState Value="" Activated="0" RealAddress="00000000"/>
+      <Color>80000008</Color>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1</ID>
+          <Description>"Drop Fix Cape/Helmet"</Description>
+          <LastState Activated="0"/>
+          <Color>80000008</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>// Credits to Eric-Dutra16
+[ENABLE]
+004BAFC8:
+db 90 90 90 90 90 90 90 90 90
+
+004BAFD1:
+db 90 90 90 90 90 90 90 90 90
+
+00473BBD:
+db 90 90 90 90 90 90 90 90 90 90 90 90 90
+
+[DISABLE]
+004BAFC8:
+cmp eax,10
+je 004BB47A
+
+004BAFD1:
+cmp eax,18
+je 004BB47A
+
+00473BBD:
+cmp dword ptr [eax+000000A0],18
+je 0047468A
+		
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>0</ID>
+          <Description>"Fix Enchant Crash Hack"</Description>
+          <LastState Activated="0"/>
+          <Color>80000008</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+label(returnhere)
+
+newmem:
+movzx eax,byte ptr [ebp+04]
+cmp eax,5
+jnb 00460523
+lea edx,[eax+eax*2]
+movzx eax,byte ptr [ebp+05]
+cmp eax,18
+jnb 00460523
+jmp returnhere
+
+0045FBB3:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+
+0045FBB3:
+movzx eax,byte ptr [ebp+04]
+lea edx,[eax+eax*2]
+movzx eax,byte ptr [ebp+05]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>14</ID>
+          <Description>"GM both faction chats"</Description>
+          <LastState Activated="0"/>
+          <Color>80000008</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp word [ecx+5808],0B
+JL "ps_game.exe"+27944
+
+originalcode:
+cmp dl,[ecx+0000012D]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+27938:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+27938:
+cmp dl,[ecx+0000012D]
+//Alt: db 3A 91 2D 01 00 00
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"Cross Faction"</Description>
+      <LastState Value="" Activated="0" RealAddress="00000000"/>
+      <Color>80000008</Color>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>19</ID>
+          <Description>"Cross Faction Inspect"</Description>
+          <LastState Activated="0"/>
+          <Color>80000008</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+00477d49:
+db 90 90 90 90 90 90
+
+
+
+[DISABLE]
+00477d49:
+db 0F 85 F9 02 00 00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>6</ID>
+          <Description>"Cross Faction Trade Chat"</Description>
+          <LastState Activated="0"/>
+          <Color>80000008</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+00420E44:
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+
+[DISABLE]
+
+00420E44:
+mov dl,[esp+14]
+cmp dl,[ecx+0000012D]
+jne 00420EDE
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>21</ID>
+          <Description>"Cross Faction Whisper"</Description>
+          <LastState Activated="0"/>
+          <Color>80000008</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+0047f629:
+db 90 90 90 90 90 90
+
+0047ff69:
+db 90 90 90 90 90 90
+
+
+[DISABLE]
+0047f629:
+db 0F 85 DF 00 00 00
+
+0047ff69:
+db 0F 85 DF 00 00 00
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>25</ID>
+      <Description>"Lapisia"</Description>
+      <LastState Value="" Activated="0" RealAddress="00000000"/>
+      <Color>80000008</Color>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>26</ID>
+          <Description>"Perfect lapisia depending on TypeID"</Description>
+          <LastState Activated="0"/>
+          <Color>80000008</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>// Credits to Eric-Dutra16
+[ENABLE]
+alloc(newmem2,2048)
+alloc(typeid,4)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2:
+push eax
+mov eax,[edx+41]
+mov [typeid],eax
+pop eax
+
+originalcode2:
+cmp byte ptr [edx+40],5F
+jne ps_game.exe+6CAB7
+
+exit2:
+jmp returnhere2
+
+"ps_game.exe"+6C9FE:
+jmp newmem2
+nop
+nop
+nop
+nop
+nop
+returnhere2:
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+cmp byte ptr [typeid],(int)2 // typeid perfect lapisia
+je 0046CD83
+cmp byte ptr [typeid],(int)7 // typeid perfect lapisia
+je 0046CD83
+
+originalcode:
+cmp esi,eax
+jae ps_game.exe+6D11C
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6CD7B:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+[DISABLE]
+dealloc(typeid)
+dealloc(newmem2)
+"ps_game.exe"+6C9FE:
+cmp byte ptr [edx+40],5F
+jne ps_game.exe+6CAB7
+
+dealloc(newmem)
+"ps_game.exe"+6CD7B:
+cmp esi,eax
+jae ps_game.exe+6D11C
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>27</ID>
+          <Description>"Perfect lapisia Shaiya OS"</Description>
+          <LastState Activated="0"/>
+          <Color>80000008</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>// Credits to Eric-Dutra16
+[ENABLE]
+alloc(newmem2,2048)
+alloc(typeid,4)
+alloc(qnt,4)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2:
+push eax
+mov eax,[edx+41]
+mov [typeid],eax
+pop eax
+
+originalcode2:
+cmp byte ptr [edx+40],5F
+jne ps_game.exe+6CAB7
+
+exit2:
+jmp returnhere2
+
+"ps_game.exe"+6C9FE:
+jmp newmem2
+nop
+nop
+nop
+nop
+nop
+returnhere2:
+
+alloc(newmem3,2048)
+label(returnhere3)
+label(originalcode3)
+label(exit3)
+
+newmem3:
+mov [qnt],al
+cmp byte ptr [qnt],#50
+jl originalcode3
+sub [qnt],#50
+
+originalcode3:
+mov [esp+13],al
+cmp al,32
+
+exit3:
+jmp returnhere3
+
+"ps_game.exe"+6CCB0:
+jmp newmem3
+nop
+returnhere3:
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(qnt1)
+label(qnt2)
+label(qnt3)
+label(qnt4)
+label(qnt5)
+label(qnt6)
+label(qnt7)
+label(qnt8)
+label(qnt9)
+label(qnt10)
+label(qnt11)
+label(qnt12)
+label(qnt13)
+label(qnt14)
+label(qnt15)
+label(qnt16)
+label(qnt17)
+label(qnt18)
+label(qnt19)
+label(qnt20)
+label(exit)
+
+newmem:
+cmp byte ptr [typeid],#22
+je qnt1
+cmp byte ptr [typeid],#42
+je qnt1
+cmp byte ptr [typeid],#23
+je qnt2
+cmp byte ptr [typeid],#43
+je qnt2
+cmp byte ptr [typeid],#24
+je qnt3
+cmp byte ptr [typeid],#44
+je qnt3
+cmp byte ptr [typeid],#25
+je qnt4
+cmp byte ptr [typeid],#45
+je qnt4
+cmp byte ptr [typeid],#26
+je qnt5
+cmp byte ptr [typeid],#46
+je qnt5
+cmp byte ptr [typeid],#27
+je qnt6
+cmp byte ptr [typeid],#47
+je qnt6
+cmp byte ptr [typeid],#28
+je qnt7
+cmp byte ptr [typeid],#48
+je qnt7
+cmp byte ptr [typeid],#29
+je qnt8
+cmp byte ptr [typeid],#49
+je qnt8
+cmp byte ptr [typeid],#30
+je qnt9
+cmp byte ptr [typeid],#50
+je qnt9
+cmp byte ptr [typeid],#31
+je qnt10
+cmp byte ptr [typeid],#51
+je qnt10
+cmp byte ptr [typeid],#32
+je qnt11
+cmp byte ptr [typeid],#52
+je qnt11
+cmp byte ptr [typeid],#33
+je qnt12
+cmp byte ptr [typeid],#53
+je qnt12
+cmp byte ptr [typeid],#34
+je qnt13
+cmp byte ptr [typeid],#54
+je qnt13
+cmp byte ptr [typeid],#35
+je qnt14
+cmp byte ptr [typeid],#55
+je qnt14
+cmp byte ptr [typeid],#36
+je qnt15
+cmp byte ptr [typeid],#56
+je qnt15
+cmp byte ptr [typeid],#37
+je qnt16
+cmp byte ptr [typeid],#57
+je qnt16
+cmp byte ptr [typeid],#38
+je qnt17
+cmp byte ptr [typeid],#58
+je qnt17
+cmp byte ptr [typeid],#39
+je qnt18
+cmp byte ptr [typeid],#59
+je qnt18
+cmp byte ptr [typeid],#40
+je qnt19
+cmp byte ptr [typeid],#60
+je qnt19
+cmp byte ptr [typeid],#41
+je qnt20
+cmp byte ptr [typeid],#61
+je qnt20
+
+originalcode:
+cmp esi,eax
+jae ps_game.exe+6D11C
+jmp exit
+
+qnt1:
+cmp byte ptr [qnt],0
+je 0046CD83
+jmp originalcode
+
+qnt2:
+cmp byte ptr [qnt],1
+je 0046CD83
+jmp originalcode
+
+qnt3:
+cmp byte ptr [qnt],2
+je 0046CD83
+jmp originalcode
+
+qnt4:
+cmp byte ptr [qnt],3
+je 0046CD83
+jmp originalcode
+
+qnt5:
+cmp byte ptr [qnt],4
+je 0046CD83
+jmp originalcode
+
+qnt6:
+cmp byte ptr [qnt],5
+je 0046CD83
+jmp originalcode
+
+qnt7:
+cmp byte ptr [qnt],6
+je 0046CD83
+jmp originalcode
+
+qnt8:
+cmp byte ptr [qnt],7
+je 0046CD83
+jmp originalcode
+
+qnt9:
+cmp byte ptr [qnt],8
+je 0046CD83
+jmp originalcode
+
+qnt10:
+cmp byte ptr [qnt],9
+je 0046CD83
+jmp originalcode
+
+qnt11:
+cmp byte ptr [qnt],#10
+je 0046CD83
+jmp originalcode
+
+qnt12:
+cmp byte ptr [qnt],#11
+je 0046CD83
+jmp originalcode
+
+qnt13:
+cmp byte ptr [qnt],#12
+je 0046CD83
+jmp originalcode
+
+qnt14:
+cmp byte ptr [qnt],#13
+je 0046CD83
+jmp originalcode
+
+qnt15:
+cmp byte ptr [qnt],#14
+je 0046CD83
+jmp originalcode
+
+qnt16:
+cmp byte ptr [qnt],#15
+je 0046CD83
+jmp originalcode
+
+qnt17:
+cmp byte ptr [qnt],#16
+je 0046CD83
+jmp originalcode
+
+qnt18:
+cmp byte ptr [qnt],#17
+je 0046CD83
+jmp originalcode
+
+qnt19:
+cmp byte ptr [qnt],#18
+je 0046CD83
+jmp originalcode
+
+qnt20:
+cmp byte ptr [qnt],#19
+je 0046CD83
+jmp originalcode
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6CD7B:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+[DISABLE]
+dealloc(typeid)
+dealloc(qnt)
+dealloc(newmem3)
+"ps_game.exe"+6CCB0:
+mov [esp+13],al
+cmp al,32
+
+dealloc(newmem2)
+"ps_game.exe"+6C9FE:
+cmp byte ptr [edx+40],5F
+jne ps_game.exe+6CAB7
+
+dealloc(newmem)
+"ps_game.exe"+6CD7B:
+cmp esi,eax
+jae ps_game.exe+6D11C
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>28</ID>
+          <Description>"Perfect lapisia 0 &gt; [20]"</Description>
+          <LastState Activated="0"/>
+          <Color>80000008</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>// Credits to Eric-Dutra16
+[ENABLE]
+"ps_game.exe"+6CD97:
+mov al,#20
+
+"ps_game.exe"+6CD7D:
+db 90 90 90 90 90 90
+
+[DISABLE]
+"ps_game.exe"+6CD97:
+inc al
+
+"ps_game.exe"+6CD7D:
+jae "ps_game.exe"+6D11C
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>22</ID>
+      <Description>"Autre Script"</Description>
+      <LastState Value="" Activated="0" RealAddress="00000000"/>
+      <Color>80000008</Color>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>23</ID>
+          <Description>"Disable charging value enchant"</Description>
+          <LastState Activated="0"/>
+          <Color>000000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+0045FC73:
+nop
+nop
+nop
+nop
+nop
+nop
+
+
+[DISABLE]
+
+0045FC73:
+mov [ebx+00000140],ecx
+
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>24</ID>
+          <Description>"Disable viewing of buffs"</Description>
+          <LastState Activated="0"/>
+          <Color>80000008</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+/////////////////////////////script by -AMI-/////////////////////////////
+alloc(newmem,2048)
+
+newmem:
+
+"ps_game.exe"+91752:
+jmp 00491792
+nop
+nop
+nop
+nop
+nop
+"ps_game.exe"+56C95:
+nop
+"ps_game.exe"+56CA1:
+nop
+"ps_game.exe"+56CA6:
+nop
+nop
+nop
+nop
+nop
+
+
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+91752:
+push ebx
+push esi
+call ps_game.exe+56CF0
+
+"ps_game.exe"+56C95:
+push ecx
+"ps_game.exe"+56CA1:
+push edx
+"ps_game.exe"+56CA6:
+call 004ED0E0
+//Alt: db 53 56 E8 97 55 FC FF
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17</ID>
+          <Description>"Union Summon Raid"</Description>
+          <LastState Activated="0"/>
+          <Color>80000008</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(ItemSummonRaid)
+label(checkcountry)
+label(failed)
+label(exit)
+
+newmem:
+call ps_game.exe+4ECF0
+//esi=target player,edi=source player
+//check map
+originalcode:
+pushad
+movzx eax,word ptr [esi+0x160]
+movzx ebx,word ptr [edi+0x160]
+cmp eax,(int)45
+je checkcountry
+cmp ebx,(int)45
+je checkcountry
+
+jmp ItemSummonRaid
+
+//checkcountry and check if same map
+checkcountry:
+cmp eax,ebx        //if they are in the same map which we speicifys
+je ItemSummonRaid
+
+movzx eax,byte ptr [esi+0x12d]
+movzx ebx,byte ptr [edi+0x12d]
+cmp eax,ebx
+jne failed
+
+/*
+push eax               //party table
+push ecx               //leader id
+mov eax,[edi+17f4]
+mov ecx,[eax+0c]       //leader id
+imul ecx,ecx,8
+add  ecx,18
+mov  ecx,[eax+ecx]   //leader address
+cmp edi,ecx          //compare address check is leader
+pop ecx
+pop eax
+je 0049e4ea        //if yes
+*/
+
+ItemSummonRaid:
+
+mov eax,dword ptr ds:[edi+0x58FC]
+mov ecx,dword ptr ds:[edi+0x5900]
+lea eax,dword ptr ds:[eax+eax*2]     // eax=bag,ecx=slot
+lea edx,dword ptr ds:[ecx+eax*8]
+imul edx,edx,4
+mov eax,dword ptr ds:[edi+edx+0x1C0]
+mov eax,dword ptr ds:[eax+30]
+cmp [eax],(int)100045                 //orginal item id
+popad
+jne 0049e4ea   //success addr
+/*
+mov eax,dword ptr ds:[eax+0x30]
+cmp byte ptr ds:[eax+0x46],0x1F
+*/
+
+
+
+exit:
+jmp returnhere
+
+failed:
+popad
+jmp 0049E517
+
+
+
+"ps_game.exe"+9E4E1:
+
+jmp newmem
+
+returnhere:
+
+[DISABLE]
+
+//code from here till the end of the code will be used to disable the cheat
+
+dealloc(newmem)
+
+"ps_game.exe"+9E4E1:
+
+call ps_game.exe+4ECF0
+
+//Alt: db E8 0A 08 FB FF
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>29</ID>
+          <Description>"Removing pid, ress requirements"</Description>
+          <LastState Activated="0"/>
+          <Color>80000008</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//pid
+"ps_game.exe"+670E9:
+jmp ps_game.exe+672F7
+nop
+
+//ress
+"ps_game.exe"+668B7:
+jmp ps_game.exe+66AC4
+nop
+
+"ps_game.exe"+662DF:
+jmp ps_game.exe+6644A
+nop
+
+//link
+"ps_game.exe"+6E5D0:
+db 90 90 90 90 90 90
+
+//enchant
+"ps_game.exe"+6CCEA:
+db 90 90 90 90 90 90
+
+//repair items
+"ps_game.exe"+71DB2:
+db 90 90 90 90 90 90
+
+//extract
+"ps_game.exe"+70602:
+db 90 90 90 90 90 90
+
+[DISABLE]
+"ps_game.exe"+670E9:
+jne ps_game.exe+672F7
+
+"ps_game.exe"+668B7:
+jne ps_game.exe+66AC4
+
+"ps_game.exe"+662DF:
+jne ps_game.exe+6644A
+
+"ps_game.exe"+6E5D0:
+mov [ebp+00000140],eax
+
+"ps_game.exe"+6CCEA:
+mov [ebp+00000140],ecx
+
+"ps_game.exe"+71DB2:
+mov [ebp+00000140],ecx
+
+"ps_game.exe"+70602:
+sub [edi+00000140],edx
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>30</ID>
+      <Description>"Securité"</Description>
+      <LastState Value="" Activated="0" RealAddress="00000000"/>
+      <Color>80000008</Color>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>31</ID>
+          <Description>"GM ability to attack both factions"</Description>
+          <LastState Activated="0"/>
+          <Color>80000008</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(exit)
+
+newmem:
+cmp byte ptr [eax+5808],#10
+jb 00457E35
+cmp dl,[eax+0000012D]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+57E2D:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+57E2D:
+cmp dl,[eax+0000012D]
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

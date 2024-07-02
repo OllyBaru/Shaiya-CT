@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="27">
+  <Forms>
+    <UDF1 Class="TCEForm" Encoding="Ascii85">D]H=@2nldAU:MM2b.}cxWeIh0Gi32eO*FuxWMuP5%{mcIVgA6t9Fkwa6vP@ynNpI$=7,z9n3I!V=oyOr.Fg)[TFlAim^X9E:#-P1m%[;6SXz:FoLQC1$=lw3P=DLS#_Ac)!zDjCJ2/l;m6L%100</UDF1>
+  </Forms>
+  <CheatEntries>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"Party Self"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+alloc(newmem1,2048)
+label(returnhere1)
+label(originalcode1)
+label(exit1)
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+cmp [ebp+18],ecx
+je 0044F557
+originalcode:
+cmp dword ptr [ebp+10],07
+mov [esp+20],ebx
+jl ps_game.exe+4F246
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+4F239:
+jmp newmem
+nop
+returnhere:
+
+
+"ps_game.exe"+754E2:
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+ newmem1: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov eax,01
+cmp [esi+10],eax
+jle 0044EC8C
+originalcode1:
+xor eax,eax
+cmp [esi+10],eax
+
+exit1:
+jmp returnhere1
+
+"ps_game.exe"+4EC70:
+jmp newmem1
+returnhere1:
+[DISABLE]
+"ps_game.exe"+4F239:
+mov [esp+20],ebx
+jl ps_game.exe+4F246
+
+"ps_game.exe"+754E2:
+cmp ebx,[ebp+000000DC]
+je ps_game.exe+75505
+
+"ps_game.exe"+4EC70:
+xor eax,eax
+cmp [esi+10],eax
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry>
+      <Description>Code :lock xadd [ecx],eax</Description>
+      <Address>7586BB68</Address>
+      <ModuleName>kernel32.dll</ModuleName>
+      <ModuleNameOffset>4BB68</ModuleNameOffset>
+      <Before>
+        <Byte>04</Byte>
+        <Byte>8B</Byte>
+        <Byte>44</Byte>
+        <Byte>24</Byte>
+        <Byte>08</Byte>
+      </Before>
+      <Actual>
+        <Byte>F0</Byte>
+        <Byte>0F</Byte>
+        <Byte>C1</Byte>
+        <Byte>01</Byte>
+      </Actual>
+      <After>
+        <Byte>C2</Byte>
+        <Byte>08</Byte>
+        <Byte>00</Byte>
+        <Byte>90</Byte>
+        <Byte>90</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+</CheatTable>

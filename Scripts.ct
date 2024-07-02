@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="18">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Script"</Description>
+      <LastState Activated="1"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//pid
+"ps_game.exe"+670E9:
+jmp ps_game.exe+672F7
+nop
+
+//ress
+"ps_game.exe"+668B7:
+jmp ps_game.exe+66AC4
+nop
+
+"ps_game.exe"+662DF:
+jmp ps_game.exe+6644A
+nop
+
+//link
+"ps_game.exe"+6E5D0:
+db 90 90 90 90 90 90
+
+//enchant
+"ps_game.exe"+6CCEA:
+db 90 90 90 90 90 90
+
+//repair items
+"ps_game.exe"+71DB2:
+db 90 90 90 90 90 90
+
+//extract
+"ps_game.exe"+70602:
+db 90 90 90 90 90 90
+
+[DISABLE]
+"ps_game.exe"+670E9:
+jne ps_game.exe+672F7
+
+"ps_game.exe"+668B7:
+jne ps_game.exe+66AC4
+
+"ps_game.exe"+662DF:
+jne ps_game.exe+6644A
+
+"ps_game.exe"+6E5D0:
+mov [ebp+00000140],eax
+
+"ps_game.exe"+6CCEA:
+mov [ebp+00000140],ecx
+
+"ps_game.exe"+71DB2:
+mov [ebp+00000140],ecx
+
+"ps_game.exe"+70602:
+sub [edi+00000140],edx
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry>
+      <Description>Change of mov [ebp+00000140],eax</Description>
+      <Address>0046E5D0</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>6E5D0</ModuleNameOffset>
+      <Before>
+        <Byte>09</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>2B</Byte>
+        <Byte>C6</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>85</Byte>
+        <Byte>40</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>44</Byte>
+        <Byte>24</Byte>
+        <Byte>1C</Byte>
+        <Byte>8B</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Change of mov [ebp+00000140],ecx</Description>
+      <Address>0046CCEA</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>6CCEA</ModuleNameOffset>
+      <Before>
+        <Byte>00</Byte>
+        <Byte>2B</Byte>
+        <Byte>C8</Byte>
+        <Byte>8B</Byte>
+        <Byte>C5</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>8D</Byte>
+        <Byte>40</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>E8</Byte>
+        <Byte>EB</Byte>
+        <Byte>DD</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Change of mov [ebp+00000140],ecx</Description>
+      <Address>00471DB2</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>71DB2</ModuleNameOffset>
+      <Before>
+        <Byte>85</Byte>
+        <Byte>2C</Byte>
+        <Byte>58</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>8D</Byte>
+        <Byte>40</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>BA</Byte>
+        <Byte>0B</Byte>
+        <Byte>07</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Change of sub [edi+00000140],edx</Description>
+      <Address>00470602</Address>
+      <ModuleName>ps_game.exe</ModuleName>
+      <ModuleNameOffset>70602</ModuleNameOffset>
+      <Before>
+        <Byte>8F</Byte>
+        <Byte>F8</Byte>
+        <Byte>12</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>29</Byte>
+        <Byte>97</Byte>
+        <Byte>40</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>97</Byte>
+        <Byte>78</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+</CheatTable>

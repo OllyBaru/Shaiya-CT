@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="18">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"CrossFaction Trade"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+cmp byte [eax+164],(int)19   //allow mapid
+je 0046ed04
+cmp byte [eax+164],(int)83   //allow m;apid
+je 0046ed04
+
+
+originalcode:
+cmp cl,[ebx+0000012D]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6ECFC:
+jmp newmem
+nop
+returnhere:
+
+
+
+ 
+ 
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+6ECFC:
+cmp cl,[ebx+0000012D]
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"CrossFaction Whisper"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+cmp byte [eax+164],(int)19   //allow mapid
+je 00471123
+cmp byte [eax+164],(int)45   //allow m;apid
+je 00471123
+
+originalcode:
+cmp dl,[ebx+0000012D]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+71117:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+71117:
+cmp dl,[ebx+0000012D]
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>4</ID>
+      <Description>"CrossFaction Inspect"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,200)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+cmp byte [eax+164],(int)19   //allow mapid
+je 00469f82
+cmp byte [eax+164],(int)45   //allow m;apid
+je 00469f82
+
+originalcode:
+cmp dl,[eax+0000012D]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+69F76:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+69F76:
+cmp dl,[eax+0000012D]
+//Alt: db 3A 90 2D 01 00 00
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>9</ID>
+      <Description>"CrossFactionParty--All Ways"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+0046779b:      //menu "invite to party"
+jmp 004677A7
+
+
+004678cb:    //command "invite to party"
+jmp 004678D6
+
+00467f52:
+jmp 00467f67  //menu    "invite to raid"
+
+00467b8f:     //command "/join"
+jmp 00467ba2
+
+[DISABLE]
+0046779b:      //menu "invite to party"
+je 004677A7
+
+004678cb:      //command "invite to party"
+je 004678D6
+
+00467f52:     //menu    "invite to raid"
+je 00467F67
+
+00467b8f:    //command "/join"
+je 00467BA2
+
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

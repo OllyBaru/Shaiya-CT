@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="24">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>10</ID>
+      <Description>"FFA (39)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,204
+label(returnhere)
+label(AttackIllegal)
+label(AttackLegal)
+label(originalcode)
+label(exit)
+
+newmem:
+push ebx
+movzx esi byte ptr [edx+136]
+movzx ebx,byte ptr [eax+136]
+cmp esi,ebx                    //level equal
+pop ebx
+jne AttackIllegal
+
+cmp byte ptr [edx+160],(int)39  //map id
+jne originalcode
+
+
+AttackLegal:
+jmp 00457e35
+
+
+
+AttackIllegal:                //eax=main
+mov byte ptr [eax+1544],0
+jmp 00457e39
+
+originalcode:
+mov dl,[edx+0000012D]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+57E27:
+jmp newmem
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+57E27:
+mov dl,[edx+0000012D]
+//Alt: db 8A 92 2D 01 00 00
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

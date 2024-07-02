@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>756</ID>
+      <Description>"Prevent SQL Injection"</Description>
+      <Options moHideChildren="1" moManualExpandCollapse="1" moActivateChildrenAsWell="1" moAllowManualCollapseAndExpand="1"/>
+      <LastState Value="" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>757</ID>
+          <Description>"fix sql injection gm commands"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(exit)
+
+alloc(check_characters,512)
+//label(check_characters)
+label(escape)
+registersymbol(check_characters)
+
+newmem:
+call check_characters
+mov [edx+eax],cl
+inc eax
+test cl,cl
+
+exit:
+jmp returnhere
+
+check_characters:
+cmp cl,27 // '
+je escape
+ret
+
+escape:
+mov cl,20 // space
+ret
+
+"ps_game.exe"+80A62:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+unregistersymbol(check_characters)
+dealloc(check_characters)
+"ps_game.exe"+80A62:
+mov [edx+eax],cl
+inc eax
+test cl,cl
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>632</ID>
+          <Description>""NoticeWarning" (Credit: Cups)"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>// Disables the call to the database for /warning (fixes SQL injection via warning)
+[ENABLE]
+ps_game.exe+836C6:
+jmp ps_game.exe+841B8
+
+[DISABLE]
+ps_game.exe+836C6:
+mov ebx,[esp+18]
+push edi
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>6</ID>
+          <Description>""NoticeAdmin""</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,32)
+
+newmem:
+mov ebx,00571E2F
+jmp 004833C8
+
+00482E95:
+jmp newmem
+nop
+
+[DISABLE]
+dealloc(newmem)
+00482E95:
+push ebx
+mov ebx,00571E2F
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>758</ID>
+          <Description>""NoticeNormal""</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,32)
+
+newmem:
+mov ebx,00571E2F
+jmp 004833C8
+
+00482F96:
+jmp newmem
+nop
+
+[DISABLE]
+dealloc(newmem)
+00482F96:
+push ebx
+mov ebx,00571E2F
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>10</ID>
+          <Description>""NoticeTo""</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,32)
+
+newmem:
+mov ebx,[esp+20]
+jmp 004833C8
+
+004830AD:
+jmp newmem
+
+[DISABLE]
+dealloc(newmem)
+004830AD:
+push ebx
+mov ebx,[esp+20]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>759</ID>
+          <Description>""NoticeMap""</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,32)
+
+newmem:
+mov ebx,00571E2F
+jmp 004833C8
+
+004831A2:
+jmp newmem
+nop
+
+[DISABLE]
+dealloc(newmem)
+004831A2:
+push edi
+mov ebx,00571E2F
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>760</ID>
+          <Description>""NoticeCountry""</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,32)
+
+newmem:
+mov ebx,00571E2F
+jmp 004833C8
+
+004832AB:
+jmp newmem
+nop
+
+[DISABLE]
+dealloc(newmem)
+004832AB:
+push edi
+mov ebx,00571E2F
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>13</ID>
+          <Description>""NoticeAll""</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,32)
+
+newmem:
+mov ebx,00571E2F
+jmp 004833C8
+
+004833AA:
+jmp newmem
+nop
+
+[DISABLE]
+dealloc(newmem)
+004833AA:
+push edi
+mov ebx,00571E2F
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>0</ID>
+          <Description>"login crash fix"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+push eax
+mov ebx,ecx
+mov eax,esi
+cmp ecx,80
+jne ps_login.exe+4FAE
+jmp exit
+
+exit:
+jmp returnhere
+
+"ps_login.exe"+4E84:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_login.exe"+4E84:
+push eax
+mov ebx,ecx
+mov eax,esi
+//Alt: db 50 8B D9 8B C6
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>21</ID>
+          <Description>"PS_Login FLOOD FIX"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+nop 
+nop 
+mov ecx,[esi+00000168]
+
+exit:
+jmp returnhere
+
+"ps_login.exe"+11ABD:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_login.exe"+11ABD:
+nop 
+nop 
+mov ecx,[esi+00000168]
+//Alt: db 90 90 8B 8E 68 01 00 00
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

@@ -1,0 +1,1357 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="21">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"EP8"</Description>
+      <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <LastState Value="" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1</ID>
+          <Description>"auto stats"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+alloc(autostats,512)
+
+newmem:
+cmp word ptr [edi],0121
+jne 00474D75
+
+pushad
+mov word ptr [autostats],0120 // opcode
+mov eax,[edi+06]
+mov dword ptr [autostats+02],eax
+mov eax,[edi+0A]
+mov dword ptr [autostats+06],eax
+movzx ax, byte ptr [edi+0E]
+mov [autostats+0A],eax
+push 08
+lea ecx,[autostats]
+push ecx
+mov ecx,ebx
+call ps_game.exe+ED0E0
+popad
+
+originalcode:
+/*
+push esi
+push 09
+mov ecx,ebx
+*/
+
+exit:
+jmp 00474D75
+
+"ps_game.exe"+74D6B:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+dealloc(autostats)
+dealloc(newmem)
+"ps_game.exe"+74D6B:
+push esi
+push 09
+mov ecx,ebx
+
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>0</ID>
+          <Description>"bf btn"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+alloc(teste,512)
+alloc(espSaver,4)
+alloc(eaxSaver,4)
+alloc(coords,512)
+
+newmem:
+cmp word ptr [edi],0245
+jne 00477999
+
+pushad
+pushfd
+cmp byte ptr [edi+02],#18
+je mapa18
+cmp byte ptr [edi+02],#30
+je mapa30
+cmp byte ptr [edi+02],#00
+je mapa00
+cmp byte ptr [edi+02],#45
+je mapa45
+cmp byte ptr [edi+02],#70
+je mapa70
+cmp byte ptr [edi+02],#81
+je mapa81
+jmp sair
+
+mapa70:
+cmp word ptr [ebp+136],#30
+jle sair
+mov eax,#70
+cmp byte ptr [ebp+12D],01
+je mapa70dark
+// light
+mov [coords],(float)1478.987
+mov [coords+04],(float)33.160
+mov [coords+08],(float)168.046
+jmp continuar
+mapa70dark:
+// dark
+mov [coords],(float)162.900
+mov [coords+04],(float)39.140
+mov [coords+08],(float)163.973
+jmp continuar
+
+mapa81:
+cmp word ptr [ebp+136],#30
+jle sair
+mov eax,#81
+cmp byte ptr [ebp+12D],01
+je mapa81dark
+mov [coords],(float)347.893
+mov [coords+04],(float)16.910
+mov [coords+08],(float)46.397
+jmp continuar
+mapa81dark:
+mov [coords],(float)162.900
+mov [coords+04],(float)39.140
+mov [coords+08],(float)163.973
+jmp continuar
+
+mapa18:
+cmp word ptr [ebp+136],#15
+jg sair
+mov eax,#18
+cmp byte ptr [ebp+12D],01
+je mapa18dark
+mov [coords],(float)413.222
+mov [coords+04],(float)20.182
+mov [coords+08],(float)138.713
+jmp continuar
+mapa18dark:
+mov [coords],(float)162.900
+mov [coords+04],(float)39.140
+mov [coords+08],(float)163.973
+jmp continuar
+
+mapa30:
+jmp sair
+
+mapa00:
+jmp sair
+
+mapa45:
+jmp sair
+
+continuar:
+mov edi,ebp // pPointer precisa estar no edi
+movzx ecx,word ptr [edi+160]
+
+cmp eax,ecx
+je sair
+
+mov ebx,00
+mov edx,00
+
+push [coords+08]
+push [coords+04]
+push [coords]
+push eax
+call ps_game.exe+14760
+
+fld dword ptr [edi+000000D0]
+mov edx,[edi+000000DC]
+fstp dword ptr [teste+3c]
+fld dword ptr [edi+000000D4]
+mov ax,[edi+00000160]
+mov ecx,0000020B
+fstp dword ptr [teste+40]
+fld dword ptr [edi+000000D8]
+mov [teste+34],cx
+push 14
+fstp dword ptr [teste+44]
+lea ecx,[teste+34]
+mov [teste+36],edx
+mov [teste+3A],ax
+push ecx
+mov ecx,edi
+call ps_game.exe+ED0E0
+
+popfd
+popad
+
+originalcode:
+/*
+push 00
+push 09
+mov ecx,ebp
+*/
+
+exit:
+jmp 00477999
+
+sair:
+popfd
+popad
+jmp 00477999
+
+"ps_game.exe"+7798E:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(coords)
+dealloc(eaxSaver)
+dealloc(espSaver)
+dealloc(newmem)
+dealloc(teste)
+"ps_game.exe"+7798E:
+push 00
+push 09
+mov ecx,ebp
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"Remove Price"</Description>
+      <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <LastState Value="" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"lapis"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>//Author: Albert
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+mov ecx,0
+fstp qword ptr [esp+2B]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6F37E:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+"ps_game.exe"+6E5C0:
+ nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+ 
+[DISABLE]
+"ps_game.exe"+6E5C0:
+mov eax,[ebp+00000140]
+cmp eax,esi
+jb ps_game.exe+6EFC5
+sub eax,esi
+mov [ebp+00000140],eax
+"ps_game.exe"+6F37E:
+mov ecx,[esp+14]
+fstp qword ptr [esp+2B]
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>5</ID>
+          <Description>"lapisian"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>//Author: Albert
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov eax,00
+originalcode:
+mov ecx,[ebp+00000140]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6CCD4:
+jmp newmem
+nop
+returnhere:
+
+
+
+[DISABLE]
+"ps_game.exe"+6CCD4:
+mov ecx,[ebp+00000140]
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>6</ID>
+      <Description>"Enchant Materials"</Description>
+      <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <LastState Value="" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>7</ID>
+          <Description>"1"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+
+originalcode:
+
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6D5B9:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+6D5B9:
+call ps_game.exe+11710
+//Alt: db E8 52 41 FA FF
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>8</ID>
+          <Description>"2"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+
+originalcode:
+mov byte ptr ss:[esp+0xA2C],dl
+mov al,0x0
+jmp 0046cf11
+exit:
+jmp returnhere
+
+"ps_game.exe"+6CF03:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+6CF03:
+mov al,[ebx+05]
+mov [esp+00000A2C],dl
+//Alt: db 8A 43 05 88 94 24 2C 0A 00 00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>9</ID>
+          <Description>"3"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+mov byte ptr ss:[esp+0xA30],0x0
+
+originalcode:
+
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6CF32:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+6CF32:
+mov cl,[edi+42]
+mov [esp+00000A30],cl
+//Alt: db 8A 4F 42 88 8C 24 30 0A 00 00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>10</ID>
+          <Description>"4"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+0046ce17:
+db eb
+
+ 
+ 
+[DISABLE]
+0046ce17:
+db 74
+
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>11</ID>
+          <Description>"5"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+jmp 0046cc79
+
+originalcode:
+movzx edx,al
+lea ecx,[ecx+ecx*2]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6CC45:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+6CC45:
+movzx edx,al
+lea ecx,[ecx+ecx*2]
+//Alt: db 0F B6 D0 8D 0C 49
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>12</ID>
+          <Description>"6"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+jmp 0046cc0c
+
+originalcode:
+jg ps_game.exe+6D5BE
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6CBFB:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+6CBFB:
+jg ps_game.exe+6D5BE
+//Alt: db 0F 8F BD 09 00 00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>13</ID>
+          <Description>"7"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+jmp 0046ca3b
+originalcode:
+test esi,esi
+je ps_game.exe+6CAB7
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6CA29:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+6CA29:
+test esi,esi
+je ps_game.exe+6CAB7
+//Alt: db 85 F6 0F 84 86 00 00 00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>14</ID>
+          <Description>"8"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+mov word ptr ss:[esp+0xA2E],0x0
+mov byte ptr ss:[esp+0xA2C],cl
+jmp 0046d1ff
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6D1F0:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+6D1F0:
+movzx eax,byte ptr [ebx+04]
+mov [esp+00000A2C],cl
+//Alt: db 0F B6 43 04 88 8C 24 2C 0A 00 00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>15</ID>
+          <Description>"9"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+jmp 0046d23f
+
+originalcode:
+mov [esp+00000A2E],al
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6D219:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+6D219:
+mov [esp+00000A2E],al
+//Alt: db 88 84 24 2E 0A 00 00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>16</ID>
+          <Description>"10"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+0046d5af:
+db eb
+0046d17e:
+db eb
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+0046d5af:
+db 74
+0046d17e:
+db 74
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>22</ID>
+      <Description>"Enchant"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+push eax
+mov al,[esi+4]
+mov [esi+7],al
+
+mov al,[esi+5]
+mov [esi+8],al
+
+mov al,[esi+6]
+mov [esi+9],al
+
+pop eax
+
+
+originalcode:
+push edi
+mov ecx,esi
+call ps_game.exe+6CBA0
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+79FF7:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+79FF7:
+push edi
+mov ecx,esi
+call ps_game.exe+6CBA0
+//Alt: db 57 8B CE E8 A1 2B FF FF
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>24</ID>
+      <Description>"fix char create hack"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>//Author: Albert
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+"ps_game.exe"+7B601:
+jmp 0047B6BB
+nop
+nop
+
+"ps_game.exe"+7C134:
+jmp 0047C180
+nop
+nop
+nop
+nop
+
+"ps_game.exe"+7B548:
+jmp 0047B6BB
+nop
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+"ps_game.exe"+7B601:
+cmp byte ptr [ebp+0000012D],01
+"ps_game.exe"+7C134:
+je ps_game.exe+7C180
+"ps_game.exe"+7B548:
+cmp [ebp+0000012D],bl
+//Alt: db 80 BD 2D 01 00 00 01
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>25</ID>
+      <Description>"GM Attack Both Sides"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>//Author: Albert
+[ENABLE]
+alloc(newmem,2048) //1kb should be enough
+label(returnhere)
+label(originalcode)
+
+newmem:
+cmp byte ptr [eax+5808],1 //Admin
+jne originalcode
+jmp 00457E35
+
+originalcode:
+mov dl,[edx+0000012D]
+jmp returnhere
+
+"ps_game.exe"+57E27:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+
+"ps_game.exe"+57E27:
+mov dl,[edx+0000012D]
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>26</ID>
+      <Description>"HP Bless Fix"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>//Author: Albert
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(Bonus0)
+label(Perc0)
+label(conv)
+label(ext)
+alloc(bless,4)
+//label(m5)
+//label(m6)
+//label(m7)
+newmem:
+mov [bless], ecx
+pushad
+mov eax, [bless]
+mov bl, 3C
+mul bl
+mov bl, 64
+div bl
+mov byte ptr [bless],al
+//mov [bless], eax
+popad
+mov ecx,[esi+0000017C] // Load_Curr_MP
+mov ebp,[esi+00000178] // Load_Curr_HP
+mov [esp+14],eax
+mov eax,[esi+000014D8] //Load_Bonus_HP
+mov [esp+18],ecx
+cmp eax,ebx // Cmp bonus with 0
+je Bonus0
+mov ecx,ebp // Mov curr hp to ecx
+sub ecx,eax // Sub bonus from curr hp
+mov [esi+00000178],ecx // Save clear HP
+mov eax,[bless] // Load %
+cmp eax,ebx // Cmp % with 0
+je Perc0
+imul eax,ecx // ClearHP*perc
+mov [esp+10],eax // Save for preproc
+fild dword ptr [esp+10] // Load to preproc
+jmp conv
+Bonus0:
+mov eax,[bless] // Load %
+cmp eax,ebx // Cmp % with 0
+je Perc0
+imul eax,ebp
+mov [esp+10],eax
+fild dword ptr [esp+10]
+conv:
+fmul st(0),st(1) // ClearHP*perc*0.01
+call ps_game.exe+1250C0 // Convert to normal format
+add [esi+00000178],eax // Add bonus to clear HP
+mov [esi+000014D8],eax // Save bonus HP
+jmp ext
+Perc0:
+mov [esi+000014D8],ebx // Set bonus HP = 0
+ext:
+mov eax,[esi+000014DC]
+jmp 0049C35B
+
+"ps_game.exe"+9C2EC:
+jmp newmem
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+9C2EC:
+mov ecx,[esi+0000017C]
+//Alt: db 3B C3 74 1E 8B CD
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>27</ID>
+      <Description>"Inventory"</Description>
+      <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <LastState Value="" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>28</ID>
+          <Description>"inven 1"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+alloc(sendPacket, 512)
+registersymbol(sendPacket)
+
+newmem:
+push eax
+mov [sendPacket],00000204 // opcode
+
+// info slot 1
+mov eax,[esp+3A]
+mov [sendPacket+02],eax
+mov eax,[esp+3E]
+mov [sendPacket+06],eax
+
+// lapis 1
+movzx eax,byte ptr [esp+41]
+mov [sendPacket+3B],al
+movzx eax,byte ptr [esp+42]
+mov [sendPacket+3F],al
+movzx eax,byte ptr [esp+43]
+mov [sendPacket+43],al
+movzx eax,byte ptr [esp+44]
+mov [sendPacket+47],al
+movzx eax,byte ptr [esp+45]
+mov [sendPacket+4B],al
+movzx eax,byte ptr [esp+46]
+mov [sendPacket+4F],al
+
+
+
+/*
+slots 1
+1 = 3b
+2 = 3f
+3 = 43
+4 = 47
+5 = 4b
+6 = 4f
+*/
+
+
+// craftname 1
+mov eax,[esp+47]
+mov [sendPacket+53],eax
+mov eax,[esp+4B]
+mov [sendPacket+57],eax
+mov eax,[esp+4F]
+mov [sendPacket+5B],eax
+mov eax,[esp+53]
+mov [sendPacket+5F],eax
+mov eax,[esp+57]
+mov [sendPacket+63],eax
+
+// info slot 2
+mov eax,[esp+5B]
+mov [sendPacket+67],eax
+mov eax,[esp+5F]
+mov [sendPacket+6B],eax
+
+// lapis 02
+movzx eax, byte ptr[esp+63]
+mov byte ptr [sendPacket+A1],al
+movzx eax, byte ptr[esp+64]
+mov byte ptr [sendPacket+A5],al
+movzx eax, byte ptr[esp+65]
+mov byte ptr [sendPacket+A9],al
+movzx eax, byte ptr[esp+66]
+mov byte ptr [sendPacket+AD],al
+movzx eax, byte ptr[esp+67]
+mov byte ptr [sendPacket+B1],al
+movzx eax, byte ptr[esp+68]
+mov byte ptr [sendPacket+B5],al
+
+/*
+slots 2
+1 = a1
+2 = a5
+3 = a9
+4 = ad
+5 = b1
+6 = b5
+*/
+
+
+//crafname 2
+mov eax,[esp+69]
+mov [sendPacket+B9],eax
+mov eax,[esp+6D]
+mov [sendPacket+BD],eax
+mov eax,[esp+71]
+mov [sendPacket+C1],eax
+mov eax,[esp+75]
+mov [sendPacket+C5],eax
+mov eax,[esp+79]
+mov [sendPacket+C9],eax
+
+pop eax
+
+originalcode:
+push #210 // D2 hex
+lea ecx,[sendPacket] //lea ecx,[esp+38]
+push ecx
+mov ecx,esi
+call 004ED0E0
+
+exit:
+jmp 00468E64
+
+"ps_game.exe"+68E56:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+68E56:
+push 46
+lea ecx,[esp+38]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>29</ID>
+          <Description>"warehouse 1"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(exit)
+alloc(bytesSend,512)
+
+newmem:
+push eax
+mov [bytesSend],00000204
+
+// info slot 1
+mov eax,[esp+26]
+mov [bytesSend+02],eax
+mov eax,[esp+2A]
+mov [bytesSend+06],eax
+
+// lapis 1
+movzx eax,byte ptr [esp+2D]
+mov [bytesSend+3B],al
+movzx eax,byte ptr [esp+2E]
+mov [bytesSend+3F],al
+movzx eax,byte ptr [esp+2F]
+mov [bytesSend+43],al
+movzx eax,byte ptr [esp+30]
+mov [bytesSend+47],al
+movzx eax,byte ptr [esp+31]
+mov [bytesSend+4B],al
+movzx eax,byte ptr [esp+32]
+mov [bytesSend+4F],al
+
+// craftname 1
+/*
+mov eax,[esp+33]
+mov [bytesSend+53],eax
+mov eax,[esp+37]
+mov [bytesSend+57],eax
+mov eax,[esp+3B]
+mov [bytesSend+5B],eax
+mov eax,[esp+3F]
+mov [bytesSend+5F],eax
+mov eax,[esp+43]
+mov [bytesSend+63],eax
+*/
+
+mov eax,[esp+55]
+mov [bytesSend+75],eax
+mov eax,[esp+59]
+mov [bytesSend+79],eax
+mov eax,[esp+5D]
+mov [bytesSend+7D],eax
+mov eax,[esp+61]
+mov [bytesSend+81],eax
+mov eax,[esp+65]
+mov [bytesSend+85],eax
+
+// info slot 2
+mov eax,[esp+47]
+mov [bytesSend+67],eax
+mov eax,[esp+4B]
+mov [bytesSend+6B],eax
+
+// lapis 02
+movzx eax, byte ptr[esp+4F]
+mov byte ptr [bytesSend+A1],al
+movzx eax, byte ptr[esp+50]
+mov byte ptr [bytesSend+A5],al
+movzx eax, byte ptr[esp+51]
+mov byte ptr [bytesSend+A9],al
+movzx eax, byte ptr[esp+52]
+mov byte ptr [bytesSend+AD],al
+movzx eax, byte ptr[esp+53]
+mov byte ptr [bytesSend+B1],al
+movzx eax, byte ptr[esp+54]
+mov byte ptr [bytesSend+B5],al
+
+mov eax,[esp+55]
+mov [bytesSend+B9],eax
+mov eax,[esp+59]
+mov [bytesSend+BD],eax
+mov eax,[esp+5D]
+mov [bytesSend+C1],eax
+mov eax,[esp+61]
+mov [bytesSend+C5],eax
+mov eax,[esp+65]
+mov [bytesSend+C9],eax
+
+pop eax
+
+push #210
+lea edx,[bytesSend]
+push edx
+mov ecx,edi
+call 004ED0E0
+
+exit:
+jmp 00469934
+
+"ps_game.exe"+69926:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+dealloc(bytesSend)
+"ps_game.exe"+69926:
+push 46
+lea edx,[esp+24]
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>30</ID>
+      <Description>"Char Info"</Description>
+      <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <LastState Value="" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>31</ID>
+          <Description>"fix 1"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(exit)
+label(organizar_bytes)
+registersymbol(organizar_bytes)
+registersymbol(sendthisbytes)
+alloc(sendthisbytes,512)
+
+newmem:
+call organizar_bytes
+push #682
+lea ecx,[sendthisbytes]
+
+exit:
+jmp returnhere
+
+organizar_bytes:
+push eax
+mov [sendthisbytes],00000303
+mov eax,[esp+3E]
+mov [sendthisbytes+02],eax
+mov eax,[esp+42]
+mov [sendthisbytes+06],eax
+mov eax,[esp+46]
+mov [sendthisbytes+0A],eax
+mov eax,[esp+4A]
+mov [sendthisbytes+0E],eax
+mov eax,[esp+4E]
+mov [sendthisbytes+12],eax
+mov eax,[esp+52]
+mov [sendthisbytes+16],eax
+mov eax,[esp+56]
+mov [sendthisbytes+1A],eax
+mov eax,[esp+5A]
+mov [sendthisbytes+1E],eax
+mov eax,[esp+5E]
+mov [sendthisbytes+22],eax
+mov eax,[esp+62]
+mov [sendthisbytes+26],eax
+mov eax,[esp+66]
+mov [sendthisbytes+2A],eax
+mov [sendthisbytes+2D],00
+
+// nome
+mov eax,[esp+69]
+mov [sendthisbytes+264],eax
+mov eax,[esp+6D]
+mov [sendthisbytes+268],eax
+mov eax,[esp+71]
+mov [sendthisbytes+26C],eax
+mov eax,[esp+75]
+mov [sendthisbytes+270],eax
+mov eax,[esp+79]
+mov [sendthisbytes+274],eax
+
+//guild
+mov eax,[esp+84]
+mov [sendthisbytes+291],eax
+mov eax,[esp+88]
+mov [sendthisbytes+295],eax
+mov eax,[esp+8C]
+mov [sendthisbytes+299],eax
+mov eax,[esp+90]
+mov [sendthisbytes+2AD],eax
+mov eax,[esp+94]
+mov [sendthisbytes+2B1],eax
+pop eax
+
+pushad
+cmp word ptr [ebx+1C0+0E*04],00
+je verTraje
+mov ecx,[ebx+1C0+0E*04]
+mov edx,[ecx+40]
+mov [sendthisbytes+3F],dl
+mov edx,[ecx+41]
+mov [sendthisbytes+40],dl
+
+verTraje:
+cmp word ptr [ebx+1C0+0F*04],00
+je verAsa
+mov ecx,[ebx+1C0+0F*04]
+mov edx,[ecx+40]
+mov [sendthisbytes+42],dl
+mov edx,[ecx+41]
+mov [sendthisbytes+43],dl
+
+verAsa:
+cmp word ptr [ebx+1C0+10*04],00
+je terminar
+mov ecx,[ebx+1C0+10*04]
+mov edx,[ecx+40]
+mov [sendthisbytes+45],dl
+mov edx,[ecx+41]
+mov [sendthisbytes+46],dl
+
+terminar:
+popad
+ret
+
+"ps_game.exe"+26C6C:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+dealloc(sendthisbytes)
+unregistersymbol(organizar_bytes)
+unregistersymbol(sendthisbytes)
+"ps_game.exe"+26C6C:
+push eax
+lea ecx,[esp+38]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>32</ID>
+          <Description>"fix 2"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(exit)
+
+newmem:
+call organizar_bytes
+push #682
+lea eax,[sendthisbytes]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+26C91:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+26C91:
+push eax
+lea eax,[esp+38]
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry>
+      <Description>Change of je Ep8.dll+361E01</Description>
+      <Address>63791D3C</Address>
+      <ModuleName>Ep8.dll</ModuleName>
+      <ModuleNameOffset>361D3C</ModuleNameOffset>
+      <Before>
+        <Byte>FF</Byte>
+        <Byte>21</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>0F</Byte>
+        <Byte>84</Byte>
+        <Byte>BF</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>81</Byte>
+        <Byte>BD</Byte>
+        <Byte>30</Byte>
+        <Byte>FF</Byte>
+        <Byte>FF</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+</CheatTable>

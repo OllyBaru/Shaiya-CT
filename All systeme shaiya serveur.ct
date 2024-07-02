@@ -1,0 +1,4430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="28">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"All systeme shaiya serveur"</Description>
+      <Options moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <LastState Value="" Activated="1" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>467</ID>
+          <Description>"RecRune"</Description>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>47</ID>
+              <Description>"Stat Recreation : Reroll"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+alloc(max,4)
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+label(custom)
+label(custom2)
+label(end)
+label(dopa)
+label(Oeuf_de_Dragon_Stat4)
+label(Oeuf_de_Dragon_Stat3)
+label(Oeuf_de_Dragon_Stat2)
+label(Oeuf_de_Dragon_Stat1)
+label(Oeuf_de_Dragon_Stat)
+label(Oeuf_de_Dragon_Mount)
+label(Oeuf_de_Dragon_remove)
+label(Oeuf_de_Dragon_Base)
+label(removal)
+label(nothing)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [start],1
+cmp [type],0
+JNE custom
+cmp [stat],0
+JNE custom
+
+originalcode:
+lea ebp,[esi+00000084]
+mov [start],0
+jmp exit
+
+custom:
+lea ebp,[esi+00000084]
+lea ecx,[ecx+00]
+mov edi,[stat]
+call 0051BD66
+mov edx,[esi+30]
+movzx ecx,word ptr [edx+3E]
+cdq
+mov [max],ecx
+inc ecx
+idiv ecx
+mov bl,dl
+call ps_game.exe+11BD66
+mov edx,[esi+30]
+movzx ecx,word ptr [edx+3E]
+inc ecx
+cdq
+idiv ecx
+cmp bl,dl
+jb custom2
+mov bl,dl
+
+custom2:
+cmp dword ptr [esp+2C],00
+jne dopa
+call ps_game.exe+11BD66
+mov edx,[esi+30]
+movzx ecx,word ptr [edx+3E]
+inc ecx
+cdq
+idiv ecx
+cmp bl,dl
+jb dopa
+mov bl,dl
+
+dopa:
+dec edi
+cmp [type],11
+JE Oeuf_de_Dragon_Stat4
+cmp [type],9
+JE Oeuf_de_Dragon_Stat3
+cmp [type],8
+JE Oeuf_de_Dragon_Stat2
+cmp [type],7
+JE Oeuf_de_Dragon_Stat1
+cmp [type],3
+JE Oeuf_de_Dragon_Stat
+cmp [type],6
+JE Oeuf_de_Dragon_Mount
+cmp [type],5
+JE Oeuf_de_Dragon_remove
+cmp [type],1
+JE Oeuf_de_Dragon_Base
+cmp [type],(int)10
+JE removal
+jmp nothing
+
+
+nothing:
+movzx dx,bl
+mov [ebp+00+edi*2],dx
+jmp end
+
+removal:
+xor ecx,ecx
+mov [ebp+00+edi*2],00
+movzx edx,word ptr [edi*2+00581C74]
+mov byte ptr [edx+esi+4C],30
+movzx eax,word ptr [edi*2+00581C74]
+mov byte ptr [eax+esi+4D],30
+mov [start],0
+jmp 004D2C7B
+
+Oeuf_de_Dragon_Stat4:
+mov bl,70.
+movzx dx,bl
+mov [ebp+00+edi*2],dx
+jmp end
+
+Oeuf_de_Dragon_Stat3:
+mov bl,65.
+movzx dx,bl
+mov [ebp+00+edi*2],dx
+jmp end
+
+Oeuf_de_Dragon_Stat2:
+mov bl,60.
+movzx dx,bl
+mov [ebp+00+edi*2],dx
+jmp end
+
+Oeuf_de_Dragon_Stat1:
+mov bl,55.
+movzx dx,bl
+mov [ebp+00+edi*2],dx
+jmp end
+
+Oeuf_de_Dragon_Stat:
+mov bl,50.
+movzx dx,bl
+mov [ebp+00+edi*2],dx
+jmp end
+
+Oeuf_de_Dragon_Base:
+mov bl,40.
+movzx dx,bl
+mov [ebp+00+edi*2],dx
+jmp end
+
+Oeuf_de_Dragon_remove:
+mov bl,max
+movzx dx,bl
+mov [ebp+00+edi*2],dx
+jmp end
+
+Oeuf_de_Dragon_Mount:
+mov bl,30.
+movzx dx,bl
+mov [ebp+00+edi*2],dx
+jmp end
+
+end:
+movzx eax,bl
+cdq
+mov ecx,0000000A
+idiv ecx
+movzx ecx,word ptr [edi*2+00581C74]
+add al,30
+mov [ecx+esi+4C],al
+movzx eax,word ptr [edi*2+00581C74]
+add dl,30
+mov [eax+esi+4D],dl
+mov [start],0
+jmp 004D2C7B
+
+
+
+
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+D2BC7:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+D2BC7:
+lea ebp,[esi+00000084]
+//Alt: db 8D AE 84 00 00 00
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>42</ID>
+              <Description>"Stat Recreation : Pointers"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+registersymbol(start)
+alloc(start,4)
+registersymbol(type)
+registersymbol(stat)
+registersymbol(counter)
+registersymbol(maxorange)
+registersymbol(itemtype)
+registersymbol(statamount)
+alloc(statamount,4)
+alloc(itemtype,4)
+alloc(maxorange,4)
+alloc(counter,4)
+alloc(type,4)
+alloc(stat,4)
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+label(check)
+label(orange)
+label(equality)
+label(pointers)
+
+newmem: //this is allocated memory, you have read,write,execute access
+/*
+Rec runes
+
+
+STR = Defines Rec rune type
+
+1	: Stat rune (random)
+2	: Stat rune (max)
+3	: Rec doubler
+10	: Stat rune (removal)
+
+Dex = Defines Stat
+
+1 : Str
+2 : Dex
+3 : Rec
+4 : Int
+5 : Wis
+6 : Luc
+7 : Hp
+8 : Mp
+9 : Sp
+
+[pp+800+eax] = oranges 801 = str 802 = dex etc
+[edi+820+eax] = orange stats, 821 = how many str you have, 822 = how many dex you got etc
+[edi+840] = max orange amount
+[edi+845] = rec doubler amount
+*/
+cmp byte ptr [ecx+70],1
+je check_level_Base
+cmp byte ptr [ecx+70],6
+je check_level_Mount
+cmp byte ptr [ecx+70],3
+je Oeuf_de_Dragon_Stat4
+cmp byte ptr [ecx+70],11
+je Oeuf_de_Dragon_Stat3
+cmp byte ptr [ecx+70],9
+je Oeuf_de_Dragon_Stat2
+cmp byte ptr [ecx+70],8
+je Oeuf_de_Dragon_Stat1
+cmp byte ptr [ecx+70],7
+je Oeuf_de_Dragon_Stat
+
+start_reroll:
+mov [statamount],0
+pushad
+movzx eax,byte ptr [ecx+70]
+movzx ebx,byte ptr [ecx+72]
+mov [type],eax
+mov [stat],ebx
+popad
+cmp [type],0
+JE originalcode
+cmp [stat],0
+JE originalcode
+cmp [stat],(int)7
+JL pointers
+mov esi,[ebp+30]
+cmp [esi],(int)120001
+JGE pointers
+cmp [esi+a0],(int)16
+JL ps_game.exe+6D901
+cmp [esi+a0],(int)22
+JL pointers
+cmp [esi+a0],(int)24
+JL ps_game.exe+6D901
+cmp [esi+a0],(int)25
+JE ps_game.exe+6D901
+cmp [esi+a0],(int)36
+JL pointers
+cmp [esi+a0],(int)39
+JL ps_game.exe+6D901
+cmp [esi+a0],(int)39
+JE pointers
+cmp [esi+a0],(int)67
+JL ps_game.exe+6D901
+
+
+pointers:
+mov [edi+845],0
+mov [edi+840],0
+mov [counter],0
+pushad
+mov esi,[ebp+30]
+movzx esi, word ptr[esi+3E]
+mov [maxorange],esi
+mov eax,0
+mov esi,[ebp+30]
+movzx esi, byte ptr[esi+4a]
+mov ebx,0
+
+orange:
+cmp eax,9
+JGE check
+add eax,1
+mov [edi+800+eax],0
+mov [edi+820+eax],0
+cmp byte ptr [ebp+82+eax*2],00
+movzx edx,byte ptr [ebp+82+eax*2]
+JE orange
+mov [edi+800+eax],1
+mov [edi+820+eax],edx
+add ebx,1
+jmp orange
+
+
+check:
+cmp ebx,esi
+popad
+JG 0046D901
+JE equality
+jmp originalcode
+
+
+originalcode:
+push eax
+mov eax,[stat]
+movzx eax,byte ptr[edi+820+eax]
+mov [statamount],eax
+pop eax
+cmp byte ptr [ecx+46],3E
+jne ps_game.exe+6D901
+cmp [start],0
+JNE ps_game.exe+6D901
+jmp exit
+
+equality:
+pushad
+mov esi,[stat]
+cmp byte ptr [edi+800+esi],00
+popad
+JE ps_game.exe+6D901
+jmp originalcode
+
+Oeuf_de_Dragon_Stat4:
+push ebp
+mov ebp,[ebp+30]
+cmp byte ptr [ebp+2e],(int)80
+pop ebp
+je start_reroll
+jmp 0046D901
+
+Oeuf_de_Dragon_Stat3:
+push ebp
+mov ebp,[ebp+30]
+cmp byte ptr [ebp+2e],(int)80
+pop ebp
+je start_reroll
+jmp 0046D901
+
+Oeuf_de_Dragon_Stat2:
+push ebp
+mov ebp,[ebp+30]
+cmp byte ptr [ebp+2e],(int)80
+pop ebp
+je start_reroll
+jmp 0046D901
+
+Oeuf_de_Dragon_Stat1:
+push ebp
+mov ebp,[ebp+30]
+cmp byte ptr [ebp+2e],(int)80
+pop ebp
+je start_reroll
+jmp 0046D901
+
+Oeuf_de_Dragon_Stat:
+push ebp
+mov ebp,[ebp+30]
+cmp byte ptr [ebp+2e],(int)80
+pop ebp
+je start_reroll
+jmp 0046D901
+
+check_level_Base:
+push ebp
+mov ebp,[ebp+30]
+cmp byte ptr [ebp+2e],(int)80
+pop ebp
+je start_reroll
+jmp 0046D901
+
+check_level_Mount:
+push ebp
+mov ebp,[ebp+30]
+cmp byte ptr [ebp+2e],(int)1
+pop ebp
+je start_reroll
+jmp 0046D901
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6D6A9:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+6D6A9:
+cmp byte ptr [ecx+46],3E
+jne ps_game.exe+6D901
+//Alt: db 80 79 46 3E 0F 85 4E 02 00 00
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>3</ID>
+          <Description>"Dex fix and instant mount"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>224</ID>
+              <Description>"DEX Override (Melee)"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(pop_originalcode)
+label(originalcode)
+label(success)
+
+define(dex_per_percent,#12)
+define(min_accuracy,#20)
+
+// edi = attacker
+// esi = target
+newmem:
+cmp byte ptr [edi+1385],1
+je originalcode
+
+push eax
+push ecx
+push edx
+sub esp,10
+
+mov eax, dword ptr [edi+1220]
+mov ecx, dword ptr [esi+1220]
+
+cmp eax,ecx
+ja success
+
+sub eax,ecx
+mov dword ptr [esp],eax
+mov dword ptr [esp+4],dex_per_percent
+fild dword ptr [esp+4] // dex_per_percent
+fild dword ptr [esp] // DEX difference
+fabs
+fdiv st(0), st(1)
+fistp dword ptr [esp]
+fistp dword ptr [esp+4]
+
+mov esi,#100
+sub esi, dword ptr [esp]
+
+cmp esi,min_accuracy
+jae pop_originalcode
+
+mov esi,min_accuracy
+
+pop_originalcode:
+add esp,10
+pop edx
+pop ecx
+pop eax
+
+originalcode:
+cmp esi,01
+jmp returnhere
+
+success:
+mov esi,#100
+jmp pop_originalcode
+
+00463D4B:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+
+00463D4B:
+mov esi,eax
+cmp esi,01
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>225</ID>
+              <Description>"DEX Override (Ranged)"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(pop_originalcode)
+label(originalcode)
+label(success)
+
+define(dex_per_percent,#12)
+define(min_accuracy,#20)
+
+// edi = attacker
+// esi = target
+newmem:
+cmp byte ptr [edi+1395],1
+je originalcode
+
+push eax
+push ecx
+push edx
+sub esp,10
+
+mov eax, dword ptr [edi+1220]
+mov ecx, dword ptr [esi+1220]
+
+cmp eax,ecx
+ja success
+
+sub eax,ecx
+mov dword ptr [esp],eax
+mov dword ptr [esp+4],dex_per_percent
+fild dword ptr [esp+4] // dex_per_percent
+fild dword ptr [esp] // DEX difference
+fabs
+fdiv st(0), st(1)
+fistp dword ptr [esp]
+fistp dword ptr [esp+4]
+
+mov esi,#100
+sub esi, dword ptr [esp]
+
+cmp esi,min_accuracy
+jae pop_originalcode
+
+mov esi,min_accuracy
+
+pop_originalcode:
+add esp,10
+pop edx
+pop ecx
+pop eax
+
+originalcode:
+cmp esi,01
+jmp returnhere
+
+success:
+mov esi,#100
+jmp pop_originalcode
+
+00463C9D:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+
+00463C9D:
+mov esi,eax
+cmp esi,01
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>46</ID>
+              <Description>"Instant Mounts"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov ecx,[eax+30]
+cmp byte ptr[ecx+25],(int)33//TypeID
+je 00477155
+cmp byte ptr[ecx+25],(int)34//TypeID
+je 00477155
+cmp byte ptr[ecx+25],(int)35//TypeID
+je 00477155
+cmp byte ptr[ecx+25],(int)36//TypeID
+je 00477155
+cmp byte ptr[ecx+25],(int)48//TypeID
+je 00477155
+cmp byte ptr[ecx+25],(int)47//TypeID
+je 00477155
+cmp byte ptr[ecx+25],(int)13//TypeID
+je 00477155
+cmp byte ptr[ecx+25],(int)14//TypeID
+je 00477155
+cmp byte ptr[ecx+25],(int)15//TypeID
+je 00477155
+cmp byte ptr[ecx+25],(int)16//TypeID
+je 00477155
+cmp byte ptr[ecx+25],(int)18//TypeID
+je 00477155
+cmp byte ptr[ecx+25],(int)19//TypeID
+je 00477155
+cmp byte ptr[ecx+25],(int)25//TypeID
+je 00477155
+cmp byte ptr[ecx+25],(int)26//TypeID
+je 00477155
+cmp byte ptr[ecx+25],(int)27//TypeID
+je 00477155
+cmp byte ptr[ecx+25],(int)28//TypeID
+je 00477155
+cmp byte ptr[ecx+25],(int)41//TypeID
+je 00477155
+cmp byte ptr[ecx+25],(int)42//TypeID
+je 00477155
+cmp byte ptr[ecx+25],(int)136//TypeID
+je 00477155
+originalcode:
+cmp byte ptr [ecx+30],03
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+7713E:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+
+[DISABLE]
+"ps_game.exe"+7713E:
+mov ecx,[eax+30]
+cmp byte ptr [ecx+30],03
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>2</ID>
+          <Description>"Spawn Bootlegery"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>0</ID>
+              <Description>"MarcherPosition"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Credits to Eric-Dutra16
+[ENABLE]
+
+// Light Auction House Spawn Points
+
+// Light
+0056E628:
+dd #42 // MapID
+
+dd (float)70.0 // X
+dd (float)1.0 // Y
+dd (float)70.0 // Z
+
+// Fury
+0056E638:
+dd #42 // MapID
+
+dd (float)70.0 // X
+dd (float)1.0 // Y
+dd (float)70.0 // Z
+
+[DISABLE]
+
+0056E628:
+dd 0000002A
+
+dd 429D3852
+dd 4175C28F
+dd 41DF999A
+
+0056E638:
+dd 0000002A
+
+dd 41BB1EB8
+dd 4175C28F
+dd 42D4CCCD
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>261</ID>
+          <Description>"drops"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>125</ID>
+              <Description>"Gold To Inventory"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,512)
+label(returnhere)
+
+label(solo)
+label(solo_bonus)
+label(solo_bonus_ok)
+label(solo_bonus_wtc)
+label(solo_bonus_rpc)
+
+newmem:
+mov eax, dword ptr [esp+44] // raid pointer
+test eax,eax
+je solo
+jmp returnhere
+
+solo:
+mov edx, dword ptr [esp+40] // player pointer
+test edx,edx
+je 004BAE0D
+
+cmp dword ptr [edx+594C],2
+je solo_bonus_wtc
+cmp dword ptr [edx+594C],3
+je solo_bonus_rpc
+
+solo_bonus_ok:
+mov ecx, dword ptr [esp+18]
+call 0046BBA0
+jmp 004BAEB8
+
+solo_bonus:
+sub esp,4
+fild dword ptr [esp+1C]
+fld dword ptr [esp]
+fmul st(1),st(0)
+fstp dword ptr [esp]
+fistp dword ptr [esp+1C]
+add esp,4
+jmp solo_bonus_ok
+
+solo_bonus_wtc:
+mov dword ptr [esp-4],(float)41.200 // White Tiger Charm = +20%
+jmp solo_bonus
+
+solo_bonus_rpc:
+mov dword ptr [esp-4],(float)71.500 // Red Phoenix Charm = +50%
+jmp solo_bonus
+
+004BAD4C:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+
+004BAD4C:
+mov eax, dword ptr [esp+44]
+test eax,eax
+je 004BAE0D
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>127</ID>
+              <Description>"Drop To Inventory"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+label(returnhere)
+label(solo)
+
+newmem:
+test ebp,ebp
+je solo
+jmp returnhere
+
+solo:
+mov ecx, dword ptr [esp+18]
+test ecx,ecx
+je 004BB438
+push ebx
+call 0046AE60
+jmp 004BB47A
+
+004BB1D5:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+
+004BB1D5:
+test ebp,ebp
+je 004BB438
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>437</ID>
+              <Description>"Random Drop"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,1024)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+define(stack_alloc,100)
+
+// 4 bytes - global random drop count
+// 4 bytes - x10,000 account random drop count
+//alloc(player_random_drop_order,40004)
+//define(accounts,#10000)
+
+// ebp = raid
+newmem:
+cmp dword ptr [esp+18],0 // Killer
+je originalcode
+
+push ebx
+sub esp,stack_alloc
+
+mov esi,esp // store the stack pointer
+
+// clear the memory
+push stack_alloc
+push 0
+push esi
+call msvcrt.memset
+add esp,C
+
+lea eax, dword ptr [ebp+118]
+mov dword ptr [esi+stack_alloc-4],eax
+push eax
+call dword ptr [005540DC] // ntdll.RtlEnterCriticalSection
+
+mov ecx, dword ptr [esi+stack_alloc+C] // mob
+xor ebx,ebx
+
+random_next:
+mov edx, dword ptr [ebp+ebx*8+18]
+
+cmp edx, dword ptr [esi+stack_alloc+1C]
+je random_ok // skip all further checks for killer
+
+push edx
+push ecx
+call func_is_player_within_range
+test eax,eax
+je random_next_check
+
+random_ok:
+mov eax, dword ptr [esi+stack_alloc-8]
+mov dword ptr [esi+eax*4],edx
+inc dword ptr [esi+stack_alloc-8]
+
+random_next_check:
+inc ebx
+cmp ebx, dword ptr [ebp+10]
+jb random_next
+
+call msvcrt.rand
+cdq
+idiv dword ptr [esi+stack_alloc-8]
+
+mov edx, dword ptr [esi+edx*4]
+
+push ebp
+push edx
+call func_get_player_index_in_party
+
+mov edx,eax // index of player in party
+
+mov eax, dword ptr [esi+stack_alloc-4]
+push eax
+call dword ptr [005540D4] // ntdll.RtlLeaveCriticalSection
+
+exit:
+add esp,stack_alloc
+pop ebx
+jmp returnhere
+
+originalcode:
+call 0051BD66
+cdq
+idiv dword ptr [ebp+10]
+jmp returnhere
+
+// push player
+// push mob
+// call func_is_player_within_range
+func_is_player_within_range:
+push ecx
+push edx
+push ebx
+sub esp,4
+
+xor eax,eax // clearing the return value (false)
+
+mov ecx, dword ptr [esp+14] // mob
+mov edx, dword ptr [esp+18] // player
+
+// comparing zone pointers
+mov ebx, dword ptr [ecx+8C]
+cmp ebx, dword ptr [edx+E0]
+jne func_is_player_within_range_exit
+
+ // load mob.X
+fld dword ptr [ecx+7C]
+// subtract player.X from it
+fsub dword ptr [edx+D0]
+// get the absolute value
+fabs
+ // square it
+fmul st(0),st(0)
+// store result in the stack and pop floating point register
+fstp dword ptr [esp]
+
+// load mob.Z
+fld dword ptr [ecx+84]
+// subtract player.Z from it
+fsub dword ptr [edx+D8]
+// get the absolute value
+fabs
+// square it
+fmul st(0),st(0)
+// add the value previously stored in stack to it
+fadd dword ptr [esp]
+
+// square root
+fsqrt
+// store result in the stack and pop floating point register
+fstp dword ptr [esp]
+
+cmp dword ptr [esp],(float)100.000 // max range
+ja func_is_player_within_range_exit
+
+inc eax // set return value to true
+func_is_player_within_range_exit:
+add esp,4
+pop ebx
+pop edx
+pop ecx
+ret 8
+
+// push party
+// push player
+// call func_get_player_index_in_party
+func_get_player_index_in_party:
+push ecx
+push edx
+push ebx
+
+mov ecx, dword ptr [esp+10] // player
+mov edx, dword ptr [esp+14] // party
+
+mov eax, dword ptr [edx+10] // party member count
+
+func_get_player_index_in_party_next:
+dec eax
+
+cmp dword ptr [edx+eax*8+18],ecx
+je func_get_player_index_in_party_exit
+
+test eax,eax
+jne func_get_player_index_in_party_next
+
+func_get_player_index_in_party_exit:
+pop ebx
+pop edx
+pop ecx
+ret 8
+
+//player_random_drop_order:
+//dd CCCCCCCC
+
+004BB266:
+jmp newmem
+nop
+nop
+nop
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+//dealloc(player_random_drop_order)
+
+004BB266:
+call 0051BD66
+cdq
+idiv dword ptr [ebp+10]
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>429</ID>
+          <Description>"Stack Drops Bag"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>428</ID>
+              <Description>"Stack Fortune Bag Drops"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,1024)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+// esp+4 = bag
+// esp+8 = player
+// esp+14 = slot
+newmem:
+cmp dword ptr [esp+15C],00473BD4 // return point for fortune bag opening
+jne originalcode
+cmp eax,1
+jne originalcode
+push eax
+push ecx
+push edx
+push ebx
+push esi
+push edi
+
+// esp+1C = bag
+// esp+20 = player
+// esp+2C = slot
+
+mov ebx, dword ptr [esp+1C]
+imul ebx,ebx,#24
+add ebx, dword ptr [esp+2C]
+imul ebx,ebx,#4
+add ebx,1C0
+mov edi, dword ptr [esp+20]
+add ebx,edi
+mov esi, dword ptr [ebx] // get item pointer
+
+push esi // item pointer
+push edi // player pointer
+call func_get_bag_slot_next_identical_item
+
+test eax,eax
+je exit
+
+mov edx, dword ptr [esp+2C]
+mov ebx, dword ptr [esp+1C]
+
+movzx ecx,ah
+push ecx
+movzx ecx,al
+push ecx
+
+push edx
+push ebx
+
+mov ecx,edi
+call 004685A0
+
+exit:
+pop edi
+pop esi
+pop ebx
+pop edx
+pop ecx
+pop eax
+
+originalcode:
+add esp,15C
+jmp returnhere
+
+// push itemPointer
+// push playerPointer
+// call func_get_bag_slot_next_identical_item
+// success: al = bag, ah = slot
+// failure: eax = 0
+func_get_bag_slot_next_identical_item:
+push ecx
+push edx
+push ebx
+push esi
+push edi
+
+mov esi, dword ptr [esp+1C] // item pointer
+mov edi, dword ptr [esp+18] // player pointer
+
+
+cmp esi,400000
+jl nort
+cmp [esi+30],400000
+jl nort
+cmp [edi],(int)5708456
+jne nort
+mov eax,[esi+30]
+cmp [eax],(int)1001
+jl nort
+cmp [eax],(int)150255
+jg nort
+
+
+
+mov al,#1
+mov ah,#0
+add edi,220
+
+func_get_bag_slot_next_identical_item_next:
+mov ecx, dword ptr [edi]
+
+// check if item exists
+test ecx,ecx
+je func_get_bag_slot_next_identical_item_next_check_slot
+
+// check if same item
+cmp ecx,esi
+je func_get_bag_slot_next_identical_item_next_check_slot
+
+// check if same item def
+mov edx, dword ptr [ecx+30]
+cmp edx, dword ptr [esi+30]
+jne func_get_bag_slot_next_identical_item_next_check_slot
+
+// check if max count isn't reached
+movzx ebx, byte ptr [edx+4B]
+cmp bl, byte ptr [ecx+42]
+ja func_get_bag_slot_next_identical_item_exit
+
+func_get_bag_slot_next_identical_item_next_check_slot:
+add edi,4
+inc ah
+cmp ah,#24
+jb func_get_bag_slot_next_identical_item_next
+
+func_get_bag_slot_next_identical_item_next_check_bag:
+xor ah,ah
+inc al
+cmp al,#5
+jbe func_get_bag_slot_next_identical_item_next
+
+nort:
+xor eax,eax
+
+func_get_bag_slot_next_identical_item_exit:
+pop edi
+pop esi
+pop ebx
+pop edx
+pop ecx
+ret 8
+
+0046C27E:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+
+0046C27E:
+add esp,15C
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>5</ID>
+          <Description>"Lapisia Perfect"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>466</ID>
+              <Description>"lapisia system"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+// esp +14 = lapisia, esp+2c = enchant item,
+// esp+1c = enchanted item
+// esp+13 = enchant level of item (byte)
+// jmp 0046D5BE = jump to block
+// item + 70 = lapisia type, item + 72 = starting,
+// item + 74 = end, item + 76 = enchant amount,
+// lapisia type 1: adds + enchant.
+// lapisia type 2: moves exact enchant
+pushad
+pushfd
+// here +24 on esp
+mov eax,[esp+14+24] // move lapisia to eax
+cmp eax,400000
+jl fail
+movzx ebx,byte ptr [esp+13+24] // move current enchant to ebx
+mov ecx,[eax+30] // move item info to ecx
+movzx edi,byte ptr [ecx+70] // lapisia type
+movzx edx,byte ptr [ecx+72] // move lapisia min limit to edi
+movzx esi,byte ptr [ecx+74] // move lapisia max limit to edx
+movzx eax,byte ptr [ecx+76] // move add enchant to esi
+
+cmp edi,0
+je nocustom
+
+cmp edi,1
+je lapisia_plus
+cmp edi,2
+je lapisia_exact
+jmp nocustom
+
+lapisia_exact:
+mov ebx,eax
+jmp update_enchant
+
+lapisia_plus:
+cmp ebx,edx
+jl fail
+cmp ebx,esi
+jge fail
+
+add ebx,eax
+
+cmp ebx,esi
+jg fail
+
+update_enchant:
+mov [esp+13+24],bl
+
+
+
+popfd
+popad
+
+movzx edx,word ptr [edx*2+00581D30]
+mov al,[esp+13]
+mov esi,[esp+1C]
+mov [esp+44],edx
+//inc al
+movzx edx,al
+jmp 0046CD9C
+
+
+fail:
+popfd
+popad
+jmp 0046D5BE
+
+nocustom:
+popfd
+popad
+
+originalcode:
+cmp esi,eax
+jae ps_game.exe+6D11C
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6CD7B:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+6CD7B:
+cmp esi,eax
+jae ps_game.exe+6D11C
+//Alt: db 3B F0 0F 83 99 03 00 00
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>419</ID>
+          <Description>"Bless Fixed"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>135</ID>
+              <Description>"Bless"</Description>
+              <Options moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+              <LastState Value="" Activated="1" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>413</ID>
+                  <Description>"bless alma"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+jmp ps_game.exe+19BB0
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+19A81:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+19A81:
+jne ps_game.exe+19BB0
+//Alt: db 0F 85 29 01 00 00
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>414</ID>
+                  <Description>"enemy bless alınca"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+jmp ps_game.exe+19CB8
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+19BDD:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+19BDD:
+jne ps_game.exe+19CB8
+//Alt: db 0F 85 D5 00 00 00
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>415</ID>
+                  <Description>"hp2"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+//mov [esi+00000178],ecx
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+9C30E:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+9C30E:
+mov [esi+00000178],ecx
+//Alt: db 89 8E 78 01 00 00
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>416</ID>
+                  <Description>"hp3"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+//mov [esi+00000178],ebx
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+9C97A:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+9C97A:
+mov [esi+00000178],ebx
+//Alt: db 89 9E 78 01 00 00
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>13</ID>
+                  <Description>"hp4"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+9C6DF:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+9C6DF:
+add [esi+00000178],eax
+//Alt: db 01 86 78 01 00 00
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>417</ID>
+                  <Description>"hp5"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+9CBEB:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+9CBEB:
+add [esi+00000178],edx
+//Alt: db 01 96 78 01 00 00
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>15</ID>
+                  <Description>"hp +10"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+//add dword ptr [esi+00000178],0A
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+614AC:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+614AC:
+add dword ptr [esi+00000178],0A
+//Alt: db 83 86 78 01 00 00 0A
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>418</ID>
+                  <Description>"another bless"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+//add [esi+00000178],edx
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+9C6C3:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+9C6C3:
+add [esi+00000178],edx
+//Alt: db 01 96 78 01 00 00
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>136</ID>
+                  <Description>"hp1"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+//add [esi+00000178],eax
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+9C341:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+9C341:
+add [esi+00000178],eax
+//Alt: db 01 86 78 01 00 00
+</AssemblerScript>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>420</ID>
+          <Description>"Heal Fixed"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>12</ID>
+              <Description>"healing x2 instead of x4"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+lea edx,[eax+ecx*2]
+mov [esp+14],edx
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+5C7DE:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+5C7DE:
+lea edx,[eax+ecx*4]
+mov [esp+14],edx
+//Alt: db E9 9D 70 AE 72
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>430</ID>
+          <Description>"Raid Kill All"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>34</ID>
+              <Description>"Shared raid kills"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+label(M1)
+label(M2)
+label(M3)
+label(M4)
+label(M5)
+label(M6)
+label(M7)
+label(M8)
+label(M9)
+
+newmem:
+call CustomFuncDeath
+pushad
+mov edi,esi
+mov edx,[esi+000000E0]
+xor ecx,ecx
+mov cl,[esi+0000012D]
+cmp ecx,01
+je setzero
+mov ecx,01
+jmp gocall
+setzero:
+mov ecx,00
+gocall:
+push ecx
+push edx
+call ShareKill
+popad
+originalcode:
+
+exit:
+jmp 00465ACF
+
+ShareKill:
+sub esp,10 { 16 }
+push ebx
+push ebp
+mov ebp,[esp+1C]
+push esi
+call dword ptr [ps_game.exe+1540D0] { -&gt;kernel32.GetTickCount }
+lea esi,[ebp+0000018C]
+mov ebx,eax
+push esi
+add ebx,000003E8 { 1000 }
+mov [esp+1C],esi
+call dword ptr [ps_game.exe+1540DC] { -&gt;ntdll.RtlEnterCriticalSection }
+mov ecx,[ebp+00000184]
+mov eax,[ecx+04]
+mov [ebp+00000188],eax
+cmp eax,ecx
+je M1
+test eax,eax
+je M1
+M8:
+mov eax,[eax+08]
+test eax,eax
+je M2
+lea esi,[eax-000000D0]
+jmp M3
+M2:
+xor esi,esi
+M3:
+// cmp byte ptr [esi+00005808],0A { if ( *(_BYTE *)(v8 + 22376) &gt; 0xAu )}
+//ja M4
+//mov eax,[ebp+00000188] {  v6 = (CObjectLink *)CZone-&gt;m_listUser.cursor-&gt;next;}
+//mov eax,[eax+04]
+//jmp M6
+
+M4:
+cmp edi,esi
+jne M5
+mov ecx,[ebp+00000188]
+mov eax,[ecx+04]
+jmp M6
+M5:
+mov dl,[esp+24]
+cmp [esi+0000012D],dl { if ( *(_BYTE *)(v8 + 301) == byCountry )}
+jne M9
+// NEW CODE HERE //
+fld dword ptr [edi+000000D0]
+push ecx
+fsub dword ptr [esi+000000D0]
+fstp dword ptr [esp+14]
+fld dword ptr [edi+000000D8]
+fsub dword ptr [esi+000000D8]
+fstp dword ptr [esp+24]
+fld dword ptr [esp+24]
+fld dword ptr [esp+14]
+fmul st(0),st(0)
+fld st(1)
+fmulp st(2),st(0)
+faddp
+fstp dword ptr [esp+24]
+fld dword ptr [esp+24]
+fstp dword ptr [esp]
+call ps_game.exe+1B8A0
+fcomp dword ptr [RangeFloat] { [100.00] }
+add esp,04 { 00000004 }
+fnstsw ax
+sahf
+//test ah,41 { 65 }
+jae M9 { if ( v11 &gt; 10.0 )}
+//Need check party
+cmp [esi+000017F4],00
+je M9
+mov ecx,esi
+push edi
+call ps_game.exe+67CE0
+//               //
+M9:
+mov edx,[ebp+00000188]
+mov eax,[edx+04]
+M6:
+cmp eax,[ebp+00000184] { while ( v6 != CZone-&gt;m_listUser.head &amp;&amp; v6 );}
+mov [ebp+00000188],eax
+je M7
+test eax,eax
+jne M8
+M7:
+mov esi,[esp+18] { v4 = &amp;this-&gt;m_listUser.m_csList.m_cs;}
+M1:
+push esi
+call dword ptr [ps_game.exe+1540D4] { -&gt;ntdll.RtlLeaveCriticalSection }
+pop esi
+pop ebp
+pop ebx
+add esp,10 { 16 }
+ret 0008 { 00000008 }
+
+RangeFloat:
+dd 42C80000
+
+CustomFuncDeath:
+sub esp,14 { 20 }
+mov eax,[esi+0000014C]
+cmp eax,[ps_game.exe+1823AC] { [000F4240] }
+jae FuncDeathM
+mov edx,[esi+0000582C]
+inc eax
+mov [esi+0000014C],eax
+mov ecx,0000060C { 1548 }
+mov [esp+0F],eax
+push 0B { 11 }
+lea eax,[esp+0C]
+mov [esp+0C],cx
+mov ecx,[ps_game.exe+18796C] { [010A2628] }
+push eax
+mov [esp+12],edx
+mov byte ptr [esp+16],01 { 1 }
+call ps_game.exe+ED2D0
+mov edx,[esi+0000014C]
+mov ecx,0000020E { 526 }
+push 07 { 7 }
+lea eax,[esp+04]
+mov [esp+04],cx
+push eax
+mov ecx,esi
+mov byte ptr [esp+0A],01 { 1 }
+mov [esp+0B],edx
+call ps_game.exe+ED0E0
+FuncDeathM:
+add esp,14 { 20 }
+ret
+
+"ps_game.exe"+65AAD:
+jmp newmem
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+65AAD:
+call ps_game.exe+67EE0
+//Alt: db E8 2E 24 00 00
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>436</ID>
+          <Description>"Buff-Costumes"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>6</ID>
+              <Description>"Look"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+label(costume)
+label(costumeweap)
+label(nothing)
+label(weap)
+label(t45)
+label(t46)
+label(t49)
+label(t51)
+label(t53)
+label(t55)
+label(t57)
+label(t58)
+label(t59)
+label(t60)
+label(t62)
+label(t64)
+label(t65)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp word ptr [ebx+164],0
+jne originalcode
+cmp word ptr [ebx+166],0
+jne weap
+jmp nothing
+
+costume:
+
+mov dl,byte ptr[ebx+164]
+//add dl,(int)99
+
+//mov dl,[esi+41]
+lea eax,[esi+4C]
+cmp byte ptr [ebx+12d],0
+jne dark
+add [edi-01],(int)50
+jmp exit
+dark:
+add [edi-01],(int)35
+jmp exit
+
+costumeweap:
+
+mov dl,byte ptr[ebx+166]
+
+//mov dl,[esi+41]
+lea eax,[esi+4C]
+cmp byte ptr [edi-01],(int)1
+je t45
+cmp byte ptr [edi-01],(int)3
+je t45
+cmp byte ptr [edi-01],(int)2
+je t46
+cmp byte ptr [edi-01],(int)4
+je t46
+cmp byte ptr [edi-01],(int)5
+je t49
+cmp byte ptr [edi-01],(int)6
+je t51
+cmp byte ptr [edi-01],(int)7
+je t53
+cmp byte ptr [edi-01],(int)8
+je t55
+cmp byte ptr [edi-01],(int)9
+je t57
+cmp byte ptr [edi-01],(int)10
+je t58
+cmp byte ptr [edi-01],(int)11
+je t59
+cmp byte ptr [edi-01],(int)12
+je t60
+cmp byte ptr [edi-01],(int)13
+je t62
+cmp byte ptr [edi-01],(int)14
+je t64
+cmp byte ptr [edi-01],(int)15
+je t65
+jmp exit
+
+t45:
+mov [edi-01],(int)45
+jmp exit
+t46:
+mov [edi-01],(int)46
+jmp exit
+t49:
+mov [edi-01],(int)49
+jmp exit
+t51:
+mov [edi-01],(int)51
+jmp exit
+t53:
+mov [edi-01],(int)53
+jmp exit
+t55:
+mov [edi-01],(int)55
+jmp exit
+t57:
+mov [edi-01],(int)57
+jmp exit
+t58:
+mov [edi-01],(int)58
+jmp exit
+t59:
+mov [edi-01],(int)59
+jmp exit
+t60:
+mov [edi-01],(int)60
+jmp exit
+t62:
+mov [edi-01],(int)62
+jmp exit
+t64:
+mov [edi-01],(int)64
+jmp exit
+t65:
+mov [edi-01],(int)65
+jmp exit
+
+
+nothing:
+mov dl,[esi+41]
+lea eax,[esi+4C]
+jmp exit
+
+originalcode:
+cmp [ebx+0*4+1c0],esi
+je costume
+cmp [ebx+1*4+1c0],esi
+je costume
+cmp [ebx+2*4+1c0],esi
+je costume
+cmp [ebx+3*4+1c0],esi
+je costume
+cmp [ebx+4*4+1c0],esi
+je costume
+cmp [ebx+f*4+1c0],0
+jne weap
+jmp nothing
+
+weap:
+cmp [ebx+5*4+1c0],esi
+je costumeweap
+jmp nothing
+
+
+
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+26BD1:
+jmp newmem
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+26BD1:
+mov dl,[esi+41]
+lea eax,[esi+4C]
+//Alt: db 8A 56 41 8D 46 4C
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>10</ID>
+              <Description>"Costume"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+label(dark)
+label(costumeweap)
+label(t45)
+label(t46)
+label(t49)
+label(t51)
+label(t53)
+label(t55)
+label(t57)
+label(t58)
+label(t59)
+label(t60)
+label(t62)
+label(t64)
+label(t65)
+
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp ebx,5
+je costumeweap
+cmp ebx,4
+jg originalcode
+cmp word ptr [ecx+164],0
+je originalcode
+cmp word ptr [ecx+164],FF
+ja originalcode
+//costume typeid change
+mov dl,byte ptr[ecx+164]
+//add dl,(int)99
+////
+//mov dl,[esi+41]
+lea eax,[esi+4C]
+
+cmp byte ptr [ecx+12d],0
+jne dark
+add [esp+13],(int)50
+jmp exit
+dark:
+add [esp+13],(int)35
+jmp exit
+
+costumeweap:
+cmp word ptr [ecx+166],0
+je originalcode
+cmp word ptr [ecx+166],ff
+ja originalcode
+
+mov dl,byte ptr[ecx+166]
+
+//mov dl,[esi+41]
+lea eax,[esi+4C]
+cmp byte ptr [esp+13],(int)1
+je t45
+cmp byte ptr [esp+13],(int)3
+je t45
+cmp byte ptr [esp+13],(int)2
+je t46
+cmp byte ptr [esp+13],(int)4
+je t46
+cmp byte ptr [esp+13],(int)5
+je t49
+cmp byte ptr [esp+13],(int)6
+je t51
+cmp byte ptr [esp+13],(int)7
+je t53
+cmp byte ptr [esp+13],(int)8
+je t55
+cmp byte ptr [esp+13],(int)9
+je t57
+cmp byte ptr [esp+13],(int)10
+je t58
+cmp byte ptr [esp+13],(int)11
+je t59
+cmp byte ptr [esp+13],(int)12
+je t60
+cmp byte ptr [esp+13],(int)13
+je t62
+cmp byte ptr [esp+13],(int)14
+je t64
+cmp byte ptr [esp+13],(int)15
+je t65
+jmp exit
+
+t45:
+mov [esp+13],(int)45
+jmp exit
+t46:
+mov [esp+13],(int)46
+jmp exit
+t49:
+mov [esp+13],(int)49
+jmp exit
+t51:
+mov [esp+13],(int)51
+jmp exit
+t53:
+mov [esp+13],(int)53
+jmp exit
+t55:
+mov [esp+13],(int)55
+jmp exit
+t57:
+mov [esp+13],(int)57
+jmp exit
+t58:
+mov [esp+13],(int)58
+jmp exit
+t59:
+mov [esp+13],(int)59
+jmp exit
+t60:
+mov [esp+13],(int)60
+jmp exit
+t62:
+mov [esp+13],(int)62
+jmp exit
+t64:
+mov [esp+13],(int)64
+jmp exit
+t65:
+mov [esp+13],(int)65
+jmp exit
+
+originalcode:
+mov dl,[esi+41]
+lea eax,[esi+4C]
+jmp exit
+
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+92C49:
+jmp newmem
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+92C49:
+mov dl,[esi+41]
+lea eax,[esi+4C]
+//Alt: db 8A 56 41 8D 46 4C
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>9</ID>
+              <Description>"Prevent multicostume"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+label(costumeweap)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp [esi+84],(int)5000
+jl originalcode
+cmp [esi+84],(int)5500
+jg costumeweap
+cmp word ptr [ebp+164],0
+je originalcode
+jmp 00473142
+
+costumeweap:
+cmp [esi+84],(int)6500
+jg originalcode
+cmp word ptr [ebp+166],0
+je originalcode
+jmp 00473142
+
+originalcode:
+cmp byte ptr [esi+44],00
+je ps_game.exe+73142
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+72F89:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+72F89:
+cmp byte ptr [esi+44],00
+je ps_game.exe+73142
+//Alt: db 80 7E 44 00 0F 84 AF 01 00 00
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>8</ID>
+              <Description>"Costume pop"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+costume:
+		cmp dword ptr [ebx+84],(int)5001
+		jl originalcode
+		cmp dword ptr [ebx+84],(int)5255
+		jg weaponcheck
+		push eax
+		mov eax, [ebx+84]
+		sub eax, (int)5000
+		mov [edi+164], eax
+		pop eax
+		//UPDATE DB
+		//pushad
+		//movzx  ecx, word ptr[edi+128]  // char id
+		//push ecx
+		//mov ecx, [edi+9d0]
+		//push ecx
+		//call dwUpdateCostume
+		//add esp, 8
+		//popad
+		//
+		pushad
+		pushfd
+		mov esi, edi
+		mov edx, 0
+		push edx
+		mov ecx, esi
+		mov ebx, 0
+		mov eax, 0
+		mov ebp, dword ptr[esi+1c0]
+		call 00492C00
+		popfd
+		popad
+		pushad
+		pushfd
+		mov esi, edi
+		mov edx, 1
+		push edx
+		mov ecx, esi
+		mov ebx, 1
+		mov eax, 0
+		mov ebp, dword ptr[esi+4+1c0]
+		call 00492C00
+		popfd
+		popad
+		pushad
+		pushfd
+		mov esi, edi
+		mov edx, 2
+		push edx
+		mov ecx, esi
+		mov ebx, 2
+		mov eax, 0
+		mov ebp, dword ptr[esi+8+1c0]
+		call 00492C00
+		popfd
+		popad
+		pushad
+		pushfd
+		mov esi, edi
+		mov edx, 3
+		push edx
+		mov ecx, esi
+		mov ebx, 3
+		mov eax, 0
+		mov ebp, dword ptr[esi+3*4+1c0]
+		call 00492C00
+		popfd
+		popad
+		pushad
+		pushfd
+		mov esi, edi
+		mov edx, 4
+		push edx
+		mov ecx, esi
+		mov ebx, 4
+		mov eax, 0
+		mov ebp, dword ptr[esi+4*4+1c0]
+		call 00492C00
+		popfd
+		popad
+		jmp originalcode
+
+	weaponcheck:
+		cmp dword ptr [ebx+84], (int)6255
+			jg originalcode
+			cmp dword ptr [ebx+84], (int)6001
+			jl originalcode
+			push eax
+			mov eax, [ebx+84]
+			sub eax, (int)6000
+			mov [edi+166], eax
+			pop eax
+
+			//pushad
+			//movzx  ecx, word ptr[edi+128]  // char id
+			//push ecx
+			//movzx ecx, word ptr [edi+166]
+			//push ecx
+			//call dwUpdateWeapCostume
+			//add esp, 8
+			//popad
+
+			pushad
+			pushfd
+			mov esi, edi
+			mov edx, 5
+			push edx
+			mov ecx, esi
+			mov ebx, 5
+			mov eax, 0
+			mov ebp, dword ptr[esi+5*4+1c0]
+			call 00492C00
+			popfd
+			popad
+
+originalcode:
+mov edx,[esp+00000B5C]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+730AF:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+730AF:
+mov edx,[esp+00000B5C]
+//Alt: db E9 FC 29 2E 6F
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>7</ID>
+              <Description>"Costume Relog"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+pushad
+			pushfd
+			//mov esi, edi
+			mov edx, 0
+			push edx
+			mov ecx, esi
+			mov ebx, 0
+			mov eax, 0
+			mov ebp, dword ptr[esi+1c0]
+			call 0492C00
+			popfd
+			popad
+			pushad
+			pushfd
+			//mov esi, edi
+			mov edx, 1
+			push edx
+			mov ecx, esi
+			mov ebx, 1
+			mov eax, 0
+			mov ebp, dword ptr[esi+4+1c0]
+			call 0492C00
+			popfd
+			popad
+			pushad
+			pushfd
+			//mov esi, edi
+			mov edx, 2
+			push edx
+			mov ecx, esi
+			mov ebx, 2
+			mov eax, 0
+			mov ebp, dword ptr[esi+8+1c0]
+			call 0492C00
+			popfd
+			popad
+			pushad
+			pushfd
+			//mov esi, edi
+			mov edx, 3
+			push edx
+			mov ecx, esi
+			mov ebx, 3
+			mov eax, 0
+			mov ebp, dword ptr[esi+3*4+1c0]
+			call 0492C00
+			popfd
+			popad
+			pushad
+			pushfd
+			//mov esi, edi
+			mov edx, 4
+			push edx
+			mov ecx, esi
+			mov ebx, 4
+			mov eax, 0
+			mov ebp, dword ptr[esi+4*4+1c0]
+			call 0492C00
+			popfd
+			popad
+			pushad
+			pushfd
+			//mov esi, edi
+			mov edx, 5
+			push edx
+			mov ecx, esi
+			mov ebx, 5
+			mov eax, 0
+			mov ebp, dword ptr[esi+5*4+1c0]
+			call 0492C00
+			popfd
+			popad
+
+
+originalcode:
+fld dword ptr [esi+000000D0]
+jmp 455EC7
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+55EC1:
+jmp newmem
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+55EC1:
+fld dword ptr [esi+000000D0]
+//Alt: db D9 86 D0 00 00 00
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>440</ID>
+          <Description>"Stat Skill point fix"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>441</ID>
+              <Description>"Stat Points"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Stat Points
+
+[ENABLE]
+alloc(newmem,1024)
+
+label(statpoint_level_enm)
+label(ret_statpoint_level_enm)
+
+label(statpoint_reset_enm)
+label(statpoint_reset_hm)
+label(ret_statpoint_reset_hm)
+label(statpoint_reset_um)
+label(ret_statpoint_reset_um)
+
+newmem:
+
+statpoint_level_enm:
+add word ptr [esi+00000138],05
+jmp ret_statpoint_level_enm
+
+statpoint_reset_enm:
+// ecx = level - 1
+// this means (level-1)*5 stat points
+// cannot multiply ecx with an odd number
+// so multiply with the number - 1
+// and add ecx
+lea ecx,[ecx+ecx*4]
+mov [edi+00000138],cx
+jmp 0048F983
+
+statpoint_reset_hm:
+// ecx = level - 1
+// this means (level-1)*8 stat points
+// and then -(level-1)
+// resulting in 7 stat points per level
+// cannot multiply ecx with an odd number
+// so multiply with the number - 1
+// and add ecx
+lea esi,[ecx*8+00000000]
+sub esi,ecx
+jmp ret_statpoint_reset_hm
+
+statpoint_reset_um:
+// ecx = level - 1
+// this means (level-1)*9 stat points
+// cannot multiply ecx with an odd number
+// so multiply with the number - 1
+// and add ecx
+lea ecx,[ecx+ecx*8]
+mov [edi+00000138],cx
+jmp ret_statpoint_reset_um
+
+// Level-Up, Easy/Normal Mode
+0049B462:
+jmp statpoint_level_enm
+nop
+nop
+ret_statpoint_level_enm:
+
+// Level-Up, Hard Mode
+0049B46B:
+add word ptr [esi+00000138],07
+
+// Level-Up, Ultimate Mode
+0049B475:
+add word ptr [esi+00000138],09
+
+// Stat Reset, Easy/Normal Mode
+0048F962:
+jmp statpoint_reset_enm
+
+// Stat Reset, Hard Mode
+0048F967:
+jmp statpoint_reset_hm
+nop
+nop
+nop
+nop
+ret_statpoint_reset_hm:
+
+// Stat Reset, Ultimate Mode
+0048F979:
+jmp statpoint_reset_um
+nop
+nop
+nop
+nop
+nop
+ret_statpoint_reset_um:
+
+[DISABLE]
+dealloc(newmem)
+
+0049B462:
+add [esi+00000138],dx
+
+0049B46B:
+add word ptr [esi+00000138],07
+
+0049B475:
+add word ptr [esi+00000138],09
+
+0048F962:
+lea ecx,[ecx+ecx*4]
+jmp 0048F97C
+
+0048F967:
+lea esi,[ecx*8+00000000]
+sub esi,ecx
+
+0048F979:
+lea ecx,[ecx+ecx*8]
+mov [edi+00000138],cx
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>98</ID>
+              <Description>"Skill Points"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Skill Points
+
+[ENABLE]
+alloc(newmem,1024)
+
+label(skillpoint_level_um)
+label(ret_skillpoint_level_um)
+
+label(skillpoint_reset_enm)
+label(ret_skillpoint_reset_enm)
+label(skillpoint_reset_hm)
+label(ret_skillpoint_reset_hm)
+label(skillpoint_reset_um)
+label(ret_skillpoint_reset_um)
+
+newmem:
+
+skillpoint_level_um:
+add [esi+0000013A],09
+jmp ret_skillpoint_level_um
+
+skillpoint_reset_enm:
+// eax = level - 1
+// this means (level-1)*3+5 skill points
+// cannot multiply eax with an odd number
+// so multiply with the number - 1
+// and add eax
+lea eax,[eax+eax*2+05]
+mov [esi+0000013A],ax
+jmp ret_skillpoint_reset_enm
+
+skillpoint_reset_hm:
+// eax = level - 1
+// this means (level-1)*4+5 skill points
+// cannot multiply eax with an odd number
+// so multiply with the number - 1
+// and add eax
+lea ecx,[eax*4+00000005]
+jmp ret_skillpoint_reset_hm
+
+skillpoint_reset_um:
+// eax = level - 1
+// this means (level-1)*7+5 skill points
+// cannot multiply eax with an odd number
+// so multiply with the number - 1
+// and add eax
+lea edx,[eax*8+05]
+add edx,eax
+mov [esi+0000013A],dx
+jmp ret_skillpoint_reset_um
+
+// Level-Up, Easy/Normal Mode
+0049B48F:
+add word ptr [esi+0000013A],03
+
+// Level-Up, Hard Mode
+0049B5CB:
+add word ptr [esi+0000013A],04
+
+// Level-Up, Ultimate Mode
+0049B7B0:
+jmp skillpoint_level_um
+nop
+nop
+ret_skillpoint_level_um:
+
+// Skill Reset, Easy/Normal Mode
+0048FCAB:
+jmp skillpoint_reset_enm
+nop
+nop
+nop
+nop
+nop
+nop
+ret_skillpoint_reset_enm:
+
+// Skill Reset, Hard Mode
+0048FCB8:
+jmp skillpoint_reset_hm
+nop
+nop
+ret_skillpoint_reset_hm:
+
+// Skill Reset, Ultimate Mode
+0048FCC8:
+jmp skillpoint_reset_um
+nop
+nop
+nop
+nop
+nop
+nop
+ret_skillpoint_reset_um:
+
+[DISABLE]
+dealloc(newmem)
+
+0049B48F:
+add word ptr [esi+0000013A],03
+
+0049B5CB:
+add word ptr [esi+0000013A],04
+
+0049B7B0:
+add [esi+0000013A],dx
+
+0048FCAB:
+lea eax,[eax+eax*2+05]
+mov [esi+0000013A],ax
+
+0048FCB8:
+lea ecx,[eax*4+00000005]
+
+0048FCC8:
+lea edx,[eax+eax*4+05]
+mov [esi+0000013A],dx
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>442</ID>
+          <Description>"Remove XP Kill map"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>31</ID>
+              <Description>"Removal EXP 15 and 30"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+cmp byte ptr[esi+160], (int)18//MapID
+je 00465222
+cmp byte ptr[esi+160], (int)30//MapID
+je 00465222
+cmp byte ptr[esi+160], (int)105//MapID
+je 00465222
+originalcode:
+cmp edi,eax
+jae ps_game.exe+651B7
+add edi,ebp
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+65177:
+jmp newmem
+nop
+returnhere:
+
+
+
+[DISABLE]
+"ps_game.exe"+65177:
+cmp edi,eax
+jae ps_game.exe+651B7
+add edi,ebp
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>443</ID>
+          <Description>"Change Caps Rank Stat pvp"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>111</ID>
+              <Description>"rank fix"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+label(rank1)
+label(rank2)
+label(rank3)
+label(rank4)
+label(rank5)
+label(rank6)
+label(rank7)
+label(rank8)
+label(rank9)
+label(rank10)
+label(rank11)
+label(rank12)
+label(rank13)
+label(rank14)
+label(rank15)
+label(rank16)
+label(rank17)
+label(rank18)
+label(rank19)
+label(rank20)
+label(rank21)
+label(rank22)
+label(rank23)
+label(rank24)
+label(rank25)
+label(rank26)
+label(rank27)
+label(rank28)
+label(rank29)
+label(rank30)
+label(rank31)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp ecx,(int)50
+JL rank1
+cmp ecx,(int)300
+JL rank2
+cmp ecx,(int)1000
+JL rank3
+cmp ecx,(int)5000
+JL rank4
+cmp ecx,(int)10000
+JL rank5
+cmp ecx,(int)20000
+JL rank6
+cmp ecx,(int)30000
+JL rank7
+cmp ecx,(int)40000
+JL rank8
+cmp ecx,(int)50000
+JL rank9
+cmp ecx,(int)70000
+JL rank10
+cmp ecx,(int)90000
+JL rank11
+cmp ecx,(int)110000
+JL rank12
+cmp ecx,(int)130000
+JL rank13
+cmp ecx,(int)150000
+JL rank14
+cmp ecx,(int)200000
+JL rank15
+cmp ecx,(int)250000
+JL rank16
+cmp ecx,(int)300000
+JL rank17
+cmp ecx,(int)350000
+JL rank18
+cmp ecx,(int)450000
+JL rank19
+cmp ecx,(int)500000
+JL rank20
+cmp ecx,(int)550000
+JL rank21
+cmp ecx,(int)600000
+JL rank22
+cmp ecx,(int)650000
+JL rank23
+cmp ecx,(int)700000
+JL rank24
+cmp ecx,(int)750000
+JL rank25
+cmp ecx,(int)800000
+JL rank26
+cmp ecx,(int)850000
+JL rank27
+cmp ecx,(int)900000
+JL rank28
+cmp ecx,(int)950000
+JL rank29
+cmp ecx,(int)900000
+JL rank30
+cmp ecx,(int)1000000
+JGE rank31
+
+
+rank1:
+mov ax,1
+mov [esp+10],ax
+jmp exit
+
+rank2:
+mov ax,2
+mov [esp+10],ax
+jmp exit
+
+rank3:
+mov ax,3
+mov [esp+10],ax
+jmp exit
+
+rank4:
+mov ax,4
+mov [esp+10],ax
+jmp exit
+
+rank5:
+mov ax,5
+mov [esp+10],ax
+jmp exit
+
+rank6:
+mov ax,6
+mov [esp+10],ax
+jmp exit
+
+rank7:
+mov ax,7
+mov [esp+10],ax
+jmp exit
+
+rank8:
+mov ax,8
+mov [esp+10],ax
+jmp exit
+
+rank9:
+mov ax,9
+mov [esp+10],ax
+jmp exit
+
+rank10:
+mov ax,(int)10
+mov [esp+10],ax
+jmp exit
+
+rank11:
+mov ax,(int)10
+mov [esp+10],ax
+jmp exit
+
+rank12:
+mov ax,(int)10
+mov [esp+10],ax
+jmp exit
+
+rank13:
+mov ax,(int)12
+mov [esp+10],ax
+jmp exit
+
+rank14:
+mov ax,(int)12
+mov [esp+10],ax
+jmp exit
+
+rank15:
+mov ax,(int)12
+mov [esp+10],ax
+jmp exit
+
+rank16:
+mov ax,(int)15
+mov [esp+10],ax
+jmp exit
+
+rank17:
+mov ax,(int)15
+mov [esp+10],ax
+jmp exit
+
+rank18:
+mov ax,(int)15
+mov [esp+10],ax
+jmp exit
+
+rank19:
+mov ax,(int)19
+mov [esp+10],ax
+jmp exit
+
+rank20:
+mov ax,(int)19
+mov [esp+10],ax
+jmp exit
+
+rank21:
+mov ax,(int)19
+mov [esp+10],ax
+jmp exit
+
+rank22:
+mov ax,(int)22
+mov [esp+10],ax
+jmp exit
+
+rank23:
+mov ax,(int)22
+mov [esp+10],ax
+jmp exit
+
+rank24:
+mov ax,(int)22
+mov [esp+10],ax
+jmp exit
+
+rank25:
+mov ax,(int)25
+mov [esp+10],ax
+jmp exit
+
+rank26:
+mov ax,(int)25
+mov [esp+10],ax
+jmp exit
+
+rank27:
+mov ax,(int)25
+mov [esp+10],ax
+jmp exit
+
+rank28:
+mov ax,(int)30
+mov [esp+10],ax
+jmp exit
+
+rank29:
+mov ax,(int)30
+mov [esp+10],ax
+jmp exit
+
+rank30:
+mov ax,(int)30
+mov [esp+10],ax
+jmp exit
+
+rank31:
+mov ax,(int)45
+
+mov [esp+10],ax
+
+jmp exit
+
+originalcode:
+
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+9D013:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+9D013:
+mov ax,[esp+10]
+//Alt: db 66 8B 44 24 10
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>447</ID>
+          <Description>"New mounts"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>448</ID>
+              <Description>"New mount"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(original)
+//label(continue)
+label(poporiginal)
+label(exit)
+alloc(fix_mount,10)
+
+newmem:
+cmp [ecx+0D*4+1C0],00
+je original
+
+push eax
+// get type
+mov eax,[ecx+0D*4+1C0]
+movzx eax, byte ptr [eax+40]
+// check type
+cmp al,#42
+jne poporiginal
+// get typeid
+mov eax,[ecx+0D*4+1C0]
+movzx eax, byte ptr [eax+41]
+// check typeid
+cmp al,#98
+jbe poporiginal
+
+// opcode
+mov eax,[esp+04]
+mov [fix_mount],eax
+mov eax,[esp+08]
+mov [fix_mount+04],eax
+
+// get mount id
+mov eax,[ecx+0D*4+1C0]
+movzx eax, byte ptr [eax+40]
+mov [fix_mount+07],eax
+mov eax,[ecx+0D*4+1C0]
+movzx eax, byte ptr [eax+41]
+mov [fix_mount+0B],eax
+pop eax
+
+// continue:
+push #15
+lea edx,[fix_mount]
+
+exit:
+jmp returnhere
+
+original:
+push 07
+lea edx,[esp+04]
+jmp exit
+
+poporiginal:
+pop eax
+jmp original
+
+"ps_game.exe"+91490:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(fix_mount)
+dealloc(newmem)
+"ps_game.exe"+91490:
+push 07
+lea edx,[esp+04]
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>449</ID>
+              <Description>"New mount (around)"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(continue)
+label(exit)
+alloc(fix_mount,10)
+
+newmem:
+push eax
+
+mov eax,[esp+18]
+mov [fix_mount],eax
+mov eax,[esp+1C]
+mov [fix_mount+04],eax
+
+cmp [esi+0D*4+1C0],00
+je no_mount
+
+mov eax,[esi+0D*4+1C0]
+movzx eax, byte ptr [eax+40]
+mov [fix_mount+07],eax
+mov eax,[esi+0D*4+1C0]
+movzx eax, byte ptr [eax+41]
+mov [fix_mount+0B],eax
+
+continue:
+pop eax
+mov [fix_mount+06],al
+
+originalcode:
+push #15
+lea edx,[fix_mount]
+
+exit:
+jmp returnhere
+
+no_mount:
+mov [fix_mount+07],00000000
+mov [fix_mount+0B],00000000
+jmp continue
+
+"ps_game.exe"+2A56C:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+dealloc(fix_mount)
+"ps_game.exe"+2A56C:
+push 07
+lea edx,[esp+18]
+
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>450</ID>
+              <Description>"New mount (town)"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+alloc(fix_mount,10)
+
+newmem:
+push eax
+
+cmp byte ptr [esp+3C],1D
+jne poporiginal
+
+mov eax,[esp+3C]
+mov [fix_mount],eax
+mov eax,[esp+40]
+mov [fix_mount+04],eax
+
+cmp [edi+0D*4+1C0],00
+je no_mount
+
+mov eax,[edi+0D*4+1C0]
+movzx eax, byte ptr [eax+40]
+mov [fix_mount+07],eax
+mov eax,[edi+0D*4+1C0]
+movzx eax, byte ptr [eax+41]
+mov [fix_mount+0B],eax
+
+continue:
+pop eax
+mov [fix_mount+06],al
+
+originalcode:
+lea ecx,[fix_mount]
+push #15
+
+exit:
+jmp returnhere
+
+original:
+lea ecx,[esp+38]
+push 07
+jmp exit
+
+poporiginal:
+pop eax
+jmp original
+
+no_mount:
+mov [fix_mount+07],00000000
+mov [fix_mount+0B],00000000
+jmp continue
+
+"ps_game.exe"+263AD:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+dealloc(fix_mount)
+"ps_game.exe"+263AD:
+lea ecx,[esp+38]
+push 07
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>431</ID>
+          <Description>"GM Chats faction"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>215</ID>
+              <Description>"GM both faction chats"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp word [ecx+5808],0B
+JL "ps_game.exe"+27944
+
+originalcode:
+cmp dl,[ecx+0000012D]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+27938:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+27938:
+cmp dl,[ecx+0000012D]
+//Alt: db 3A 91 2D 01 00 00
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>454</ID>
+          <Description>"Cross Faction"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>452</ID>
+              <Description>"Cross Faction Trade"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+0047D9B6:
+db 90 90 90 90 90 90
+
+
+
+[DISABLE]
+0047D9B6:
+db 0F 85 1E 07 00 00
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>455</ID>
+              <Description>"cross faction whisper 1"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+cmp byte ptr [eax+160],(int)42
+jne originalcode
+movzx edx,byte ptr [ebp+160]
+cmp [eax+160],dl
+je 0047F62F
+originalcode:
+mov dl,[eax+0000012D]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+7F61D:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+7F61D:
+mov dl,[eax+0000012D]
+//Alt: db 8A 90 2D 01 00 00
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>456</ID>
+              <Description>"cross faction whisper 2"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+cmp byte ptr [eax+160],(int)42
+jne originalcode
+movzx edx,byte ptr [ebp+160]
+cmp [eax+160],dl
+je 0047FF6F
+originalcode:
+mov dl,[eax+0000012D]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+7FF5D:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+7FF5D:
+mov dl,[eax+0000012D]
+//Alt: db 8A 90 2D 01 00 00
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>19</ID>
+              <Description>"Cross Faction Inspect"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+00477d49:
+db 90 90 90 90 90 90
+
+
+
+[DISABLE]
+00477d49:
+db 0F 85 F9 02 00 00
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>458</ID>
+          <Description>"Guild Check"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>457</ID>
+              <Description>"Guild check current ppl in party"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+cmp eax,02
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+850A8:
+jmp newmem
+nop
+nop
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+850A8:
+cmp eax,07
+jg ps_game.exe+8520C
+//Alt: db 83 F8 03 0F 8F 5B 01 00 00
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>124</ID>
+              <Description>"Guild check accepted requests "</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+cmp dword ptr [esi+24],02
+jl ps_game.exe+85456
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+8542C:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+8542C:
+cmp dword ptr [esi+24],07
+jl ps_game.exe+85456
+//Alt: db 83 7E 24 03 7C 24
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>195</ID>
+              <Description>"Drop Fix - Helmets and Capes"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Credits to Eric-Dutra16
+[ENABLE]
+004BAFC8:
+db 90 90 90 90 90 90 90 90 90
+
+004BAFD1:
+db 90 90 90 90 90 90 90 90 90
+
+00473BBD:
+db 90 90 90 90 90 90 90 90 90 90 90 90 90
+
+[DISABLE]
+004BAFC8:
+cmp eax,10
+je 004BB47A
+
+004BAFD1:
+cmp eax,18
+je 004BB47A
+
+00473BBD:
+cmp dword ptr [eax+000000A0],18
+je 0047468A
+		
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>444</ID>
+          <Description>"System craft"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>446</ID>
+              <Description>"Main"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>//Author: Totoshka, skype: antoshka1312
+//http://www.elitepvpers.com/forum/shaiya-trading/4166314-development-projects.html
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+//Mount System Craft base 1
+label(__MountSkin1)
+label(__MountSkin2)
+label(__MountSkin3)
+label(__MountSkin4)
+label(__MountSkin5)
+label(__MountSkin6)
+//Mount System Craft divin 2
+label(__MountSkin7)
+label(__MountSkin8)
+label(__MountSkin9)
+label(__MountSkin10)
+label(__MountSkin11)
+label(__MountSkin12)
+//Mount System Craft Epic 3
+label(__MountSkin13)
+label(__MountSkin14)
+label(__MountSkin15)
+label(__MountSkin16)
+label(__MountSkin17)
+label(__MountSkin18)
+//Stat 50-55 System Craft
+label(__StatSTR1)
+label(__StatDEX1)
+label(__StatREC1)
+label(__StatINT1)
+label(__StatWIS1)
+label(__StatLUC1)
+//Stat 55-60 System Craft
+label(__StatSTR2)
+label(__StatDEX2)
+label(__StatREC2)
+label(__StatINT2)
+label(__StatWIS2)
+label(__StatLUC2)
+//Stat 60-65 System Craft
+label(__StatSTR3)
+label(__StatDEX3)
+label(__StatREC3)
+label(__StatINT3)
+label(__StatWIS3)
+label(__StatLUC3)
+//Stat 65-70 System Craft
+label(__StatSTR4)
+label(__StatDEX4)
+label(__StatREC4)
+label(__StatINT4)
+label(__StatWIS4)
+label(__StatLUC4)
+label(__getitemaddr)
+
+newmem:
+mov ecx,[esi+30]
+
+pushad
+//Mount System Craft base 1
+cmp dword ptr [ecx],(int)42001
+je __MountSkin1
+
+cmp dword ptr [ecx],(int)42005
+je __MountSkin2
+
+cmp dword ptr [ecx],(int)42009
+je __MountSkin3
+
+cmp dword ptr [ecx],(int)42013
+je __MountSkin4
+
+cmp dword ptr [ecx],(int)42017
+je __MountSkin5
+
+cmp dword ptr [ecx],(int)42021
+je __MountSkin6
+//Mount System Craft Divin 2
+cmp dword ptr [ecx],(int)42002
+je __MountSkin7
+
+cmp dword ptr [ecx],(int)42006
+je __MountSkin8
+
+cmp dword ptr [ecx],(int)42010
+je __MountSkin9
+
+cmp dword ptr [ecx],(int)42014
+je __MountSkin10
+
+cmp dword ptr [ecx],(int)42018
+je __MountSkin11
+
+cmp dword ptr [ecx],(int)42022
+je __MountSkin12
+//Mount System Craft Epic 3
+cmp dword ptr [ecx],(int)42003
+je __MountSkin13
+
+cmp dword ptr [ecx],(int)42007
+je __MountSkin14
+
+cmp dword ptr [ecx],(int)42011
+je __MountSkin15
+
+cmp dword ptr [ecx],(int)42015
+je __MountSkin16
+
+cmp dword ptr [ecx],(int)42019
+je __MountSkin17
+
+cmp dword ptr [ecx],(int)42023
+je __MountSkin18
+//Stat 50 System Craft
+cmp dword ptr [ecx],(int)100246
+je __StatSTR1
+jmp originalcode
+cmp dword ptr [ecx],(int)100245
+je __StatDEX1
+jmp originalcode
+cmp dword ptr [ecx],(int)100244
+je __StatREC1
+jmp originalcode
+cmp dword ptr [ecx],(int)100243
+je __StatINT1
+jmp originalcode
+cmp dword ptr [ecx],(int)100210
+je __StatWIS1
+jmp originalcode
+cmp dword ptr [ecx],(int)100209
+je __StatLUC1
+//Stat 55 System Craft
+cmp dword ptr [ecx],(int)100146
+je __StatSTR2
+jmp originalcode
+cmp dword ptr [ecx],(int)100147
+je __StatDEX2
+jmp originalcode
+cmp dword ptr [ecx],(int)100148
+je __StatREC2
+jmp originalcode
+cmp dword ptr [ecx],(int)100149
+je __StatINT2
+jmp originalcode
+cmp dword ptr [ecx],(int)100150
+je __StatWIS2
+jmp originalcode
+cmp dword ptr [ecx],(int)100151
+je __StatLUC2
+//Stat 60 System Craft
+cmp dword ptr [ecx],(int)100152
+je __StatSTR3
+jmp originalcode
+cmp dword ptr [ecx],(int)100153
+je __StatDEX3
+jmp originalcode
+cmp dword ptr [ecx],(int)100154
+je __StatREC3
+jmp originalcode
+cmp dword ptr [ecx],(int)100155
+je __StatINT3
+jmp originalcode
+cmp dword ptr [ecx],(int)100192
+je __StatWIS3
+jmp originalcode
+cmp dword ptr [ecx],(int)100193
+je __StatLUC3
+//Stat 65 System Craft
+cmp dword ptr [ecx],(int)100194
+je __StatSTR1
+jmp originalcode
+cmp dword ptr [ecx],(int)100203
+je __StatDEX1
+jmp originalcode
+cmp dword ptr [ecx],(int)100205
+je __StatREC1
+jmp originalcode
+cmp dword ptr [ecx],(int)100206
+je __StatINT1
+jmp originalcode
+cmp dword ptr [ecx],(int)100207
+je __StatWIS1
+jmp originalcode
+cmp dword ptr [ecx],(int)100208
+je __StatLUC1
+jmp originalcode
+
+//Mount System Craft base 1
+__MountSkin1:
+mov eax,(int)42
+mov ebx,(int)002
+jmp __getitemaddr
+
+__MountSkin2:
+mov eax,(int)42
+mov ebx,(int)006
+jmp __getitemaddr
+
+__MountSkin3:
+mov eax,(int)42
+mov ebx,(int)010
+jmp __getitemaddr
+
+__MountSkin4:
+mov eax,(int)42
+mov ebx,(int)014
+jmp __getitemaddr
+
+__MountSkin5:
+mov eax,(int)42
+mov ebx,(int)018
+jmp __getitemaddr
+
+__MountSkin6:
+mov eax,(int)42
+mov ebx,(int)022
+jmp __getitemaddr
+
+//Mount System Craft Divin 2
+__MountSkin7:
+mov eax,(int)42
+mov ebx,(int)003
+jmp __getitemaddr
+
+__MountSkin8:
+mov eax,(int)42
+mov ebx,(int)007
+jmp __getitemaddr
+
+__MountSkin9:
+mov eax,(int)42
+mov ebx,(int)011
+jmp __getitemaddr
+
+__MountSkin10:
+mov eax,(int)42
+mov ebx,(int)015
+jmp __getitemaddr
+
+__MountSkin11:
+mov eax,(int)42
+mov ebx,(int)019
+jmp __getitemaddr
+
+__MountSkin12:
+mov eax,(int)42
+mov ebx,(int)023
+jmp __getitemaddr
+
+//Mount System Craft Epic 3
+__MountSkin13:
+mov eax,(int)42
+mov ebx,(int)004
+jmp __getitemaddr
+
+__MountSkin14:
+mov eax,(int)42
+mov ebx,(int)008
+jmp __getitemaddr
+
+__MountSkin15:
+mov eax,(int)42
+mov ebx,(int)012
+jmp __getitemaddr
+
+__MountSkin16:
+mov eax,(int)42
+mov ebx,(int)016
+jmp __getitemaddr
+
+__MountSkin17:
+mov eax,(int)42
+mov ebx,(int)020
+jmp __getitemaddr
+
+__MountSkin18:
+mov eax,(int)42
+mov ebx,(int)024
+jmp __getitemaddr
+
+//Stat 50-55 System Craft
+__StatSTR1:
+mov eax,(int)100
+mov ebx,(int)113
+jmp __getitemaddr
+
+__StatDEX1:
+mov eax,(int)100
+mov ebx,(int)134
+jmp __getitemaddr
+
+__StatREC1:
+mov eax,(int)100
+mov ebx,(int)142
+jmp __getitemaddr
+
+__StatINT1:
+mov eax,(int)100
+mov ebx,(int)143
+jmp __getitemaddr
+
+__StatWIS1:
+mov eax,(int)100
+mov ebx,(int)144
+jmp __getitemaddr
+
+__StatLUC1:
+mov eax,(int)100
+mov ebx,(int)145
+jmp __getitemaddr
+
+//Stat 55-60 System Craft
+__StatSTR2:
+mov eax,(int)100
+mov ebx,(int)146
+jmp __getitemaddr
+
+__StatDEX2:
+mov eax,(int)100
+mov ebx,(int)147
+jmp __getitemaddr
+
+__StatREC2:
+mov eax,(int)100
+mov ebx,(int)148
+jmp __getitemaddr
+
+__StatINT2:
+mov eax,(int)100
+mov ebx,(int)149
+jmp __getitemaddr
+
+__StatWIS2:
+mov eax,(int)100
+mov ebx,(int)150
+jmp __getitemaddr
+
+__StatLUC2:
+mov eax,(int)100
+mov ebx,(int)151
+jmp __getitemaddr
+
+//Stat 60-65 System Craft
+__StatSTR3:
+mov eax,(int)100
+mov ebx,(int)152
+jmp __getitemaddr
+
+__StatDEX3:
+mov eax,(int)100
+mov ebx,(int)153
+jmp __getitemaddr
+
+__StatREC3:
+mov eax,(int)100
+mov ebx,(int)154
+jmp __getitemaddr
+
+__StatINT3:
+mov eax,(int)100
+mov ebx,(int)155
+jmp __getitemaddr
+
+__StatWIS3:
+mov eax,(int)100
+mov ebx,(int)192
+jmp __getitemaddr
+
+__StatLUC3:
+mov eax,(int)100
+mov ebx,(int)193
+jmp __getitemaddr
+
+//Stat 65-70 System Craft
+__StatSTR4:
+mov eax,(int)100
+mov ebx,(int)194
+jmp __getitemaddr
+
+__StatDEX4:
+mov eax,(int)100
+mov ebx,(int)203
+jmp __getitemaddr
+
+__StatREC4:
+mov eax,(int)100
+mov ebx,(int)205
+jmp __getitemaddr
+
+__StatINT4:
+mov eax,(int)100
+mov ebx,(int)206
+jmp __getitemaddr
+
+__StatWIS4:
+mov eax,(int)100
+mov ebx,(int)207
+jmp __getitemaddr
+
+__StatLUC4:
+mov eax,(int)100
+mov ebx,(int)208
+jmp __getitemaddr
+
+
+__getitemaddr:
+imul eax,eax,0x100
+add eax,ebx
+imul eax,eax,0xa8
+add eax,0x589674
+mov dword ptr [esi+0x30],eax
+
+originalcode:
+popad
+mov ecx,[esi+30]
+push 43
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+6DAC9:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+6DAC9:
+mov ecx,[esi+30]
+push 43
+//Alt: db 8B 4E 30 6A 43
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>445</ID>
+              <Description>"ItemType"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>//Author: Totoshka, skype: antoshka1312
+//http://www.elitepvpers.com/forum/shaiya-trading/4166314-development-projects.html
+[ENABLE]
+0046da9b:
+db 90 90 90 90 90 90
+0046daa8:
+db 90 90 90 90 90 90
+ 
+ 
+[DISABLE]
+0046da9b:
+db 0F 84 FC 05 00 00
+
+0046daa8:
+db 0F 86 EF 05 00 00
+
+
+
+
+
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>462</ID>
+          <Description>"Change character skin faction"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>18</ID>
+              <Description>"enable login cross faction (light)"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+jmp ps_game.exe+7B6BB
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+7B54E:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+7B54E:
+je ps_game.exe+7B6BB
+//Alt: db 0F 84 67 01 00 00
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>463</ID>
+              <Description>"enable login cross faction (dark)"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+jmp ps_game.exe+7B6BB
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+7B608:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+7B608:
+je ps_game.exe+7B6BB
+//Alt: db 0F 84 AD 00 00 00
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>20</ID>
+              <Description>"enable world enter cross faction"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+jmp ps_game.exe+7C180
+push edi
+lea edx,[ebp+00005834]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+7C134:
+jmp newmem
+nop
+nop
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+7C134:
+je ps_game.exe+7C180
+push edi
+lea edx,[ebp+00005834]
+//Alt: db 74 4A 57 8D 95 34 58 00 00
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>469</ID>
+          <Description>"Fix stat reset"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>4</ID>
+              <Description>"fix oracle stat reset"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+movzx eax,byte ptr [edi+00000134]
+
+
+originalcode:
+jmp dword ptr [eax*4+0048FB84]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+8F77C:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+8F77C:
+jmp dword ptr [eax*4+0048FB84]
+//Alt: db FF 24 85 84 FB 48 00
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>468</ID>
+              <Description>"fix oracle"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp edi,5
+JE 0049B438
+
+originalcode:
+jmp dword ptr [edi*4+0049B980]
+
+exit:
+jmp returnhere
+
+"ps_game.exe"+9B3DA:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+9B3DA:
+jmp dword ptr [edi*4+0049B980]
+//Alt: db FF 24 BD 80 B9 49 00
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable>
+  <CheatEntries>
+    <CheatEntry>
+      <ID>23</ID>
+      <Description>"Disable charging value enchant"</Description>
+      <LastState Activated="0"/>
+      <Color>000000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>
+[ENABLE]
+
+0045FC73:
+nop
+nop
+nop
+nop
+nop
+nop
+
+
+[DISABLE]
+
+0045FC73:
+mov [ebx+00000140],ecx
+
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

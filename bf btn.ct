@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"bf btn"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+alloc(teste,512)
+alloc(espSaver,4)
+alloc(eaxSaver,4)
+alloc(coords,512)
+
+newmem:
+cmp word ptr [edi],0245
+jne 00477999
+
+pushad
+pushfd
+cmp byte ptr [edi+02],#18
+je mapa18
+cmp byte ptr [edi+02],#30
+je mapa30
+cmp byte ptr [edi+02],#00
+je mapa00
+cmp byte ptr [edi+02],#45
+je mapa45
+cmp byte ptr [edi+02],#70
+je mapa70
+cmp byte ptr [edi+02],#81
+je mapa81
+jmp sair
+
+mapa70:
+cmp word ptr [ebp+136],#30
+jle sair
+mov eax,#70
+cmp byte ptr [ebp+12D],01
+je mapa70dark
+// light
+mov [coords],(float)1478.987
+mov [coords+04],(float)33.160
+mov [coords+08],(float)168.046
+jmp continuar
+mapa70dark:
+// dark
+mov [coords],(float)162.900
+mov [coords+04],(float)39.140
+mov [coords+08],(float)163.973
+jmp continuar
+
+mapa81:
+cmp word ptr [ebp+136],#30
+jle sair
+mov eax,#81
+cmp byte ptr [ebp+12D],01
+je mapa81dark
+mov [coords],(float)347.893
+mov [coords+04],(float)16.910
+mov [coords+08],(float)46.397
+jmp continuar
+mapa81dark:
+mov [coords],(float)162.900
+mov [coords+04],(float)39.140
+mov [coords+08],(float)163.973
+jmp continuar
+
+mapa18:
+cmp word ptr [ebp+136],#15
+jg sair
+mov eax,#18
+cmp byte ptr [ebp+12D],01
+je mapa18dark
+mov [coords],(float)413.222
+mov [coords+04],(float)20.182
+mov [coords+08],(float)138.713
+jmp continuar
+mapa18dark:
+mov [coords],(float)162.900
+mov [coords+04],(float)39.140
+mov [coords+08],(float)163.973
+jmp continuar
+
+mapa30:
+jmp sair
+
+mapa00:
+jmp sair
+
+mapa45:
+jmp sair
+
+continuar:
+mov edi,ebp // pPointer precisa estar no edi
+movzx ecx,word ptr [edi+160]
+
+cmp eax,ecx
+je sair
+
+mov ebx,00
+mov edx,00
+
+push [coords+08]
+push [coords+04]
+push [coords]
+push eax
+call ps_game.exe+14760
+
+fld dword ptr [edi+000000D0]
+mov edx,[edi+000000DC]
+fstp dword ptr [teste+3c]
+fld dword ptr [edi+000000D4]
+mov ax,[edi+00000160]
+mov ecx,0000020B
+fstp dword ptr [teste+40]
+fld dword ptr [edi+000000D8]
+mov [teste+34],cx
+push 14
+fstp dword ptr [teste+44]
+lea ecx,[teste+34]
+mov [teste+36],edx
+mov [teste+3A],ax
+push ecx
+mov ecx,edi
+call ps_game.exe+ED0E0
+
+popfd
+popad
+
+originalcode:
+/*
+push 00
+push 09
+mov ecx,ebp
+*/
+
+exit:
+jmp 00477999
+
+sair:
+popfd
+popad
+jmp 00477999
+
+"ps_game.exe"+7798E:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(coords)
+dealloc(eaxSaver)
+dealloc(espSaver)
+dealloc(newmem)
+dealloc(teste)
+"ps_game.exe"+7798E:
+push 00
+push 09
+mov ecx,ebp
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"auto stats"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+alloc(autostats,512)
+
+newmem:
+cmp word ptr [edi],0121
+jne 00474D75
+
+pushad
+mov word ptr [autostats],0120 // opcode
+mov eax,[edi+06]
+mov dword ptr [autostats+02],eax
+mov eax,[edi+0A]
+mov dword ptr [autostats+06],eax
+movzx ax, byte ptr [edi+0E]
+mov [autostats+0A],eax
+push 08
+lea ecx,[autostats]
+push ecx
+mov ecx,ebx
+call ps_game.exe+ED0E0
+popad
+
+originalcode:
+/*
+push esi
+push 09
+mov ecx,ebx
+*/
+
+exit:
+jmp 00474D75
+
+"ps_game.exe"+74D6B:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+dealloc(autostats)
+dealloc(newmem)
+"ps_game.exe"+74D6B:
+push esi
+push 09
+mov ecx,ebx
+
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry>
+      <Description>Change of je Ep8.dll+361E01</Description>
+      <Address>63791D3C</Address>
+      <ModuleName>Ep8.dll</ModuleName>
+      <ModuleNameOffset>361D3C</ModuleNameOffset>
+      <Before>
+        <Byte>FF</Byte>
+        <Byte>21</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>0F</Byte>
+        <Byte>84</Byte>
+        <Byte>BF</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>81</Byte>
+        <Byte>BD</Byte>
+        <Byte>30</Byte>
+        <Byte>FF</Byte>
+        <Byte>FF</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+</CheatTable>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>35</ID>
+      <Description>"SQL Injection"</Description>
+      <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <LastState Value="" Activated="1" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>24</ID>
+          <Description>"userid rewrite"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov cl,[eax]
+cmp cl,30
+jge originalcode
+cmp cl,'*'
+je originalcode
+cmp cl,'+'
+je originalcode
+cmp cl,'.'
+je originalcode
+cmp cl,'/'
+je originalcode
+cmp cl,0
+je originalcode
+mov cl,30
+originalcode:
+
+mov [edx+eax],cl
+
+exit:
+jmp returnhere
+
+"ps_login.exe"+44F4:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_login.exe"+44F4:
+mov cl,[eax]
+mov [edx+eax],cl
+//Alt: db 8A 08 88 0C 02
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>25</ID>
+          <Description>"password rewrite"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov cl,[eax]
+cmp cl,30
+jge originalcode
+cmp cl,'*'
+je originalcode
+cmp cl,'+'
+je originalcode
+cmp cl,'.'
+je originalcode
+cmp cl,'/'
+je originalcode
+cmp cl,0
+je originalcode
+mov cl,30
+originalcode:
+
+mov [edx+eax],cl
+
+exit:
+jmp returnhere
+
+"ps_login.exe"+4510:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_login.exe"+4510:
+mov cl,[eax]
+mov [edx+eax],cl
+//Alt: db 8A 08 88 0C 02
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

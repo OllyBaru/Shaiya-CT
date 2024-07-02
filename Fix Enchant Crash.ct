@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="18">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Fix Enchant Crash"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+label(returnhere)
+
+newmem:
+movzx eax,byte ptr [ebp+04]
+cmp eax,5
+jnb 00460523
+lea edx,[eax+eax*2]
+movzx eax,byte ptr [ebp+05]
+cmp eax,18
+jnb 00460523
+jmp returnhere
+
+0045FBB3:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+
+0045FBB3:
+movzx eax,byte ptr [ebp+04]
+lea edx,[eax+eax*2]
+movzx eax,byte ptr [ebp+05]
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
