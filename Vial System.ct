@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>752</ID>
+      <Description>"Vial System"</Description>
+      <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>750</ID>
+          <Description>"Variables"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+// comands ep 5 credits to alvx9
+alloc(newmem,2048)
+label(returnhere)
+alloc(command1,16)
+alloc(command2,16)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+push 0x05 // String Lenght
+push command1// command string
+push ebp
+call game.exe+1CDF60 //CmdImput
+add esp,0x0C
+test eax,eax //Testar se comando foi digitado.
+jne dep
+jmp blacksmith
+
+
+
+originalcode:
+push 13D4 //Código original
+jmp exit
+
+
+blacksmith:
+push eax
+mov eax,FD0 // cInputNpcNumber
+mov [868DD8],eax // cGetNpcNumber
+mov [868DDC],eax // cGetNpcNumber
+mov [21FED2C],eax // cGetNpcNumber
+mov [086DE30],3 // type
+mov [086DE2C],1 // typeid
+mov [21FE66C],0 // dwNpcFunctionName
+mov [868DD4], 66  // dwBlackSmithWindow
+pop eax
+jmp 0x479D21 // Cmd_Jump
+
+
+dep:
+push 04
+push command2//string your command
+push ebp
+call game.exe+1CDF60
+add esp,0C
+test eax,eax
+je dep2
+jmp originalcode
+
+dep2:
+push eax
+mov eax,FD0
+mov [0086DE30],6 // type
+mov [0086DE2C],B //typeid
+// CwNpcFunctionName
+mov [021FE66C],0
+mov [00868DD4],(int)100
+pop eax
+jmp 00479D21
+
+
+command1:
+db '/wh' // warehouse
+
+command2:
+db '/blacksmith'
+
+exit:
+jmp returnhere
+
+"game.exe"+78F8A:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"game.exe"+78F8A:
+push 000013D4
+//Alt: db 68 D4 13 00 00
+
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

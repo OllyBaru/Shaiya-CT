@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="38">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"ENABLE KEY WITH CAPS LOCK ACTIVE"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+alloc(CAPS_LOCK_POINTER,4)
+registersymbol(CAPS_LOCK_POINTER)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+cmp byte ptr [esi+11C],00
+je originalcode
+
+pushad
+push 14
+call GetKeyState
+test al,01
+je Set_False_Caps_Lock
+mov byte ptr [CAPS_LOCK_POINTER],1
+popad
+
+cmp byte ptr [CAPS_LOCK_POINTER],1
+je Check_Pointer_Esi
+
+originalcode:
+cmp dword ptr [game.exe+3C13C0],00
+
+exit:
+jmp returnhere
+
+Check_Pointer_Esi:
+cmp byte ptr [esi+11C],02
+je originalcode
+jmp 00500A6D
+
+Set_False_Caps_Lock:
+popad
+mov byte ptr [CAPS_LOCK_POINTER],0
+cmp byte ptr [esi+11C],02
+je 00500A6D
+jmp originalcode
+
+"game.exe"+10087B:
+jmp newmem
+nop 2
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+dealloc(CAPS_LOCK_POINTER)
+unregistersymbol(CAPS_LOCK_POINTER)
+"game.exe"+10087B:
+cmp dword ptr [game.exe+3C13C0],00
+//Alt: db 83 3D C0 13 7C 00 00
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"ENABLE FADE WITHE WITH CAPS LOCK ACTIVE"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+cmp byte ptr [edi+11C],02
+je Check_Caps
+cmp byte ptr [edi+11C],01
+je Check_If_Caps
+
+originalcode:
+cmp byte ptr [edi+0000011C],00
+
+exit:
+jmp returnhere
+
+Check_Caps:
+cmp byte ptr [CAPS_LOCK_POINTER],01
+je SET_FADE
+jmp 005015CB
+
+SET_FADE:
+mov edx,[esp+14]
+jmp 005014A1
+
+Check_If_Caps:
+cmp byte ptr [CAPS_LOCK_POINTER],01
+je 005015CB
+jmp originalcode
+
+"game.exe"+101490:
+jmp newmem
+nop 2
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"game.exe"+101490:
+cmp byte ptr [edi+0000011C],00
+//Alt: db 80 BF 1C 01 00 00 00
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry>
+      <Description>Change of je ijl16.dll+8477</Description>
+      <AddressString>ijl16.dll+8468</AddressString>
+      <Before>
+        <Byte>1C</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>02</Byte>
+      </Before>
+      <Actual>
+        <Byte>74</Byte>
+        <Byte>0D</Byte>
+      </Actual>
+      <After>
+        <Byte>B8</Byte>
+        <Byte>8C</Byte>
+        <Byte>0E</Byte>
+        <Byte>7C</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Change of je ijl16.dll+8508</Description>
+      <AddressString>ijl16.dll+84F8</AddressString>
+      <Before>
+        <Byte>1C</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>02</Byte>
+      </Before>
+      <Actual>
+        <Byte>74</Byte>
+        <Byte>0E</Byte>
+      </Actual>
+      <After>
+        <Byte>3E</Byte>
+        <Byte>80</Byte>
+        <Byte>BF</Byte>
+        <Byte>1C</Byte>
+        <Byte>01</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+</CheatTable>
